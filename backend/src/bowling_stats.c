@@ -1,16 +1,22 @@
 #include "bowling_stats.h"
+#include <stdio.h>
 
 int frejmovi[10];
 int poeni[21];
+static int skorUkupan;
 
 int skor()
 {
-	return 0;
+	return skorUkupan;
 }
 
 void srusi(int x)
 {
-	return;
+	int i;
+	for (i = 0; i < MAX_BROJ_BACANJA; i++)
+	{
+		skorUkupan += x;	
+	}
 }
 void inicijalizacija()
 {

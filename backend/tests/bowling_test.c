@@ -22,8 +22,6 @@ TEST_TEAR_DOWN(BowlingTest)
 // Prvi test - promasena sva bacanja
 TEST(BowlingTest, TestAllZeroes)
 {
-	int i;
-	for (i = 0; i < MAX_BROJ_BACANJA; i++)
 	srusi(0);
 	TEST_ASSERT_EQUAL(0, skor());
 }
@@ -31,8 +29,6 @@ TEST(BowlingTest, TestAllZeroes)
 // Drugi test - srusen jedan cunj u svim bacanjima
 TEST(BowlingTest, TestAllOnes)
 {
-	int i;
-	for (i = 0; i < MAX_BROJ_BACANJA; i++)
 	srusi(1);
 	TEST_ASSERT_EQUAL(21, skor());
 }
