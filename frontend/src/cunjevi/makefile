@@ -1,6 +1,6 @@
-all: unity KnokDownPin_Test main
+all: unity KnockDownPin_Test main
 
-.PHONY: all unity KnokDownPin_Test
+.PHONY: all unity KnockDownPin_Test
 
 unity:
 	$(MAKE) -C unity all
