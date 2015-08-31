@@ -5,7 +5,7 @@ int poeni[21];
 
 int skor()
 {
-	return -1;
+	return 0;
 }
 
 void srusi(int x)
