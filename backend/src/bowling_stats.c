@@ -8,16 +8,27 @@ static int brBacanja;
 
 int skor()
 {
+	int i; 
+	int j = 0;
+	for (i = 0; i < BROJ_FREJMOVA; i++)
+	{
+		if (poeni[j] + poeni[j+1] == 10)  // spare
+		skorUkupan += (10 + poeni[j+2]);
+		else
+		skorUkupan += (poeni[j] + poeni[j+1]);
+		j += 2;
+	}
+	skorUkupan += poeni[MAX_BROJ_BACANJA-1];   // zadnji okvir ima 3 bacanja
 	return skorUkupan;
 }
 
 void srusi(int x)
 {
-	skorUkupan += x;	
-	brBacanja++;
 	if (brBacanja == MAX_BROJ_BACANJA)
 	inicijalizacija();
+	poeni[brBacanja++] = x;
 }
+
 
 void inicijalizacija()
 {
@@ -34,5 +45,6 @@ void inicijalizacija()
   }
 
   skorUkupan = 0;
+  brBacanja = 0;
 
 }
