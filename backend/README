@@ -1,0 +1,5 @@
+**Bowling test**
+
+ - ~~Promasena sva bacanja.~~
+ - ~~Srusen po jedan cunj u svakom bacanju.~~
+ 
