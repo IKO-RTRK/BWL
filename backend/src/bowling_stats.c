@@ -1,10 +1,14 @@
 #include "bowling_stats.h"
 
+int frames[10];
+int points[21];
+
 int skor()
 {
-  return 0;
+	return 0;
 }
-int srusi(int x)
+
+void srusi(int x)
 {
-  return 0;
+	return 0;
 }
