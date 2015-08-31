@@ -17,7 +17,7 @@ TEST_GROUP_RUNNER(KnockDownPins)
 
 TEST(KnockDownPins, AllPinsDownOnHit)
 {
-	uint KnockedPins = 0;
+	int KnockedPins = 0;
 	TEST_ASSERT_EQUAL(10, KnockedPins);
 }
 
