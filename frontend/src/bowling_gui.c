@@ -70,6 +70,30 @@ void initialisation(void)
     return;
 }
 
+void followBumper(int curr_pos_row,int in_field_column)
+{
+  int column;
+  if (in_field_column == 2)
+    column = 1;
+  else
+    column = 15;
+  
+  int prev_pos_row = curr_pos_row--;
+  matrix[prev_pos_row][in_field_column] = '.';
+  
+  while (curr_pos_row > 0)
+  {
+    prev_pos_row = curr_pos_row;
+    curr_pos_row -= 1;
+    
+    matrix[prev_pos_row][column] = '.';
+    matrix[curr_pos_row][column] = bowling_ball;
+    system("clear");
+    print();
+    usleep(700000);
+  }
+}
+
 void move(void)
 { 
     int offset;
@@ -77,26 +101,40 @@ void move(void)
     int curr_pos_col = BALL_POS_COL;
     int prev_pos_row;
     int prev_pos_col;
-    
+    double a, b;		// koriste se samo za funkciju foo1
     while (curr_pos_row >= 5)
     {
       if (curr_pos_col < 2 || curr_pos_col > 14)
 	offset = 0;
       else
+      {
+	foo1(a,b); //napisao sam je samo da bih mogao dobiti bolje vrijednosti za random
+		    //ako se ko sjeti neceg pametnijeg neka optimizuje
+		  //bez neceg ovakvog random vraca uvijek istu vrijednost
+		// ni u kojem slucaju ovo ovako ostaviti
+	a += 2.435;
+	b += 4.353;
 	offset = (random() % 3) - 1;
+      }
       
       prev_pos_row = curr_pos_row;
       prev_pos_col = curr_pos_col;
       
       curr_pos_row -= 1;
       curr_pos_col = curr_pos_col + offset;
-      
 	
       matrix[prev_pos_row][prev_pos_col] = '.';
       matrix[curr_pos_row][curr_pos_col] = bowling_ball;
       system("clear");
       print();
       usleep(700000);
+      
+      //da li je kugla upala u kanal
+      if (curr_pos_col == 2 || curr_pos_col == 14)
+      {
+	followBumper(curr_pos_row,curr_pos_col);	//sprovedi kuglu kroz kanal
+	curr_pos_row = 4;
+      }
     }
 }
 
