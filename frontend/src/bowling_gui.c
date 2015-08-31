@@ -1,12 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
+# include <unistd.h>
 #include "bowling_gui.h"
 
 void initialisation(void) 
 {
     int curr_row;
     int curr_column;
-    int counter = NUM_OF_BALL - 1;
-
+    int counter = NUM_OF_PIN - 1;
+    
+    
     for (curr_row = 0; curr_row < ROW; curr_row++)
     {
 	matrix[curr_row][0] = '|';
@@ -19,7 +22,7 @@ void initialisation(void)
     int tmp = 0, tmp1;
     int n = 5;
 
-    //unosenje cunjeva u mapu
+    //unosenje cunjeva u matricu
     for (curr_row = 4; curr_row > 0; curr_row--)
     {
 	tmp1 = n;
@@ -61,9 +64,43 @@ void initialisation(void)
     matrix[1][23] = '_';
     matrix[1][25] = '1';
     matrix[2][25] = '1';
+    system("clear");
+    print();
+    usleep(700000);
     return;
 }
 
+void move(void)
+{ 
+    int offset;
+    int curr_pos_row = BALL_POS_ROW;
+    int curr_pos_col = BALL_POS_COL;
+    int prev_pos_row;
+    int prev_pos_col;
+    
+    while (curr_pos_row >= 5)
+    {
+      if (curr_pos_col < 2 || curr_pos_col > 14)
+	offset = 0;
+      else
+	offset = (random() % 3) - 1;
+      
+      prev_pos_row = curr_pos_row;
+      prev_pos_col = curr_pos_col;
+      
+      curr_pos_row -= 1;
+      curr_pos_col = curr_pos_col + offset;
+      
+	
+      matrix[prev_pos_row][prev_pos_col] = '.';
+      matrix[curr_pos_row][curr_pos_col] = bowling_ball;
+      system("clear");
+      print();
+      usleep(700000);
+    }
+}
+
+//Ispis matrice
 void print(void)
 {
     int curr_row;
@@ -83,6 +120,6 @@ void print(void)
 int main(void)
 {
   initialisation();
-  print();
+  move();
   return 0;
 }
