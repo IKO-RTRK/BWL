@@ -1,1 +1,9 @@
 #KnockDownPin
+
+Pin Down Tests
+ - All Pins are down
+ - 0 Pins down if ball out of line
+ - x/10 Pins down if ball is in centar of lane
+ - x/7 Pins down if ball is +1/-1 from centar 
+ - x/5 Pins down if ball is +2/-2 from centar
+ - x/3 Pins down if ball is +3/-3 from centar
