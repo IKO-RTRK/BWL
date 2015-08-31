@@ -34,5 +34,5 @@ TEST(BowlingTest, TestAllOnes)
 	int i;
 	for (i = 0; i < MAX_BROJ_BACANJA; i++)
 	srusi(1);
-	TEST_ASSERT_EQUAL(21, skor());
+	TEST_ASSERT_EQUAL_HEX32(21, skor());
 }
