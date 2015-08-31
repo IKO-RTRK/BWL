@@ -70,30 +70,6 @@ void initialisation(void)
     return;
 }
 
-void followBumper(int curr_pos_row,int in_field_column)
-{
-  int column;
-  if (in_field_column == 2)
-    column = 1;
-  else
-    column = 15;
-  
-  int prev_pos_row = curr_pos_row--;
-  matrix[prev_pos_row][in_field_column] = '.';
-  
-  while (curr_pos_row > 0)
-  {
-    prev_pos_row = curr_pos_row;
-    curr_pos_row -= 1;
-    
-    matrix[prev_pos_row][column] = '.';
-    matrix[curr_pos_row][column] = bowling_ball;
-    system("clear");
-    print();
-    usleep(700000);
-  }
-}
-
 void move(void)
 { 
     int offset;
@@ -129,12 +105,6 @@ void move(void)
       print();
       usleep(700000);
       
-      //da li je kugla upala u kanal
-      if (curr_pos_col == 2 || curr_pos_col == 14)
-      {
-	followBumper(curr_pos_row,curr_pos_col);	//sprovedi kuglu kroz kanal
-	curr_pos_row = 4;
-      }
     }
 }
 
