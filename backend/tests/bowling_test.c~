@@ -7,7 +7,6 @@ TEST_GROUP_RUNNER(BowlingTest)
 {
 	RUN_TEST_CASE(BowlingTest, TestAllZeroes);
 	RUN_TEST_CASE(BowlingTest, TestAllOnes);	
-	RUN_TEST_CASE(BowlingTest, TestSpare);	
 
 }
 
@@ -39,7 +38,7 @@ TEST(BowlingTest, TestAllOnes)
 }
 
 // Treci test - spare u drugom bacanju (5+5), ostala bacanja po 1 cunj 
-TEST(BowlingTest, TestSpare)
+TEST(BowlingTest, TestAllOnes)
 {
 	int i;
 	srusi(5);

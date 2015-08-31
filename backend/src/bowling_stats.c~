@@ -33,6 +33,6 @@ void inicijalizacija()
       poeni[j] = 0;
   }
 
-  skorUkupan = 0;
+  skorUkuoan = 0;
 
 }
