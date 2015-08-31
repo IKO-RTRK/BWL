@@ -1,4 +1,5 @@
-int ourRandom(void){
+int random(void)
+{
   unsigned int m = 1024;
   unsigned int a = 1101;
   unsigned int c = 1023;
@@ -6,4 +7,9 @@ int ourRandom(void){
   unsigned int result = (a*z + c) % m;
 
   return result;
+}
+
+void foo1(double a, double b)
+{
+  
 }
