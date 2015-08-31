@@ -16,7 +16,8 @@ char bowling_ball = 'o';
 void initialisation(void);
 void print(void);
 void move(void);
-int ourRandom(void);
+int random(void);
+void followBumper(int,int);
 
 #endif
 
