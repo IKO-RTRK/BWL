@@ -9,5 +9,6 @@
  - ~~Poslednje bacanje strike.~~
  - ~~Malo strike, malo spare.~~
  - ~~Bez strikeova i spareova ~~
+ - ~~Prvi pokusaj u svakom frejmu promasaj.~~
 
 
