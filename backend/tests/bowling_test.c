@@ -13,6 +13,7 @@ TEST_GROUP_RUNNER(BowlingTest)
 	RUN_TEST_CASE(BowlingTest, TenStrikesInRow);
 	RUN_TEST_CASE(BowlingTest, LastStrike);
 	RUN_TEST_CASE(BowlingTest, SparesAndStrikes);
+	RUN_TEST_CASE(BowlingTest, NoStrikesNoSpares);
 }
 
 TEST_SETUP(BowlingTest)
@@ -83,11 +84,13 @@ TEST(BowlingTest, TenStrikesInRow)
 	}
  	TEST_ASSERT_EQUAL(300, score());
 }
+
+//Sedmi test - poslednje bacanje strike 
 TEST(BowlingTest, LastStrike)
 {
 	int i;
 	for(i = 0; i < MAX_NUM_OF_THROWS - 3; i++)
-	{
+	{ 
 	 knockDown(0);	
 	}
 	knockDown(1);
@@ -97,7 +100,7 @@ TEST(BowlingTest, LastStrike)
 }
 
 
-//Sedmi test - malo strike malo spare 
+//Osmi test - malo strike malo spare 
 
 TEST(BowlingTest, SparesAndStrikes)
 {
@@ -113,3 +116,21 @@ int i;
 	TEST_ASSERT_EQUAL(85,score());
 
 }
+// Deveti test - bez strikeova i spareova
+TEST(BowlingTest, NoStrikesNoSpares)
+{
+
+	knockDown(2);
+	knockDown(7);
+	knockDown(3);
+	knockDown(4);
+	knockDown(5);
+	knockDown(1);
+	int i;
+	for(i=0;i<MAX_NUM_OF_THROWS - 6; i++)
+	knockDown(2);
+
+
+	TEST_ASSERT_EQUAL(52,score());
+}
+
