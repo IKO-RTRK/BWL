@@ -1,4 +1,4 @@
-**LED Driver Tests**
+**Bowling Tests**
 
  - ~~Promasena sva bacanja.~~
  - ~~Srusen jedan cunj u svim bacanjima.~~
