@@ -8,7 +8,7 @@ TEST_GROUP_RUNNER(BowlingTest)
 	RUN_TEST_CASE(BowlingTest, TestAllZeroes);
 	RUN_TEST_CASE(BowlingTest, TestAllOnes);	
 	RUN_TEST_CASE(BowlingTest, TestSpare);	
-
+	RUN_TEST_CASE(BowlingTest, TestStrike);
 }
 
 TEST_SETUP(BowlingTest)
@@ -47,4 +47,14 @@ TEST(BowlingTest, TestSpare)
 	for (i = 0; i < MAX_BROJ_BACANJA - 2; i++)
 	srusi(1);
 	TEST_ASSERT_EQUAL(30, skor());
+}
+
+// Cetvrti test - strike u prvom bacanju (10), ostala bacanja po 1 cunj 
+TEST(BowlingTest, TestStrike)
+{
+	int i;
+	srusi(10);
+	for (i = 0; i < MAX_BROJ_BACANJA - 2; i++)
+	srusi(1);
+	TEST_ASSERT_EQUAL(31, skor());
 }
