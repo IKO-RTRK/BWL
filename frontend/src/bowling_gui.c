@@ -280,6 +280,7 @@ for(i=0;i<10;i++)// Simulacija vise bacanja
   	 initialisationPins();
  	 initialisationTable();
   };
+  system("clear");
 // A ova da se nakon svaka dva bacanja sve "refresuje"
 // Ovako sam uradio jer treba da nakon prvog bacanja u seriji ostanu neporuseni cunjevi... Zbog toga sam sve ovo pisao
 
