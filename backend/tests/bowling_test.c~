@@ -81,3 +81,15 @@ TEST(BowlingTest, TenStrikesInRow)
 	}
  	TEST_ASSERT_EQUAL(300, score());
 }
+TEST(BowlingTest, LastStrike)
+{
+	int i;
+	for(i = 0; i < MAX_NUM_OF_THROWS - 3; i++)
+	{
+	 knockDown(0);	
+	}
+	knockDown(1);
+	knockDown(9);
+	knockDown(10);
+ 	TEST_ASSERT_EQUAL(20, score());
+}

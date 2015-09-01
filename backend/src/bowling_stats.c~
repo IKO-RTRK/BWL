@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int frames[10];
-int points[21];
+int points[25]; // zbog points[j+4] da se ne bi cackala zasticena memorija
 static int totalScore;
 static int numOfThrow;
 
@@ -27,9 +27,8 @@ int score()
 		j += 2;
 	}
 
-	if(totalScore != 300)
-
-	totalScore += points[MAX_NUM_OF_THROWS-1];   // zadnji okvir ima 3 bacanja
+	if( points[20] == 10 || ( points[20] + points[19] == 10));
+	else	totalScore += points[MAX_NUM_OF_THROWS-1];   // zadnji okvir ima 3 bacanja
 	return totalScore;
 }
 
