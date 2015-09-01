@@ -16,19 +16,30 @@ void initialisationLane(void)
 {
     int curr_row;
     int curr_column;
-    
+    int j;
     //unos staze
-    for (curr_row = 0; curr_row < ROW; curr_row++)
+    for (curr_row = 4; curr_row < ROW; curr_row++)
     {
-	matrix[curr_row][0] = '|';
+	/*matrix[curr_row][2] = '|';
+	matrix[curr_row][4] = '|';
+	matrix[curr_row][12] = '|';
+	matrix[curr_row][14] = '|';*/
+
+	for(j=5;j<12;j++)
+	{
+		matrix[curr_row][j] = ' ';
+	}
+	matrix[curr_row][3] = ' ';
+	matrix[curr_row][13] = ' ';
 	matrix[curr_row][2] = '|';
+	matrix[curr_row][4] = '|';
+	matrix[curr_row][12] = '|';
 	matrix[curr_row][14] = '|';
-	matrix[curr_row][16] = '|';
     }
+    
     matrix[BALL_POS_ROW][BALL_POS_COL] = bowling_ball;  //pocetna pozicija na kojoj ce se nalaziti kugla
     return;
 }
-
 
 
 void initialisationPins(void)
@@ -42,6 +53,11 @@ void initialisationPins(void)
     //unosenje cunjeva u matricu
     for (curr_row = 4; curr_row > 0; curr_row--)
     {
+	matrix[tmp][2] = '|';
+	matrix[tmp][4] = '|';
+	matrix[tmp][12] = '|';
+	matrix[tmp][14] = '|';
+
 	tmp1 = n;
 	for (curr_column = curr_row; curr_column > 0; curr_column--)
 	{
@@ -50,6 +66,7 @@ void initialisationPins(void)
 	}
 	tmp++;
 	n++;
+	
     }
     return;
 }
@@ -239,13 +256,29 @@ int main(void)
   initialisationLane();
   initialisationPins();
   initialisationTable();
-  system("clear");
-  print();
-  usleep(700000);
+  //system("clear");
+ // print();
+  //usleep(700000);
+
+int KolikoZaOboriti;  
+  int i;
+for(i=0;i<10;i++)// Simulacija vise bacanja
+{
   move();
-  int KolikoZaOboriti;
   KolikoZaOboriti=knockDown(lastPosition);    
   pinsDown(KolikoZaOboriti);
+  sleep(2);
+  initialisationLane();// Ova initialisation1 mi je za donji dio staze ispod cunjeva
+  if(i<9&&i>0&&(i%2==1||KolikoZaOboriti==10)) 
+  {
+	 //initialisationLane();
+  	 initialisationPins();
+ 	 initialisationTable();
+  };
+// A ova da se nakon svaka dva bacanja sve "refresuje"
+// Ovako sam uradio jer treba da nakon prvog bacanja u seriji ostanu neporuseni cunjevi... Zbog toga sam sve ovo pisao
+
+}
 
   return 0;
 }
