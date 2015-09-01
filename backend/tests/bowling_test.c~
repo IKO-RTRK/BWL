@@ -9,7 +9,6 @@ TEST_GROUP_RUNNER(BowlingTest)
 	RUN_TEST_CASE(BowlingTest, TestAllOnes);	
 	RUN_TEST_CASE(BowlingTest, TestSpare);	
 	RUN_TEST_CASE(BowlingTest, TestStrike);
-	RUN_TEST_CASE(BowlingTest, TwoStrikesInRow);
 }
 
 TEST_SETUP(BowlingTest)
@@ -58,15 +57,4 @@ TEST(BowlingTest, TestStrike)
 	for (i = 0; i < MAX_BROJ_BACANJA - 2; i++)
 	srusi(1);
 	TEST_ASSERT_EQUAL(31, skor());
-}
-
-// Peti test - strike u prvom i drugom bacanju, ostala bacanja po 1 cunj 
-TEST(BowlingTest, TwoStrikesInRow)
-{
-	int i;
-	srusi(10);
-	srusi(10);
-	for (i = 0; i < MAX_BROJ_BACANJA - 4; i++)
-	srusi(1);
-	TEST_ASSERT_EQUAL(50, skor());
 }
