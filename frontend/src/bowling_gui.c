@@ -5,11 +5,17 @@
 
 static int lastPosition;// Potrebna mi je informacija o poslednjoj poziciji
 
-void initialisation(void) 
+//Ovo podrzava samo gcc kompajler
+char matrix[ROW][COLUMN] = {[0 ... ROW-1][0 ... COLUMN-1] = ' '};
+char bowling_pins[NUM_OF_PINS] = {[0 ... NUM_OF_PINS-1] = '!'};
+
+char bowling_ball = 'o';
+
+
+void initialisationLane(void)
 {
     int curr_row;
     int curr_column;
-    int counter = NUM_OF_PINS - 1;
     
     //unos staze
     for (curr_row = 0; curr_row < ROW; curr_row++)
@@ -19,8 +25,17 @@ void initialisation(void)
 	matrix[curr_row][14] = '|';
 	matrix[curr_row][16] = '|';
     }
+    matrix[BALL_POS_ROW][BALL_POS_COL] = bowling_ball;  //pocetna pozicija na kojoj ce se nalaziti kugla
+    return;
+}
 
-    
+
+
+void initialisationPins(void)
+{
+    int curr_row;
+    int curr_column;
+    int counter = NUM_OF_PINS - 1;
     int tmp = 0, tmp1;
     int n = START_PINS;
 
@@ -36,13 +51,17 @@ void initialisation(void)
 	tmp++;
 	n++;
     }
-
+    return;
+}
     
-    matrix[BALL_POS_ROW][BALL_POS_COL] = bowling_ball;  //pocetna pozicija na kojoj ce se nalaziti kugla
 
-    //prikaz rezultata
+ 
+void initialisationTable(void)
+{   
+    int curr_row;
+    int curr_column;
     
-    tmp1 = START_LANE_ROW;				//prvi red od koga pocinju da se upisuju -
+    int tmp1 = START_LANE_ROW;				//prvi red od koga pocinju da se upisuju -
     for (curr_row = 0; curr_row < 10; curr_row++)
     {
 	for (curr_column = 0; curr_column < 3; curr_column++) 
@@ -55,7 +74,7 @@ void initialisation(void)
     }
     
     
-    tmp = START_LANE_COLON;				//prva kolona od koje pocinju da se upisuju |
+    int tmp = START_LANE_COLON;				//prva kolona od koje pocinju da se upisuju |
 
     for (curr_row = 0; curr_row < 11; curr_row++)
     {
@@ -72,13 +91,10 @@ void initialisation(void)
     matrix[1][23] = '_';
     matrix[1][25] = '1';
     matrix[2][25] = '1';
-    
-    system("clear");
-    print();
-    usleep(700000);
-    return;
 }
+    
 
+    
 void move(void)
 { 
     int offset; 					//rezultat random-a, ukoliko kugla nije otisla van staze
@@ -220,7 +236,12 @@ void print(void)
 
 int main(void)
 {
-  initialisation();
+  initialisationLane();
+  initialisationPins();
+  initialisationTable();
+  system("clear");
+  print();
+  usleep(700000);
   move();
   int KolikoZaOboriti;
   KolikoZaOboriti=knockDown(lastPosition);    
