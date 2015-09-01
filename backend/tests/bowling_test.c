@@ -10,6 +10,7 @@ TEST_GROUP_RUNNER(BowlingTest)
 	RUN_TEST_CASE(BowlingTest, TestSpare);	
 	RUN_TEST_CASE(BowlingTest, TestStrike);
 	RUN_TEST_CASE(BowlingTest, TwoStrikesInRow);
+	RUN_TEST_CASE(BowlingTest, TenStrikesInRow);
 }
 
 TEST_SETUP(BowlingTest)
@@ -69,4 +70,14 @@ TEST(BowlingTest, TwoStrikesInRow)
 	for (i = 0; i < MAX_BROJ_BACANJA - 4; i++)
 	srusi(1);
 	TEST_ASSERT_EQUAL(50, skor());
+}
+// Sesti test -strike u svakom bacanju(svaki put po 10 poena)
+TEST(BowlingTest, TenStrikesInRow)
+{
+	int i;
+	for(i = 0; i < BROJ_FREJMOVA; i++)
+	{
+	 srusi(10);	
+	}
+ 	TEST_ASSERT_EQUAL(300, skor());
 }
