@@ -75,7 +75,7 @@ TEST(BowlingTest, TwoStrikesInRow)
 TEST(BowlingTest, TenStrikesInRow)
 {
 	int i;
-	for(i = 0; i < NUM_OF_FRAMES; i++)
+	for(i = 0; i < MAX_NUM_OF_THROWS; i++)
 	{
 	 knockDown(10);	
 	}

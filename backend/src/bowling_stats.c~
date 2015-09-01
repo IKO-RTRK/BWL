@@ -26,6 +26,9 @@ int score()
 
 		j += 2;
 	}
+
+	if(totalScore != 300)
+
 	totalScore += points[MAX_NUM_OF_THROWS-1];   // zadnji okvir ima 3 bacanja
 	return totalScore;
 }
