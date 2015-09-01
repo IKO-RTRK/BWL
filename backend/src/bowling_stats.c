@@ -10,10 +10,16 @@ int skor()
 {
 	int i; 
 	int j = 0;
+	int bonus;
 	for (i = 0; i < BROJ_FREJMOVA; i++)
 	{
 		if (poeni[j] == 10)                    // strike
-		skorUkupan += (10 + poeni[j+2] + poeni[j+3]);
+		{
+			if (poeni[j+2] == 10)
+			skorUkupan += (10 + poeni[j+2] + poeni[j+4]);
+			else
+			skorUkupan += (10 + poeni[j+2] + poeni[j+3]);
+		}
 		else if (poeni[j] + poeni[j+1] == 10)  // spare
 		skorUkupan += (10 + poeni[j+2]);
 		else
