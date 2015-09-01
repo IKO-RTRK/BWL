@@ -14,6 +14,7 @@ TEST_GROUP_RUNNER(BowlingTest)
 	RUN_TEST_CASE(BowlingTest, LastStrike);
 	RUN_TEST_CASE(BowlingTest, SparesAndStrikes);
 	RUN_TEST_CASE(BowlingTest, NoStrikesNoSpares);
+	RUN_TEST_CASE(BowlingTest, FirstAttemptAlwaysMiss);
 }
 
 TEST_SETUP(BowlingTest)
@@ -133,4 +134,24 @@ TEST(BowlingTest, NoStrikesNoSpares)
 
 	TEST_ASSERT_EQUAL(52,score());
 }
+
+//Deseti test - prvo bacanje u svakom frejmu promasaj
+
+TEST(BowlingTest, FirstAttemptAlwaysMiss)
+{
+	
+	int i;
+	do
+	{
+	if(i%2==0)
+	knockDown(0);
+	else knockDown(1);
+	i++;
+	}while(i<MAX_NUM_OF_THROWS-1);
+	knockDown(1);
+	
+	TEST_ASSERT_EQUAL(11,score());
+}
+
+
 
