@@ -83,6 +83,8 @@ TEST(BowlingTest, TenStrikesInRow)
 	}
  	TEST_ASSERT_EQUAL(300, score());
 }
+
+//Sedmi test - poslednje bacanje strike 
 TEST(BowlingTest, LastStrike)
 {
 	int i;
@@ -97,7 +99,7 @@ TEST(BowlingTest, LastStrike)
 }
 
 
-//Sedmi test - malo strike malo spare 
+//Osmi test - malo strike malo spare 
 
 TEST(BowlingTest, SparesAndStrikes)
 {
