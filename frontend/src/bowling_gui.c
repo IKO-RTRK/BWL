@@ -3,6 +3,8 @@
 # include <unistd.h>
 #include "bowling_gui.h"
 
+static int lastPosition;// Potrebna mi je informacija o poslednjoj poziciji
+
 void initialisation(void) 
 {
     int curr_row;
@@ -91,7 +93,7 @@ void move(void)
 	offset = 0;					//ne koristi se vise radnom jer je njeno kretanje fiksno 
       else
       {
-	foo1(a,b); //napisao sam je samo da bih mogao dobiti bolje vrijednosti za random
+	//foo1(a,b); //napisao sam je samo da bih mogao dobiti bolje vrijednosti za random
 		    //ako se ko sjeti neceg pametnijeg neka optimizuje
 		  //bez neceg ovakvog random vraca uvijek istu vrijednost
 		// ni u kojem slucaju ovo ovako ostaviti
@@ -108,12 +110,96 @@ void move(void)
 	
       matrix[prev_pos_row][prev_pos_col] = '.';		//na prethodnoj poziciji na kojoj se nalazila kugla upisi .
       matrix[curr_pos_row][curr_pos_col] = bowling_ball;//na trenutnu poziciju na kojoj se nalazi kugla ucrtaj kuglu 
+      lastPosition=curr_pos_col;//ovo sam dodao jer mi je bila potrebna zadnja pozicija
       system("clear");
       print();
       usleep(700000);
       
     }
 }
+
+
+// Ovo je neki moj random
+unsigned int random7()
+{
+	unsigned int x;
+	char* a;
+	x=(unsigned int)a;
+	return x;
+}
+// Funkcija koja u odnosu na poziciju vraca slucajan broj cunjeva koje treba srusiti
+// Mislim da bi ovu funkciju trebali koristiti i ovi iz backenda prilikom pozivanja svoje f_je srusi
+int knockDown(int position)
+{
+	int maxMod,x;
+	if(position<5 || position>11)
+		return 0;
+	else if(position==5 || position==11)
+		maxMod=3;
+	else if(position==6 || position==10)
+		maxMod=5;
+	else if(position==7 || position==9)
+		maxMod=7;
+	else if(position==8)
+		maxMod=10;
+		
+	x=(random7()%maxMod)+1;
+	return x;
+}
+
+// Funkcija koja stavlja 'x' na mjesto srusenog cunja, s tim da ona  na slucajan nacin
+//  bira poziciju na kojoj ce srusiti cunj
+void pinsDown(int k)
+{
+	 if(k!=0)
+	 {
+	 int pale[k], i, j;
+	 for(i=0;i<=k;i++)
+		{
+		pale[i]=random()%11;
+		for(j=0;j<i;j++)
+			{
+			if(pale[i]==pale[j]) 
+			i--;
+			}
+	 	}
+	 for(i=0;i<=k;i++)
+	 	{
+
+	 	 switch(pale[i])
+	 	 {
+
+	 	 case 1:
+	 	 	matrix[3][8]='x'; break;
+	 	 case 2:
+	 	 	matrix[2][7]='x'; break;
+	 	 case 3:
+	 	 	matrix[2][9]='x'; break;
+	 	 case 4:
+	 	 	matrix[1][6]='x'; break;
+	 	 case 5:
+	 	 	matrix[1][8]='x'; break;
+	 	 case 6:
+	 	 	matrix[1][10]='x'; break;
+	 	 case 7:
+	 	 	matrix[0][5]='x'; break;
+	 	 case 8:
+	 	 	matrix[0][7]='x'; break;
+	 	 case 9:
+	 	 	matrix[0][9]='x'; break;
+	 	 case 10:
+	 	 	matrix[0][11]='x'; break;
+
+	 	 }
+	 	}
+	 }
+	 matrix[4][lastPosition]='.';
+	  system("clear");
+      print();
+      usleep(700000);
+}
+
+
 
 //Ispis matrice
 void print(void)
@@ -136,5 +222,9 @@ int main(void)
 {
   initialisation();
   move();
+  int KolikoZaOboriti;
+  KolikoZaOboriti=knockDown(lastPosition);    
+  pinsDown(KolikoZaOboriti);
+
   return 0;
 }

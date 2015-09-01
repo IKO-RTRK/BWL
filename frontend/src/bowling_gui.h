@@ -19,6 +19,10 @@ char bowling_ball = 'o';
 void initialisation(void);
 void print(void);
 void move(void);
+void pinsDown(int);
+int knockDown(int);
+// Neki random sa kojim sam radio... Slobodno se moze kasnije izbaciti
+unsigned int random7(void);
 
 #endif
 
