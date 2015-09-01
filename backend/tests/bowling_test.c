@@ -13,8 +13,8 @@ TEST_GROUP_RUNNER(BowlingTest)
 	RUN_TEST_CASE(BowlingTest, TenStrikesInRow);
 	RUN_TEST_CASE(BowlingTest, LastStrike);
 	RUN_TEST_CASE(BowlingTest, SparesAndStrikes);
-	/*RUN_TEST_CASE(BowlingTest, NoStrikesNoSpares);
-	RUN_TEST_CASE(BowlingTest, FirstAttemptAlwaysMiss);*/
+	RUN_TEST_CASE(BowlingTest, NoStrikesNoSpares);
+	RUN_TEST_CASE(BowlingTest, FirstAttemptAlwaysMiss);
 }
 
 TEST_SETUP(BowlingTest)
@@ -119,7 +119,7 @@ int i;
 	TEST_ASSERT_EQUAL(85,score());
 
 }
-/*
+
 // Deveti test - bez strikeova i spareova
 TEST(BowlingTest, NoStrikesNoSpares)
 {
@@ -143,7 +143,7 @@ TEST(BowlingTest, NoStrikesNoSpares)
 TEST(BowlingTest, FirstAttemptAlwaysMiss)
 {
 	
-	int i;
+	int i = 0;
 	do
 	{
 	if(i%2==0)
@@ -156,5 +156,5 @@ TEST(BowlingTest, FirstAttemptAlwaysMiss)
 	TEST_ASSERT_EQUAL(11,score());
 }
 
-*/
+
 

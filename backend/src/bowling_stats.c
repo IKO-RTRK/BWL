@@ -1,8 +1,8 @@
 #include "bowling_stats.h"
 #include <stdio.h>
 
-int frames[10];
-int points[21]; 
+int frames[NUM_OF_FRAMES];
+int points[MAX_NUM_OF_THROWS]; 
 static int totalScore;
 static int numOfThrow;
 
