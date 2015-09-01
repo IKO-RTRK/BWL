@@ -11,6 +11,7 @@ TEST_GROUP_RUNNER(BowlingTest)
 	RUN_TEST_CASE(BowlingTest, TestStrike);
 	RUN_TEST_CASE(BowlingTest, TwoStrikesInRow);
 	RUN_TEST_CASE(BowlingTest, TenStrikesInRow);
+	RUN_TEST_CASE(BowlingTest, LastStrike);
 }
 
 TEST_SETUP(BowlingTest)
@@ -80,4 +81,16 @@ TEST(BowlingTest, TenStrikesInRow)
 	 knockDown(10);	
 	}
  	TEST_ASSERT_EQUAL(300, score());
+}
+TEST(BowlingTest, LastStrike)
+{
+	int i;
+	for(i = 0; i < MAX_NUM_OF_THROWS - 3; i++)
+	{
+	 knockDown(0);	
+	}
+	knockDown(1);
+	knockDown(9);
+	knockDown(10);
+ 	TEST_ASSERT_EQUAL(20, score());
 }
