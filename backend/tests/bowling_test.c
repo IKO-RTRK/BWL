@@ -12,6 +12,7 @@ TEST_GROUP_RUNNER(BowlingTest)
 	RUN_TEST_CASE(BowlingTest, TwoStrikesInRow);
 	RUN_TEST_CASE(BowlingTest, TenStrikesInRow);
 	RUN_TEST_CASE(BowlingTest, LastStrike);
+	RUN_TEST_CASE(BowlingTest, SparesAndStrikes);
 }
 
 TEST_SETUP(BowlingTest)
@@ -93,4 +94,22 @@ TEST(BowlingTest, LastStrike)
 	knockDown(9);
 	knockDown(10);
  	TEST_ASSERT_EQUAL(20, score());
+}
+
+
+//Sedmi test - malo strike malo spare 
+
+TEST(BowlingTest, SparesAndStrikes)
+{
+int i;
+	knockDown(10);
+	knockDown(10);
+	knockDown(5);
+	knockDown(5);
+	knockDown(6);
+	knockDown(4);
+	for(i=0; i < MAX_NUM_OF_THROWS - 8; i++)
+	knockDown(1);
+	TEST_ASSERT_EQUAL(85,score());
+
 }

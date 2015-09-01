@@ -11,6 +11,7 @@ TEST_GROUP_RUNNER(BowlingTest)
 	RUN_TEST_CASE(BowlingTest, TestStrike);
 	RUN_TEST_CASE(BowlingTest, TwoStrikesInRow);
 	RUN_TEST_CASE(BowlingTest, TenStrikesInRow);
+	RUN_TEST_CASE(BowlingTest, LastStrike);
 }
 
 TEST_SETUP(BowlingTest)
