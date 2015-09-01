@@ -122,7 +122,12 @@ void move(void)
     double a, b;		// koriste se samo za funkciju foo1
     while (curr_pos_row >= 5)				//sve dok ne dodje kugla do cunjeva
     {
-      if (curr_pos_col < 2 || curr_pos_col > 14) 	//ako je kugla dosla do kraja staze, da se nastavi kretati pravo kroz kanal
+
+      if(curr_pos_col==4)		// ako je kugla dosla do kanala, natjeramo ga da udje u njega
+	offset = -1;
+      else if(curr_pos_col==12)		// isto to samo u drugu stranu
+	offset = 1;
+      else if (curr_pos_col < 4  || curr_pos_col > 12) 	//ako je kugla dosla do kraja staze, da se nastavi kretati pravo kroz kanal
 	offset = 0;					//ne koristi se vise radnom jer je njeno kretanje fiksno 
       else
       {
