@@ -10,13 +10,10 @@
 #define START_LANE_COLON 22
 #define START_PINS 5
 
-//Ovo podrzava samo gcc kompajler
-char matrix[ROW][COLUMN] = {[0 ... ROW-1][0 ... COLUMN-1] = ' '};
-char bowling_pins[NUM_OF_PINS] = {[0 ... NUM_OF_PINS-1] = '!'};
 
-char bowling_ball = 'o';
-
-void initialisation(void);
+void initialisationLane(void);
+void initialisationPins(void);
+void initialisationTable(void);
 void print(void);
 void move(void);
 void pinsDown(int);
