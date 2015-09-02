@@ -7,3 +7,4 @@ Kao što smo se dogovorili danas na sastanku, ovdje svako treba da napiše šta 
 - Nikola Nikolic, Bojan Djukic, Stefan Savic, Mladen Antonic - Refactoring i documentation za bowling_stats.c
 - Bojan Gajic, Srdjan Micin, Nebojsa Markovic, Sinisa Djuric - Refactoring za bowling_gui.c
 - Mladen Stupar, Branka Pekez - Refactoring i pisanje dokumetacije
+- Saša Mihajlica - Ispis rezultata na ekran i testovi za rušenje čunjeva
