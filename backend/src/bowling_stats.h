@@ -10,5 +10,6 @@ void initialise();
 int score();
 void knockDown(uint8_t x);
 void testMemory(int* pointsCheck);
-
+int* get_points_array(); // zvati score() prije ovoga, vraca pokazivac na pocetak niza statistike, objasnjenje je u fajlu sa implementacijom
+int* get_frames_array(); // zvati score() prije ovoga, vraca pokazivac na pocetak niza bodova u svakom frejmu
 #endif

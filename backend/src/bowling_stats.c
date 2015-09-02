@@ -8,6 +8,21 @@ int points[MAX_NUM_OF_THROWS];
 static uint16_t totalScore; //max score je 300 pa koristimo uint16_t
 static uint8_t numOfThrow;
 
+
+int* get_points_array()
+{
+	/* points je organizovan na nacin:
+	points[i*2] - vraca bodove sa prvog bacanja u i-tom frejmu
+	points[i*2+1] - vraca bodove sa drugog bacanja u i-tom frejmu
+	points[MAX_NUM_OF_THROWS-1] - vraca bodove sa dodatnog bacanja u zadnjem frejmu ( bitno provjeriti da li je stecen uslov za dodatno bacanje, ako nije ne treba ni ispisivati )
+	bitno da znate kako bi kupili odgovarajuce bodove i ispisivali ih na ekran za odredjeni frejm
+	*/
+	return points;
+}
+int* get_frame_array()
+{
+	return frames;
+}
 int score()
 {
 	uint8_t i; 
@@ -19,24 +34,23 @@ int score()
 			if(j < LAST_FRAME_FIRST_THROW)
 			{
 				if (points[j+2] == ALL_PINS_DOWN)          //double
-				totalScore += (ALL_PINS_DOWN + points[j+2] + points[j+4]);
+				frames[i] = totalScore += (ALL_PINS_DOWN + points[j+2] + points[j+4]);
 							
 				else				//strike
-				totalScore += (ALL_PINS_DOWN + points[j+2] + points[j+3]);
+				frames[i] = totalScore += (ALL_PINS_DOWN + points[j+2] + points[j+3]);
 			}
 			else
-				totalScore += (ALL_PINS_DOWN + points[j+1]+ points[j+2]);// last frame different rules
+				frames[i] = totalScore += (ALL_PINS_DOWN + points[j+1]+ points[j+2]);// last frame different rules
 
 		}
 		else if ((points[j] + points[j+1] == ALL_PINS_DOWN) && (j<=LAST_FRAME_FIRST_THROW))  // spare
-			totalScore += (ALL_PINS_DOWN + points[j+2]);
+			frames[i] = totalScore += (ALL_PINS_DOWN + points[j+2]);
 		else
-		totalScore += (points[j] + points[j+1]);
+		frames[i] = totalScore += (points[j] + points[j+1]);
 
 		j += 2;
 
 	}
-
 	return totalScore;
 }
 
