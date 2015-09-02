@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
+//#include <stdlib.h>
 # include <unistd.h>
 #include "bowling_gui.h"
 
@@ -241,7 +241,43 @@ void pinsDown(int k)
          usleep(700000);
 }
 
-
+//funkcija koje postavlja rezultate rusenja cunjeva
+//i ukupan broj bodova po frejmovima
+void populateMatrixTable(int* score,int* total)
+{
+  int i = 0;	//trenutna kolona u matrici
+  int j = 0;	//citanje iz score niza
+  int k = 0;	//citanje iz total niza
+  int l = 0;	//upisa ucinka za frame, pomjeranje kroz polja na kojima se upisuje rezultat
+  
+  int tmpScore[21] = {1,2,4,6,8,6}; 	// nizovi koristeni za testiranje
+  int tmpTotal[10] = {6,15,21,35};	// umjesto njih ce se koristiti rezultati iz statistike
+  score = tmpScore;
+  total = tmpTotal;
+  
+  for (i = START_LANE_ROW; i < COLUMN; i+= 2)
+  {
+    if (*(score+j) != 0)
+      matrix[1][i] = *(score+j++) + 0x30;		//postavljen rezultat bacanja, matrica je char, a rezultat int
+    if ((i+1)%4 == 2)			//uslov je ovakav jer tabela pocinje da se ispisuje od pozicije START_LANE_ROW, 
+    {					//na poziciji odredjenoj uslovom se nalazi posljednja cifra rezultata za frame
+      if (*(total+k) != 0)
+      {
+	int tmpResult = *(total+k++);
+	int tmpMod = 0;
+	l = 0;
+	while (tmpResult)
+	{
+	  tmpMod = tmpResult % 10;
+	  tmpResult /= 10;
+	  matrix[2][i-l] = tmpMod + 0x30;		//upisujemo broj po ciframa
+	  l++;
+	}
+      }						 //postavljen ukupan ucinak za frame
+    }
+  }
+  return;
+}
 
 //Ispis matrice
 void print(void)
@@ -258,6 +294,15 @@ void print(void)
 	printf("\n");
     }
     return;
+}
+
+unsigned int random(void)
+{
+     static unsigned int zi,zii;
+     
+     zi=(1103515245* zii + 12345) % 2147483648 ;
+     zii=zi;
+             return zi ;
 }
 
 int main(void)
@@ -279,6 +324,8 @@ int main(void)
 
     pinsDown(KolikoZaOboriti[i]);
     sleep(2);
+    int tmpPopulation1,tmpPopulation2;
+    populateMatrixTable(&tmpPopulation1,&tmpPopulation2);
     initialisationLane();		// Ova initialisationLane refresh-uje donji dio staze ispod cunjeva
     initialisationTable();		// i tabela se treba refresh-ovati nakon svakog bacanja
 
