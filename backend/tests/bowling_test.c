@@ -81,7 +81,7 @@ TEST(BowlingTest, TwoStrikesInRow)
 TEST(BowlingTest, TenStrikesInRow)
 {
 	int i;
-	for(i = 0; i < MAX_NUM_OF_THROWS; i++)
+	for(i = 0; i < MAX_NUM_OF_THROWS-9; i++)
 	{
 	 knockDown(10);	
 	}
@@ -155,7 +155,7 @@ TEST(BowlingTest, FirstAttemptAlwaysMiss)
 //Jedanaesti test - pokusaj nedozvoljenog pristupa memorijskim lokacijama
 TEST(BowlingTest, UnallowedMemoryAccess)
 {
-	int pointsCheck[24]={ };
+	int pointsCheck[24]={};
 	int i;
 	for(i = 0; i < MAX_NUM_OF_THROWS-3; i++)
 	{

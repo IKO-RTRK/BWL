@@ -37,13 +37,13 @@ void knockDown(int x)
 	if (numOfThrow == MAX_NUM_OF_THROWS)
 	initialise();
 	
-	points[numOfThrow++] = x;
-	if (x == 10)
+	points[numOfThrow] = x;
+	if ((x == ALL_PINS_DOWN) && (numOfThrow<LAST_FRAME_FIRST_THROW)) // last frame <=> different rules
 	{
-		points[numOfThrow++] = 0;  // ako je strike ima samo jedno bacanje u okviru	
+		points[++numOfThrow] = 0;  // ako je strike ima samo jedno bacanje u okviru => vazi za prvih devet frameova	
 	}
+	numOfThrow++;
 }
-
 
 void initialise()
 {
