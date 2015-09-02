@@ -1,15 +1,16 @@
 #include "bowling_stats.h"
 #include <stdio.h>
 
+
 int frames[NUM_OF_FRAMES];
 int points[MAX_NUM_OF_THROWS]; 
-static int totalScore;
-static int numOfThrow;
+static uint16_t totalScore; //max score je 300 pa koristimo uint16_t
+static uint8_t numOfThrow;
 
 int score()
 {
-	int i; 
-	int j = 0;
+	uint8_t i; 
+	uint8_t j = 0;
 	for (i = 0; i < NUM_OF_FRAMES; i++)
 	{
 		if (points[j] == ALL_PINS_DOWN)            
@@ -40,7 +41,7 @@ int score()
 	return totalScore;
 }
 
-void knockDown(int x)
+void knockDown(uint8_t x)
 {
 	if (numOfThrow == MAX_NUM_OF_THROWS)
 	initialise();
@@ -55,7 +56,7 @@ void knockDown(int x)
 
 void initialise()
 {
-  int i,j;
+  uint8_t i,j;
 
   for(i = 0; i < NUM_OF_FRAMES; i++)
   {
@@ -74,7 +75,7 @@ void initialise()
 
 void testMemory(int* pointsCheck)
 {
-	int i=0;
+	uint8_t i=0;
  	for (i = 0; i < 24; i++) {
      	pointsCheck[i] = points[i];
   	}
