@@ -1,6 +1,8 @@
 #include "../unity/unity_fixture.h"
 #include "../src/bowling_stats.h"
-
+/*Pojedini testovi su uradjeni u slucaju da imamo 21 bacanje,
+sto se ne desava ako u zadnjem frame ne napravimo strike ili spare.
+Treba promjeniti ocekivane rezultate i refaktorisati kod.*/
 
 TEST_GROUP(BowlingTest);
 
