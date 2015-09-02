@@ -8,5 +8,6 @@
  - ~~Perfekno bacanje (svi strike-ovi).~~
  - ~~Poslednje bacanje strike.~~
  - ~~Malo strike, malo spare.~~
+ - ~~Bez strikeova i spareova ~~
 
 
