@@ -1,6 +1,6 @@
 #include "bowling_stats.h"
 #include <stdio.h>
-#include <stdint.h>
+
 
 
 int frames[NUM_OF_FRAMES];

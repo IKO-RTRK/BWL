@@ -48,7 +48,7 @@ void knockDown(uint8_t x)
 	initialise();
 	
 	points[numOfThrow] = x;
-	if ((x == ALL_PINS_DOWN) && (numOfThrow<LAST_FRAME_FIRST_THROW)) // last frame <=> different rules
+	if ((x == ALL_PINS_DOWN) && (numOfThrow < LAST_FRAME_FIRST_THROW)) // last frame <=> different rules
 	{
 		points[++numOfThrow] = 0;  // ako je strike ima samo jedno bacanje u okviru => vazi za prvih devet frameova	
 	}
