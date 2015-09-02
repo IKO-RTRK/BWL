@@ -9,7 +9,7 @@
 #define START_LANE_ROW 23
 #define START_LANE_COLON 22
 #define START_PINS 5
-
+#define min(a,b) (((a)<=(b))?(a):(b))
 
 
 void initialisationLane(void);
@@ -18,9 +18,9 @@ void initialisationTable(void);
 void print(void);
 void move(void);
 void pinsDown(int);
-int knockDown(int);
+int knockDownPins(int, int);
 // Neki random sa kojim sam radio... Slobodno se moze kasnije izbaciti
-unsigned int random7(void);
+//unsigned int random7(void);
 
 #endif
 

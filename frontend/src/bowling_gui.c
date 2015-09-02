@@ -152,19 +152,19 @@ void move(void)
 
 // Funkcija koja u odnosu na poziciju vraca slucajan broj cunjeva koje treba srusiti
 // Mislim da bi ovu funkciju trebali koristiti i ovi iz backenda prilikom pozivanja svoje f_je srusi
-int knockDown(int position)
+int knockDownPins(int position, int remain)
 {
 	int maxMod,x;
 	if(position<5 || position>11)
 		return 0;
 	else if(position==5 || position==11)
-		maxMod=3;
+		maxMod=min(remain,3);
 	else if(position==6 || position==10)
-		maxMod=5;
+		maxMod=min(remain,5);
 	else if(position==7 || position==9)
-		maxMod=7;
+		maxMod=min(remain,7);
 	else if(position==8)
-		maxMod=10;
+		maxMod=min(remain,10);
 		
 	x=(random()%maxMod)+1;
 	return x;
@@ -189,29 +189,61 @@ void pinsDown(int k)
 	 for(i=0;i<=k;i++)
 	 	{
 
-	 	 switch(pale[i])
+	 	 switch(pale[i])	// Ovi if-ovi dodani u svakom case-u da ne bi u drugom bacanju ponovo stavljalo 'x'
+					// tamo gdje je on vec postavljen
+
 	 	 {
 
 	 	 case 1:
-	 	 	matrix[3][8]='x'; break;
+			if(matrix[3][8]=='x')
+			  i--;
+			else
+	 	 	  matrix[3][8]='x'; break;
 	 	 case 2:
-	 	 	matrix[2][7]='x'; break;
+			if(matrix[2][7]=='x')
+			  i--;
+			else
+	 	 	  matrix[2][7]='x'; break;
 	 	 case 3:
-	 	 	matrix[2][9]='x'; break;
-	 	 case 4:
-	 	 	matrix[1][6]='x'; break;
+			if(matrix[2][9]=='x')
+			  i--;
+			else
+	 	 	  matrix[2][9]='x'; break;
+	 	 case 4: 
+			if(matrix[1][6]=='x')
+			  i--;
+			else
+	 	 	  matrix[1][6]='x'; break;
 	 	 case 5:
-	 	 	matrix[1][8]='x'; break;
+			if(matrix[1][8]=='x')
+			  i--;
+			else
+	 	 	  matrix[1][8]='x'; break;
 	 	 case 6:
-	 	 	matrix[1][10]='x'; break;
+	 	 	if(matrix[1][10]=='x')
+			  i--;
+			else
+	 	 	  matrix[1][10]='x'; break;
 	 	 case 7:
-	 	 	matrix[0][5]='x'; break;
+	 	 	if(matrix[0][5]=='x')
+			  i--;
+			else
+	 	 	  matrix[0][5]='x'; break;
 	 	 case 8:
-	 	 	matrix[0][7]='x'; break;
+	 	 	if(matrix[0][7]=='x')
+			  i--;
+			else
+	 	 	  matrix[0][7]='x'; break;
 	 	 case 9:
-	 	 	matrix[0][9]='x'; break;
+	 	 	if(matrix[0][9]=='x')
+			  i--;
+			else
+	 	 	  matrix[0][9]='x'; break;
 	 	 case 10:
-	 	 	matrix[0][11]='x'; break;
+	 	 	if(matrix[0][11]=='x')
+			  i--;
+			else
+	 	 	  matrix[0][11]='x'; break;
 
 	 	 }
 	 	}
@@ -250,22 +282,25 @@ int main(void)
  // print();
   //usleep(700000);
 
-int KolikoZaOboriti;  
+int KolikoZaOboriti[21];  
   int i;
-for(i=0;i<10;i++)// Simulacija vise bacanja
+for(i=0;i<4;i++)// Simulacija vise bacanja
 {
   move();
-  KolikoZaOboriti=knockDown(lastPosition);    
-  pinsDown(KolikoZaOboriti);
+  if(i%2==1)
+    KolikoZaOboriti[i]=knockDownPins(lastPosition, 10-KolikoZaOboriti[i-1]);    
+  else
+    KolikoZaOboriti[i]=knockDownPins(lastPosition, 10);
+  pinsDown(KolikoZaOboriti[i]);
   sleep(2);
   initialisationLane();// Ova initialisation1 mi je za donji dio staze ispod cunjeva
-  if(i<9&&i>0&&(i%2==1||KolikoZaOboriti==10)) 
+  if(i<9&&i>0&&(i%2==1||KolikoZaOboriti[i]==10)) 
   {
 	 //initialisationLane();
   	 initialisationPins();
  	 initialisationTable();
   };
-  system("clear");
+  //system("clear");
 // A ova da se nakon svaka dva bacanja sve "refresuje"
 // Ovako sam uradio jer treba da nakon prvog bacanja u seriji ostanu neporuseni cunjevi... Zbog toga sam sve ovo pisao
 
