@@ -16,10 +16,11 @@ TEST_GROUP_RUNNER(bowling_stats)
 	RUN_TEST_CASE(bowling_stats, SetScoreForOneThrow);
 }
 
+//Prvi test
 TEST(bowling_stats, SetScoreForOneThrow)
 {
-	//uint16_t virtualLeds = 0xffff;
-	//LedDriver_Create(&virtualLeds);
-	//TEST_ASSERT_EQUAL_HEX16(0, virtualLeds);
+	srusi(5);
+	TEST_ASSERT_MESSAGE( skor()[0] == 5 , "Prvi test pao");
+	printf("\n\nTEST 1 PROSAO");
 }
 
