@@ -11,7 +11,7 @@ static int numOfThrow;
 //Vjerovatno postoji elegantnije rjesenje
 int score()
 {
-	int i; 
+	int i = 0; 
 	int j = 0;
 	for (i = 0; i < NUM_OF_FRAMES; i++)
 	{

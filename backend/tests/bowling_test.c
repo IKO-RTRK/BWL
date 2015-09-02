@@ -1,6 +1,7 @@
 #include "../unity/unity_fixture.h"
 #include "../src/bowling_stats.h"
 
+
 TEST_GROUP(BowlingTest);
 
 TEST_GROUP_RUNNER(BowlingTest)
@@ -15,6 +16,7 @@ TEST_GROUP_RUNNER(BowlingTest)
 	RUN_TEST_CASE(BowlingTest, SparesAndStrikes);
 	RUN_TEST_CASE(BowlingTest, NoStrikesNoSpares);
 	RUN_TEST_CASE(BowlingTest, FirstAttemptAlwaysMiss);
+	RUN_TEST_CASE(BowlingTest, UnallowedMemoryAccess);
 }
 
 TEST_SETUP(BowlingTest)
@@ -43,7 +45,6 @@ TEST(BowlingTest, TestAllOnes)
 	knockDown(1);
 	TEST_ASSERT_EQUAL(21, score());
 }
-
 
 // Treci test - spare u drugom bacanju (5+5), ostala bacanja po 1 cunj 
 TEST(BowlingTest, TestSpare)
@@ -76,12 +77,11 @@ TEST(BowlingTest, TwoStrikesInRow)
 	knockDown(1);
 	TEST_ASSERT_EQUAL(50, score());
 }
-
 // Sesti test -strike u svakom bacanju(svaki put po 10 poena)
 TEST(BowlingTest, TenStrikesInRow)
 {
 	int i;
-	for(i = 0; i < MAX_NUM_OF_THROWS-9; i++)
+	for(i = 0; i < MAX_NUM_OF_THROWS; i++)
 	{
 	 knockDown(10);	
 	}
@@ -119,7 +119,6 @@ int i;
 	TEST_ASSERT_EQUAL(85,score());
 
 }
-
 // Deveti test - bez strikeova i spareova
 TEST(BowlingTest, NoStrikesNoSpares)
 {
@@ -137,9 +136,7 @@ TEST(BowlingTest, NoStrikesNoSpares)
 
 	TEST_ASSERT_EQUAL(52,score());
 }
-
 //Deseti test - prvo bacanje u svakom frejmu promasaj
-
 TEST(BowlingTest, FirstAttemptAlwaysMiss)
 {
 	
@@ -155,6 +152,20 @@ TEST(BowlingTest, FirstAttemptAlwaysMiss)
 	
 	TEST_ASSERT_EQUAL(11,score());
 }
-
+//Jedanaesti test - pokusaj nedozvoljenog pristupa memorijskim lokacijama
+TEST(BowlingTest, UnallowedMemoryAccess)
+{
+	int pointsCheck[24]={ };
+	int i;
+	for(i = 0; i < MAX_NUM_OF_THROWS-3; i++)
+	{
+	 knockDown(0);	
+	}
+	 knockDown(10);	
+	 knockDown(10);	
+	 knockDown(10);	
+	testMemory(pointsCheck);
+ 	TEST_ASSERT_EQUAL(0, pointsCheck[22]);
+}
 
 
