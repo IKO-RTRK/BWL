@@ -1,6 +1,7 @@
 #include <stdio.h>
 //#include <stdlib.h>
 # include <unistd.h>
+#include  <stdint.h>
 #include "bowling_gui.h"
 
 static int lastPosition;// Potrebna mi je informacija o poslednjoj poziciji
@@ -12,9 +13,9 @@ char bowling_ball = 'o';
 
 void initialisationLane(void)
 {
-    int curr_row;
-    int curr_column;
-    int j;
+    uint8_t curr_row;
+    uint8_t curr_column;
+    uint8_t j;
     //unos staze
     for (curr_row = 4; curr_row < ROW; curr_row++)
       {
@@ -37,11 +38,11 @@ void initialisationLane(void)
 
 void initialisationPins(void)
 {
-    int curr_row;
-    int curr_column;
-    int counter = NUM_OF_PINS - 1;
-    int tmp = 0, tmp1;
-    int n = START_PINS;
+    uint8_t curr_row;
+    uint8_t curr_column;
+    uint8_t counter = NUM_OF_PINS - 1;
+    uint8_t tmp = 0, tmp1;
+    uint8_t n = START_PINS;
 
     //unosenje cunjeva u matricu
     for (curr_row = 4; curr_row > 0; curr_row--)
@@ -68,9 +69,9 @@ void initialisationPins(void)
  
 void initialisationTable(void)
 {   
-    int curr_row;
-    int curr_column;
-    int tmp1 = START_LANE_ROW;				//prvi red od koga pocinju da se upisuju -
+    uint8_t curr_row;
+    uint8_t curr_column;
+    uint8_t tmp1 = START_LANE_ROW;				//prvi red od koga pocinju da se upisuju -
     for (curr_row = 0; curr_row < 10; curr_row++)
     {
 	for (curr_column = 0; curr_column < 3; curr_column++) 
@@ -82,7 +83,7 @@ void initialisationTable(void)
 	tmp1+=4;
     }
         
-    int tmp = START_LANE_COLON;				//prva kolona od koje pocinju da se upisuju |
+    uint8_t tmp = START_LANE_COLON;				//prva kolona od koje pocinju da se upisuju |
 
     for (curr_row = 0; curr_row < 11; curr_row++)
     {
@@ -101,11 +102,11 @@ void initialisationTable(void)
     
 void move(void)
 { 
-    int offset; 					//rezultat random-a, ukoliko kugla nije otisla van staze
-    int curr_pos_row = BALL_POS_ROW;			//trentuni red u kome se nalazi kugla u toku kretanja
-    int curr_pos_col = BALL_POS_COL;			//trentuna kolona u kojoj se nalazi kugla u toku kretanja
-    int prev_pos_row;					//prethodni red u kome se nalazila kugla
-    int prev_pos_col;					//prethodna kolona
+    uint8_t offset; 					//rezultat random-a, ukoliko kugla nije otisla van staze
+    uint8_t curr_pos_row = BALL_POS_ROW;			//trentuni red u kome se nalazi kugla u toku kretanja
+    uint8_t curr_pos_col = BALL_POS_COL;			//trentuna kolona u kojoj se nalazi kugla u toku kretanja
+    uint8_t prev_pos_row;					//prethodni red u kome se nalazila kugla
+    uint8_t prev_pos_col;					//prethodna kolona
     double a, b;		// koriste se samo za funkciju foo1
     while (curr_pos_row >= 5)				//sve dok ne dodje kugla do cunjeva
     {
@@ -142,7 +143,7 @@ void move(void)
 int knockDownPins(int position, int remain) 	// remain se koristi da zapamtim broj nesrusenih
 {  // da se ne desi u slucaju da je u prvom bacanju pogodjen centar i sruseno 7 cunjeva i da se u narednom bacanju pogodi centar ponovo
    // i tad srusi npr 5 a ostala su samo 3... min ogranicava maxMod 
-	int maxMod,x;				
+	uint8_t maxMod,x;				
 	if(position<5 || position>11)
 		return 0;
 	else if(position==5 || position==11)
@@ -164,7 +165,7 @@ void pinsDown(int k)
 {
 	if(k!=0)
 	 {
-	   int pale[k], i, j;
+	   uint8_t pale[k], i, j;
 	   for(i=0;i<=k;i++)
 		{
 		  pale[i]=random()%10+1;
@@ -245,10 +246,10 @@ void pinsDown(int k)
 //i ukupan broj bodova po frejmovima
 void populateMatrixTable(int* score,int* total)
 {
-  int i = 0;	//trenutna kolona u matrici
-  int j = 0;	//citanje iz score niza
-  int k = 0;	//citanje iz total niza
-  int l = 0;	//upisa ucinka za frame, pomjeranje kroz polja na kojima se upisuje rezultat
+  uint8_t i = 0;	//trenutna kolona u matrici
+  uint8_t j = 0;	//citanje iz score niza
+  uint8_t k = 0;	//citanje iz total niza
+  uint8_t l = 0;	//upisa ucinka za frame, pomjeranje kroz polja na kojima se upisuje rezultat
   
   int tmpScore[21] = {1,2,4,6,8,6}; 	// nizovi koristeni za testiranje
   int tmpTotal[10] = {6,15,21,35};	// umjesto njih ce se koristiti rezultati iz statistike
@@ -282,8 +283,8 @@ void populateMatrixTable(int* score,int* total)
 //Ispis matrice
 void print(void)
 {
-    int curr_row;
-    int curr_column;
+    uint8_t curr_row;
+    uint8_t curr_column;
     
     for (curr_row = 0; curr_row < ROW; curr_row++) 
     {
@@ -311,8 +312,8 @@ int main(void)
   initialisationPins();
   initialisationTable();
   
-  int KolikoZaOboriti[21];  // Zbog 21-og bacanja
-  int i;
+  uint8_t KolikoZaOboriti[21];  // Zbog 21-og bacanja
+  uint8_t i;
   for(i=0;i<10;i++)	// Simulacija vise bacanja... Trebalo bi 21 ali predugo traje dok provjeravamo ispis
   {
     move();
