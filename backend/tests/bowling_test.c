@@ -59,7 +59,7 @@ TEST(BowlingTest, TestSpare)
 {
 	throwTheBall(2,5);
 	throwTheBall(MAX_NUM_OF_THROWS-2,1);
-
+	TEST_ASSERT_EQUAL(19,score());
 
 }
 
