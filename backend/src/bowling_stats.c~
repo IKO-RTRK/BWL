@@ -1,8 +1,8 @@
 #include "bowling_stats.h"
 #include <stdio.h>
 
-int frames[10];
-int points[21];
+int frames[NUM_OF_FRAMES];
+int points[MAX_NUM_OF_THROWS]; 
 static int totalScore;
 static int numOfThrow;
 
@@ -12,23 +12,31 @@ int score()
 	int j = 0;
 	for (i = 0; i < NUM_OF_FRAMES; i++)
 	{
-		if (points[j] == 10)                    // strike
-		{
-			if (points[j+2] == 10)
-			totalScore += (10 + points[j+2] + points[j+4]);
+		if (points[j] == ALL_PINS_DOWN)            
+		{	
+			if(j<LAST_FRAME_FIRST_THROW)
+			{
+				if (points[j+2] == ALL_PINS_DOWN)          //double
+				totalScore += (ALL_PINS_DOWN + points[j+2] + points[j+4]);
+							
+				else				//strike
+				totalScore += (ALL_PINS_DOWN + points[j+2] + points[j+3]);
+			}
 			else
-			totalScore += (10 + points[j+2] + points[j+3]);
+				totalScore += (ALL_PINS_DOWN + points[j+1]);// last frame different rules
+
 		}
-		else if (points[j] + points[j+1] == 10)  // spare
-		totalScore += (10 + points[j+2]);
+		else if ((points[j] + points[j+1] == ALL_PINS_DOWN) && (j<LAST_FRAME_FIRST_THROW))  // spare
+			totalScore += (ALL_PINS_DOWN + points[j+2]);
 		else
 		totalScore += (points[j] + points[j+1]);
 
 		j += 2;
+
+		if(j==(MAX_NUM_OF_THROWS-1))
+			totalScore += points[j];   // zadnji okvir ima 3 bacanja
 	}
 
-	if( points[20] == 10 || ( points[20] + points[19] == 10));
-	else	totalScore += points[MAX_NUM_OF_THROWS-1];   // zadnji okvir ima 3 bacanja
 	return totalScore;
 }
 
@@ -63,6 +71,7 @@ void initialise()
   numOfThrow = 0;
 
 }
+
 void testMemory(int* pointsCheck)
 {
 	int i=0;
