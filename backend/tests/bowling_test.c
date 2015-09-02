@@ -70,7 +70,7 @@ TEST(BowlingTest, TestStrike)
 
 	knockDown(10);
 	throwTheBall(MAX_NUM_OF_THROWS-2,1);
-	TEST_ASSERT_EQUAL(31, score());
+	TEST_ASSERT_EQUAL(30, score());
 }
 
 // Peti test - strike u prvom i drugom bacanju, ostala bacanja po 1 cunj 
