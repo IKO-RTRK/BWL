@@ -1,6 +1,6 @@
 #include "bowling_stats.h"
 #include <stdio.h>
-
+#include <stdbool.h>
 
 
 int16_t frames[NUM_OF_FRAMES];
@@ -8,6 +8,10 @@ int8_t points[MAX_NUM_OF_THROWS];
 static uint16_t totalScore; //max score je 300 pa koristimo uint16_t
 static uint8_t numOfThrow;
 
+static bool isSpare(uint8_t frameIndex) // helper funkcija za provjeru spare a
+{
+	return points[frameIndex] + points[frameIndex+1] == ALL_PINS_DOWN;
+}
 
 int8_t* get_points_array()
 {
@@ -43,7 +47,7 @@ int16_t score()
 				frames[i] = totalScore += (ALL_PINS_DOWN + points[j+1]+ points[j+2]);// last frame different rules
 
 		}
-		else if ((points[j] + points[j+1] == ALL_PINS_DOWN) && (j<=LAST_FRAME_FIRST_THROW))  // spare
+		else if ((isSpare(j)) && (j <= LAST_FRAME_FIRST_THROW))  // spare
 			frames[i] = totalScore += (ALL_PINS_DOWN + points[j+2]);
 		else
 		frames[i] = totalScore += (points[j] + points[j+1]);
