@@ -51,7 +51,7 @@ TEST(BowlingTest, TestAllZeroes)
 TEST(BowlingTest, TestAllOnes)
 {
 	throwTheBall(MAX_NUM_OF_THROWS,1);
-	TEST_ASSERT_EQUAL(21, score());
+	TEST_ASSERT_EQUAL(20, score());
 }
 
 // Treci test - spare u drugom bacanju (5+5), ostala bacanja po 1 cunj 
