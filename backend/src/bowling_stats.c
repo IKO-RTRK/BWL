@@ -73,12 +73,12 @@ void initialise()
 
   for(i = 0; i < NUM_OF_FRAMES; i++)
   {
-      frames[i] = 0;
+      frames[i] = NOT_EVALUATED;
   }
 
   for(j = 0; j < MAX_NUM_OF_THROWS; j++)
   {
-      points[j] = 0;
+      points[j] = NOT_THROWN;
   }
 
   totalScore = 0;
