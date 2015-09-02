@@ -3,13 +3,13 @@
 
 
 
-int frames[NUM_OF_FRAMES];
-int points[MAX_NUM_OF_THROWS]; 
+int16_t frames[NUM_OF_FRAMES];
+int8_t points[MAX_NUM_OF_THROWS]; 
 static uint16_t totalScore; //max score je 300 pa koristimo uint16_t
 static uint8_t numOfThrow;
 
 
-int* get_points_array()
+int8_t* get_points_array()
 {
 	/* points je organizovan na nacin:
 	points[i*2] - vraca bodove sa prvog bacanja u i-tom frejmu
@@ -19,11 +19,11 @@ int* get_points_array()
 	*/
 	return points;
 }
-int* get_frame_array()
+int16_t* get_frame_array()
 {
 	return frames;
 }
-int score()
+int16_t score()
 {
 	uint8_t i; 
 	uint8_t j = 0;
