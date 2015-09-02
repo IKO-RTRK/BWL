@@ -222,7 +222,7 @@ void populateMatrixTable(int* score,int* total)
   int l = 0;	//upisa ucinka za frame, pomjeranje kroz polja na kojima se upisuje rezultat
   
   int tmpScore[21] = {1,2,4,6,8,6}; 	// nizovi koristeni za testiranje
-  int tmpTotal[10] = {6,15,21,35};	// umjesto njih ce se koristi ti rezultati iz statistike
+  int tmpTotal[10] = {6,15,21,35};	// umjesto njih ce se koristiti rezultati iz statistike
   score = tmpScore;
   total = tmpTotal;
   
