@@ -78,7 +78,7 @@ TEST(BowlingTest, TwoStrikesInRow)
 {
 	throwTheBall(2,10);
 	throwTheBall(MAX_NUM_OF_THROWS-4,1);
-	TEST_ASSERT_EQUAL(50, score());
+	TEST_ASSERT_EQUAL(49, score());
 }
 // Sesti test -strike u svakom bacanju(svaki put po 10 poena)
 TEST(BowlingTest, TenStrikesInRow)
