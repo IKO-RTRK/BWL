@@ -14,6 +14,7 @@ int score()
 	int j = 0;
 	for (i = 0; i < NUM_OF_FRAMES; i++)
 	{
+
 		if (points[j] == 10)            
 		{	
 			if(j<LAST_FRAME_FIRST_THROW)
@@ -38,6 +39,8 @@ int score()
 		if(j==(MAX_NUM_OF_THROWS-1))
 			totalScore += points[j];   // zadnji okvir ima 3 bacanja
 	}
+
+	return totalScore;
 
 }
 
