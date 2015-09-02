@@ -1,5 +1,6 @@
 #include "../unity/unity_fixture.h"
 #include "../src/bowling_stats.h"
+<<<<<<< HEAD
 
 static void throwTheBall(int num,int pins)
 {
@@ -7,6 +8,11 @@ static void throwTheBall(int num,int pins)
 	for(i=0;i<num;i++)
 		knockDown(pins);
 }
+=======
+/*Pojedini testovi su uradjeni u slucaju da imamo 21 bacanje,
+sto se ne desava ako u zadnjem frame ne napravimo strike ili spare.
+Treba promjeniti ocekivane rezultate i refaktorisati kod.*/
+>>>>>>> 8f446b5fa2311991b75fe20ee61297b554a55392
 
 TEST_GROUP(BowlingTest);
 
