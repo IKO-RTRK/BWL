@@ -25,18 +25,16 @@ int score()
 				totalScore += (ALL_PINS_DOWN + points[j+2] + points[j+3]);
 			}
 			else
-				totalScore += (ALL_PINS_DOWN + points[j+1]);// last frame different rules
+				totalScore += (ALL_PINS_DOWN + points[j+1]+ points[j+2]);// last frame different rules
 
 		}
-		else if ((points[j] + points[j+1] == ALL_PINS_DOWN) && (j<LAST_FRAME_FIRST_THROW))  // spare
+		else if ((points[j] + points[j+1] == ALL_PINS_DOWN) && (j<=LAST_FRAME_FIRST_THROW))  // spare
 			totalScore += (ALL_PINS_DOWN + points[j+2]);
 		else
 		totalScore += (points[j] + points[j+1]);
 
 		j += 2;
 
-		//if(j == (MAX_NUM_OF_THROWS-1))
-		//	totalScore += points[j];   // zadnji okvir ima 3 bacanja
 	}
 
 	return totalScore;

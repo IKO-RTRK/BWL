@@ -1,18 +1,14 @@
 #include "../unity/unity_fixture.h"
 #include "../src/bowling_stats.h"
 
+
 static void throwTheBall(int num,int pins)
 {
 	int i;
-	for(i = 0;i < num; i++)
-	{
+	for(i=0;i<num;i++)
 		knockDown(pins);
-	}
 }
 
-/*Pojedini testovi su uradjeni u slucaju da imamo 21 bacanje,
-sto se ne desava ako u zadnjem frame ne napravimo strike ili spare.
-Treba promjeniti ocekivane rezultate i refaktorisati kod.*/
 
 TEST_GROUP(BowlingTest);
 
@@ -59,7 +55,6 @@ TEST(BowlingTest, TestSpare)
 {
 	throwTheBall(2,5);
 	throwTheBall(MAX_NUM_OF_THROWS-2,1);
-	TEST_ASSERT_EQUAL(29,score());
 
 }
 
@@ -67,9 +62,8 @@ TEST(BowlingTest, TestSpare)
 TEST(BowlingTest, TestStrike)
 {
 
-
 	knockDown(10);
-	throwTheBall(MAX_NUM_OF_THROWS-2,1);
+	throwTheBall(MAX_NUM_OF_THROWS-3,1);
 	TEST_ASSERT_EQUAL(30, score());
 }
 
@@ -77,7 +71,7 @@ TEST(BowlingTest, TestStrike)
 TEST(BowlingTest, TwoStrikesInRow)
 {
 	throwTheBall(2,10);
-	throwTheBall(MAX_NUM_OF_THROWS-4,1);
+	throwTheBall(MAX_NUM_OF_THROWS-5,1);
 	TEST_ASSERT_EQUAL(49, score());
 }
 // Sesti test -strike u svakom bacanju(svaki put po 10 poena)
@@ -90,7 +84,7 @@ TEST(BowlingTest, TenStrikesInRow)
 //Sedmi test - poslednje bacanje strike 
 TEST(BowlingTest, LastStrike)
 {
-	throwTheBall(MAX_NUM_OF_THROWS - 3, 0);
+	throwTheBall(MAX_NUM_OF_THROWS-3,0);	
 	knockDown(1);
 	knockDown(9);
 	knockDown(10);
@@ -102,12 +96,14 @@ TEST(BowlingTest, LastStrike)
 
 TEST(BowlingTest, SparesAndStrikes)
 {
+
 	throwTheBall(2,10);
 	throwTheBall(2,5);
 	knockDown(6);
 	knockDown(4);
-	throwTheBall(MAX_NUM_OF_THROWS-8,1);
-	TEST_ASSERT_EQUAL(85,score());
+	throwTheBall(MAX_NUM_OF_THROWS-9,1);
+	TEST_ASSERT_EQUAL(84,score());
+
 }
 // Deveti test - bez strikeova i spareova
 TEST(BowlingTest, NoStrikesNoSpares)
@@ -119,8 +115,8 @@ TEST(BowlingTest, NoStrikesNoSpares)
 	knockDown(4);
 	knockDown(5);
 	knockDown(1);
-	throwTheBall(MAX_NUM_OF_THROWS-6,2);
-	TEST_ASSERT_EQUAL(52,score());
+	throwTheBall(MAX_NUM_OF_THROWS-7,2);
+	TEST_ASSERT_EQUAL(50,score());
 }
 //Deseti test - prvo bacanje u svakom frejmu promasaj
 TEST(BowlingTest, FirstAttemptAlwaysMiss)
@@ -129,20 +125,19 @@ TEST(BowlingTest, FirstAttemptAlwaysMiss)
 	int i = 0;
 	do
 	{
-	if(i % 2 == 0)
+	if(i%2==0)
 	knockDown(0);
 	else knockDown(1);
 	i++;
-	}while(i < MAX_NUM_OF_THROWS-1);
+	}while(i<MAX_NUM_OF_THROWS-1);
 	knockDown(1);
 	
-	TEST_ASSERT_EQUAL(11,score());
+	TEST_ASSERT_EQUAL(10,score());
 }
 //Jedanaesti test - pokusaj nedozvoljenog pristupa memorijskim lokacijama
 TEST(BowlingTest, UnallowedMemoryAccess)
 {
 	int pointsCheck[24]={};
-
 	throwTheBall(MAX_NUM_OF_THROWS-3,0);
 	throwTheBall(3,10);
 	testMemory(pointsCheck);
