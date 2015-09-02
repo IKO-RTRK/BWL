@@ -35,8 +35,8 @@ int score()
 
 		j += 2;
 
-		if(j == (MAX_NUM_OF_THROWS-1))
-			totalScore += points[j];   // zadnji okvir ima 3 bacanja
+		//if(j == (MAX_NUM_OF_THROWS-1))
+		//	totalScore += points[j];   // zadnji okvir ima 3 bacanja
 	}
 
 	return totalScore;
