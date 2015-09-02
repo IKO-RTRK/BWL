@@ -7,7 +7,7 @@
 
 void initialise();
 int score();
-void knockDown(int x);
+void knockDown(uint8_t x);
 void testMemory(int* pointsCheck);
 
 #endif

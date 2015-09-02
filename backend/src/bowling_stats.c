@@ -1,5 +1,6 @@
 #include "bowling_stats.h"
 #include <stdio.h>
+#include <stdint.h>
 
 
 int frames[NUM_OF_FRAMES];
@@ -15,7 +16,7 @@ int score()
 	{
 		if (points[j] == ALL_PINS_DOWN)            
 		{	
-			if(j<LAST_FRAME_FIRST_THROW)
+			if(j < LAST_FRAME_FIRST_THROW)
 			{
 				if (points[j+2] == ALL_PINS_DOWN)          //double
 				totalScore += (ALL_PINS_DOWN + points[j+2] + points[j+4]);
@@ -34,7 +35,7 @@ int score()
 
 		j += 2;
 
-		if(j==(MAX_NUM_OF_THROWS-1))
+		if(j == (MAX_NUM_OF_THROWS-1))
 			totalScore += points[j];   // zadnji okvir ima 3 bacanja
 	}
 
@@ -47,7 +48,7 @@ void knockDown(uint8_t x)
 	initialise();
 	
 	points[numOfThrow] = x;
-	if ((x == ALL_PINS_DOWN) && (numOfThrow<LAST_FRAME_FIRST_THROW)) // last frame <=> different rules
+	if ((x == ALL_PINS_DOWN) && (numOfThrow < LAST_FRAME_FIRST_THROW)) // last frame <=> different rules
 	{
 		points[++numOfThrow] = 0;  // ako je strike ima samo jedno bacanje u okviru => vazi za prvih devet frameova	
 	}
