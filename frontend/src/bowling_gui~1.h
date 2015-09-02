@@ -20,6 +20,7 @@ void print(void);
 void move(void);
 void pinsDown(int);
 int knockDown(int);
+void populateMatrixTable(int*, int*);
 
 // Neki random sa kojim sam radio... Slobodno se moze kasnije izbaciti
 unsigned int random7(void);

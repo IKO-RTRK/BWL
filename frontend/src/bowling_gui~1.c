@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 # include <unistd.h>
-#include "bowling_gui.h"
+#include "bowling_gui~1.h"
 
 static int lastPosition;// Potrebna mi je informacija o poslednjoj poziciji
 
@@ -212,7 +212,43 @@ void pinsDown(int k)
       usleep(700000);
 }
 
-
+//funkcija koje postavlja rezultate rusenja cunjeva
+//i ukupan broj bodova po frejmovima
+void populateMatrixTable(int* score,int* total)
+{
+  int i = 0;	//trenutna kolona u matrici
+  int j = 0;	//citanje iz score niza
+  int k = 0;	//citanje iz total niza
+  int l = 0;	//upisa ucinka za frame, pomjeranje kroz polja na kojima se upisuje rezultat
+  
+  int tmpScore[21] = {1,2,4,6,8,6}; 	// nizovi koristeni za testiranje
+  int tmpTotal[10] = {6,15,21,35};	// umjesto njih ce se koristi ti rezultati iz statistike
+  score = tmpScore;
+  total = tmpTotal;
+  
+  for (i = 1; i < COLUMN_TABLE; i+= 2)
+  {
+    if (*(score+j) != 0)
+      matrixTable[1][i] = *(score+j++) + 0x30;		//postavljen rezultat bacanja, matrica je char, a rezultat int
+    if ((i+1)%4 == 0)
+    {
+      if (*(total+k) != 0)
+      {
+	int tmpResult = *(total+k++);
+	int tmpMod = 0;
+	l = 0;
+	while (tmpResult)
+	{
+	  tmpMod = tmpResult % 10;
+	  tmpResult /= 10;
+	  matrixTable[2][i-l] = tmpMod + 0x30;		//upisujemo broj po ciframa
+	  l++;
+	}
+      }						 //postavljen ukupan ucinak za frame
+    }
+  }
+  return;
+}
 
 //Ispis matrice
 void print(void)
@@ -223,27 +259,29 @@ void print(void)
     
     for (curr_row = 0; curr_row < 4; curr_row++) 
     {
-      
+        //ispis 4 reda trake
 	for (curr_column = 0; curr_column < COLUMN; curr_column++)
 	{
-	    printf("%c", matrixLane[curr_row][curr_column]);
+	    printf("%c", matrixLane[curr_row][curr_column]);		
 	}
 	
+	//ispis 4 reda tabele
 	for (curr_column = COLUMN; curr_column < COLUMN + COLUMN_TABLE; curr_column++, j++)
 	{
-	  printf("%c", matrixTable[curr_row][j]);
+	  printf("%c", matrixTable[curr_row][j]);		
 	}
 	j = 0;
 	printf("\n");
 	
     }
     
+    //ispis ostatka trake
     for (curr_row = ROW_TABLE ; curr_row < ROW; curr_row++) 
     {
       
-	for (curr_column = 0; curr_column < COLUMN; curr_column++)
+	for (curr_column = 0; curr_column < COLUMN; curr_column++)	
 	{
-	    printf("%c", matrixLane[curr_row][curr_column]);
+	    printf("%c", matrixLane[curr_row][curr_column]);		
 	}
 	
 	printf("\n");
@@ -281,6 +319,11 @@ int main(void)
   int KolikoZaOboriti;
   KolikoZaOboriti=knockDown(lastPosition);    
   pinsDown(KolikoZaOboriti);
+  int tmpPopulate1,tmpPolulate2;
+  populateMatrixTable(&tmpPopulate1,&tmpPolulate2);
+  system("clear");
+  
+  print();
 
   return 0;
 }

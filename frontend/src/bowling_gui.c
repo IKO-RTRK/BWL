@@ -103,11 +103,7 @@ void initialisationTable(void)
 	tmp+=4;
     }
     
-    //primjer kako ce izgledati rezultati
     
-    matrix[1][23] = '_';
-    matrix[1][25] = '1';
-    matrix[2][25] = '1';
 }
     
 
