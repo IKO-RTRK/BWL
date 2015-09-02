@@ -131,6 +131,12 @@ void move(void)
 	offset = 0;					//ne koristi se vise radnom jer je njeno kretanje fiksno 
       else
       {
+	//foo1(a,b); //napisao sam je samo da bih mogao dobiti bolje vrijednosti za random
+		    //ako se ko sjeti neceg pametnijeg neka optimizuje
+		  //bez neceg ovakvog random vraca uvijek istu vrijednost
+		// ni u kojem slucaju ovo ovako ostaviti
+	a += 2.435;
+	b += 4.353;
 	offset = (random() % 3) - 1;
       }
       
@@ -150,6 +156,15 @@ void move(void)
     }
 }
 
+
+// Ovo je neki moj random
+unsigned int random7()
+{
+	unsigned int x;
+	char* a;
+	x=(unsigned int)a;
+	return x;
+}
 // Funkcija koja u odnosu na poziciju vraca slucajan broj cunjeva koje treba srusiti
 // Mislim da bi ovu funkciju trebali koristiti i ovi iz backenda prilikom pozivanja svoje f_je srusi
 int knockDown(int position)
@@ -166,7 +181,7 @@ int knockDown(int position)
 	else if(position==8)
 		maxMod=10;
 		
-	x=(random()%maxMod)+1;
+	x=(random7()%maxMod)+1;
 	return x;
 }
 

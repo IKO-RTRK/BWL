@@ -1,15 +1,11 @@
+#include <math.h>
+
 int random(void)
 {
-  unsigned int m = 1024;
-  unsigned int a = 1101;
-  unsigned int c = 1023;
-  unsigned int z;
-  unsigned int result = (a*z + c) % m;
-
-  return result;
+     static unsigned int zi,zii;
+     
+     zi=(1103515245* zii + 12345)% (int)pow(2,32) ;
+     zii=zi;
+             return zi ;
 }
 
-void foo1(double a, double b)
-{
-  
-}
