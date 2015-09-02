@@ -21,7 +21,7 @@ void prikazRezultata(int serija, int bacanje, int sruseno, int ukupanRez)
 // ovdje je ona logika kad se ispisuje X,- i /
 if(sruseno==10) b[serija][bacanje]='X';
 else if(sruseno==0) b[serija][bacanje]='-';
-else if(bacanje==2 && b[serija][bacanje-1]+sruseno==0x40) b[serija][bacanje]='/';
+else if(bacanje==2 && b[serija][bacanje-1]+sruseno==0x3A) b[serija][bacanje]='/';
 else b[serija][bacanje]=0x30+sruseno;
 
 ukupno[serija]=ukupanRez;

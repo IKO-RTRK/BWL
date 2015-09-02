@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 # include <unistd.h>
-#include "bowling_gui.h"
+#include "bowling_gui~1.h"
 
 static int lastPosition;// Potrebna mi je informacija o poslednjoj poziciji
 

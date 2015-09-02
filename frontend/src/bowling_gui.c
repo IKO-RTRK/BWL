@@ -8,9 +8,7 @@ static int lastPosition;// Potrebna mi je informacija o poslednjoj poziciji
 //Ovo podrzava samo gcc kompajler
 char matrix[ROW][COLUMN] = {[0 ... ROW-1][0 ... COLUMN-1] = ' '};
 char bowling_pins[NUM_OF_PINS] = {[0 ... NUM_OF_PINS-1] = '!'};
-
 char bowling_ball = 'o';
-
 
 void initialisationLane(void)
 {
@@ -19,23 +17,18 @@ void initialisationLane(void)
     int j;
     //unos staze
     for (curr_row = 4; curr_row < ROW; curr_row++)
-    {
-	/*matrix[curr_row][2] = '|';
-	matrix[curr_row][4] = '|';
-	matrix[curr_row][12] = '|';
-	matrix[curr_row][14] = '|';*/
-
+      {
 	for(j=5;j<12;j++)
-	{
+	  {
 		matrix[curr_row][j] = ' ';
-	}
+	  }
 	matrix[curr_row][3] = ' ';
 	matrix[curr_row][13] = ' ';
 	matrix[curr_row][2] = '|';
 	matrix[curr_row][4] = '|';
 	matrix[curr_row][12] = '|';
 	matrix[curr_row][14] = '|';
-    }
+      }
     
     matrix[BALL_POS_ROW][BALL_POS_COL] = bowling_ball;  //pocetna pozicija na kojoj ce se nalaziti kugla
     return;
@@ -77,7 +70,6 @@ void initialisationTable(void)
 {   
     int curr_row;
     int curr_column;
-    
     int tmp1 = START_LANE_ROW;				//prvi red od koga pocinju da se upisuju -
     for (curr_row = 0; curr_row < 10; curr_row++)
     {
@@ -89,8 +81,7 @@ void initialisationTable(void)
 
 	tmp1+=4;
     }
-    
-    
+        
     int tmp = START_LANE_COLON;				//prva kolona od koje pocinju da se upisuju |
 
     for (curr_row = 0; curr_row < 11; curr_row++)
@@ -127,7 +118,7 @@ void move(void)
 	offset = -1;
       else if(curr_pos_col==12)		// isto to samo u drugu stranu
 	offset = 1;
-      else if (curr_pos_col < 4  || curr_pos_col > 12) 	//ako je kugla dosla do kraja staze, da se nastavi kretati pravo kroz kanal
+      else if (curr_pos_col < 4  || curr_pos_col > 12) 	//ako je kugla izasla sa staze, da se nastavi kretati pravo kroz kanal
 	offset = 0;					//ne koristi se vise radnom jer je njeno kretanje fiksno 
       else
       {
@@ -142,7 +133,7 @@ void move(void)
 	
       matrix[prev_pos_row][prev_pos_col] = '.';		//na prethodnoj poziciji na kojoj se nalazila kugla upisi .
       matrix[curr_pos_row][curr_pos_col] = bowling_ball;//na trenutnu poziciju na kojoj se nalazi kugla ucrtaj kuglu 
-      lastPosition=curr_pos_col;//ovo sam dodao jer mi je bila potrebna zadnja pozicija
+      lastPosition=curr_pos_col;   			//ovo sam dodao jer mi je bila potrebna zadnja pozicija
       system("clear");
       print();
       usleep(700000);
@@ -152,9 +143,10 @@ void move(void)
 
 // Funkcija koja u odnosu na poziciju vraca slucajan broj cunjeva koje treba srusiti
 // Mislim da bi ovu funkciju trebali koristiti i ovi iz backenda prilikom pozivanja svoje f_je srusi
-int knockDownPins(int position, int remain)
-{
-	int maxMod,x;
+int knockDownPins(int position, int remain) 	// remain se koristi da zapamtim broj nesrusenih
+{  // da se ne desi u slucaju da je u prvom bacanju pogodjen centar i sruseno 7 cunjeva i da se u narednom bacanju pogodi centar ponovo
+   // i tad srusi npr 5 a ostala su samo 3... min ogranicava maxMod 
+	int maxMod,x;				
 	if(position<5 || position>11)
 		return 0;
 	else if(position==5 || position==11)
@@ -174,26 +166,25 @@ int knockDownPins(int position, int remain)
 //  bira poziciju na kojoj ce srusiti cunj
 void pinsDown(int k)
 {
-	 if(k!=0)
+	if(k!=0)
 	 {
-	 int pale[k], i, j;
-	 for(i=0;i<=k;i++)
+	   int pale[k], i, j;
+	   for(i=0;i<=k;i++)
 		{
-		pale[i]=random()%11;
-		for(j=0;j<i;j++)
-			{
+		  pale[i]=random()%10+1;
+		  for(j=0;j<i;j++)		// Da ne izgleda da su npr srusena samo 2 cunja a trebalo je 5
+						// tj da se ne postavlja 'x' na isto mjesto
+		    {
 			if(pale[i]==pale[j]) 
 			i--;
-			}
+		    }
 	 	}
-	 for(i=0;i<=k;i++)
+	   for(i=0;i<=k;i++)
+	     {
+
+	       switch(pale[i])	// Ovi if-ovi dodani u svakom case-u da ne bi u drugom bacanju ponovo stavljalo 'x'
+				// tamo gdje je on vec postavljen... Treba biti zapamcen polozaj nesrusenih cunjeva iz prvog bacanja 
 	 	{
-
-	 	 switch(pale[i])	// Ovi if-ovi dodani u svakom case-u da ne bi u drugom bacanju ponovo stavljalo 'x'
-					// tamo gdje je on vec postavljen
-
-	 	 {
-
 	 	 case 1:
 			if(matrix[3][8]=='x')
 			  i--;
@@ -245,13 +236,13 @@ void pinsDown(int k)
 			else
 	 	 	  matrix[0][11]='x'; break;
 
-	 	 }
 	 	}
+	     }
 	 }
 	 matrix[4][lastPosition]='.';
-	  system("clear");
-      print();
-      usleep(700000);
+	 system("clear");
+         print();
+         usleep(700000);
 }
 
 
@@ -278,33 +269,28 @@ int main(void)
   initialisationLane();
   initialisationPins();
   initialisationTable();
-  //system("clear");
- // print();
-  //usleep(700000);
-
-int KolikoZaOboriti[21];  
+  
+  int KolikoZaOboriti[21];  // Zbog 21-og bacanja
   int i;
-for(i=0;i<4;i++)// Simulacija vise bacanja
-{
-  move();
-  if(i%2==1)
-    KolikoZaOboriti[i]=knockDownPins(lastPosition, 10-KolikoZaOboriti[i-1]);    
-  else
-    KolikoZaOboriti[i]=knockDownPins(lastPosition, 10);
-  pinsDown(KolikoZaOboriti[i]);
-  sleep(2);
-  initialisationLane();// Ova initialisation1 mi je za donji dio staze ispod cunjeva
-  if(i<9&&i>0&&(i%2==1||KolikoZaOboriti[i]==10)) 
+  for(i=0;i<10;i++)	// Simulacija vise bacanja... Trebalo bi 21 ali predugo traje dok provjeravamo ispis
   {
-	 //initialisationLane();
-  	 initialisationPins();
- 	 initialisationTable();
-  };
-  //system("clear");
-// A ova da se nakon svaka dva bacanja sve "refresuje"
-// Ovako sam uradio jer treba da nakon prvog bacanja u seriji ostanu neporuseni cunjevi... Zbog toga sam sve ovo pisao
+    move();
 
-}
+    if(i%2==1)
+      KolikoZaOboriti[i]=knockDownPins(lastPosition, 10-KolikoZaOboriti[i-1]);    
+    else
+      KolikoZaOboriti[i]=knockDownPins(lastPosition, 10);
 
-  return 0;
+    pinsDown(KolikoZaOboriti[i]);
+    sleep(2);
+    initialisationLane();		// Ova initialisationLane refresh-uje donji dio staze ispod cunjeva
+    initialisationTable();		// i tabela se treba refresh-ovati nakon svakog bacanja
+
+    if(i<9&&i>0&&(i%2==1||KolikoZaOboriti[i]==10)) 
+      initialisationPins();	// Cunjevi se nakon svaka dva bacanja trebaju refresh-ovati
+// Ovako sam uradio jer treba da nakon prvog bacanja u seriji ostanu neporuseni cunjevi
+
+    }
+
+    return 0;
 }
