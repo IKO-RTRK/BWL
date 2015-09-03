@@ -4,7 +4,7 @@
 static int score[21];
 static int currentPosition;
 
-int* skor()
+int* throws()
 {
   return score;
 }
@@ -12,6 +12,10 @@ int* skor()
 
 int srusi(int x)
 {
+  if (x < 0 || x > 10 ) 
+  {
+    x = 0;
+  }
   score[currentPosition] = x;
   currentPosition++;
 }
