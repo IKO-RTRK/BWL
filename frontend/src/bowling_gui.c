@@ -306,7 +306,7 @@ unsigned int random(void)
              return zi ;
 }
 
-int main(void)
+/*int main(void)
 {
   initialisationLane();
   initialisationPins();
@@ -337,4 +337,4 @@ int main(void)
     }
 
     return 0;
-}
+} */
