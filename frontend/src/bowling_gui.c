@@ -130,7 +130,7 @@ void move(void)
       matrix[prev_pos_row][prev_pos_col] = '.';		//na prethodnoj poziciji na kojoj se nalazila kugla upisi .
       matrix[curr_pos_row][curr_pos_col] = bowling_ball;//na trenutnu poziciju na kojoj se nalazi kugla ucrtaj kuglu 
       lastPosition=curr_pos_col;   			//ovo sam dodao jer mi je bila potrebna zadnja pozicija
-      system("clear");
+      system(CLEAR);
       print();
       usleep(700000);
       
@@ -287,7 +287,7 @@ void pinsDown(int k,int fallen[],int position)	//fallen dodano da bi se znalo ko
 	 }
 	 
 	/* matrix[4][lastPosition]='.';
-	 system("clear");			Zakomentarisano zbog testova, nakon testiranja otkomentarisati
+	 system(CLEAR);			Zakomentarisano zbog testova, nakon testiranja otkomentarisati
          print();
          usleep(700000);     */
 }

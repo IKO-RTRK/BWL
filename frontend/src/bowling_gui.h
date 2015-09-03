@@ -11,6 +11,11 @@
 #define START_PINS 5
 #define min(a,b) (((a)<=(b))?(a):(b))
 
+#ifdef _WIN32
+#define CLEAR "cls"
+#else
+#define CLEAR "clear"
+#endif
 
 void initialisationLane(void);
 void initialisationPins(void);
