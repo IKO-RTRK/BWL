@@ -16,7 +16,7 @@ TEST_GROUP_RUNNER(bowling_stats)
 	RUN_TEST_CASE(bowling_stats, SetScoreForOneThrow);
 	RUN_TEST_CASE(bowling_stats, SetScoresForOneThrowOnBoundaries);
 	RUN_TEST_CASE(bowling_stats, SetNewGame);
-	//RUN_TEST_CASE(bowling_stats, SetScoresForMultipleThrows_WithoutRules);
+	RUN_TEST_CASE(bowling_stats, SetScoresForMultipleThrows_WithoutRules);
 }
 
 //Prvi test
@@ -54,16 +54,15 @@ TEST(bowling_stats, SetNewGame)
 	printf("\n\n***TEST 3 PROSAO\n");
 }
 //Cetvrti test
-// TEST(bowling_stats, SetScoresForMultipleThrows_WithoutRules)
-// {
-// 	srusi(511);
-// 	TEST_ASSERT_MESSAGE( throws()[1] == 0 , "\n***Treci test pao\n");
-// 	int i;
-// 	for (i = 0; i < 50 ; i++)
-// 	{
-// 	  srusi(i);
-// 	  TEST_ASSERT_MESSAGE( throws()[i % 20] == i , "\n***Treci test pao\n");
-// 	}
-// 	
-// 	printf("\n\n***TEST 2 PROSAO\n");
-// }
+TEST(bowling_stats, SetScoresForMultipleThrows_WithoutRules)
+{
+	newGame();
+	int i;
+	for (i = 0; i < 50 ; i++)
+	{
+	  srusi(i % 11);
+	  TEST_ASSERT_MESSAGE( throws()[i % 20] == i % 11 , "***Cetvrti test pao");
+	}
+	
+	printf("\n\n***TEST 4 PROSAO \n");
+}

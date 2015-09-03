@@ -12,6 +12,10 @@ int* throws(void)
 
 int srusi(int x)
 {
+  if (currentPosition > 19)
+  {
+    newGame();
+  }
   if (x < 0 || x > 10 ) 
   {
     x = 0;
