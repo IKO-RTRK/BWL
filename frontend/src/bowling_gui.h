@@ -20,7 +20,7 @@ void move(void);
 void pinsDown(int);
 int knockDownPins(int, int);
 void populateMatrixTable(int*, int*);
-unsigned int random(void);
+//unsigned int random(void);
 
 #endif
 

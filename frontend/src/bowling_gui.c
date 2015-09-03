@@ -1,6 +1,6 @@
 #include <stdio.h>
-//#include <stdlib.h>
-# include <unistd.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include  <stdint.h>
 #include "bowling_gui.h"
 
@@ -166,7 +166,7 @@ void pinsDown(int k)
 	if(k!=0)
 	 {
 	   uint8_t pale[k], i, j;
-	   for(i=0;i<=k;i++)
+	   for(i=0;i<k;i++)
 		{
 		  pale[i]=random()%10+1;
 		  for(j=0;j<i;j++)		// Da ne izgleda da su npr srusena samo 2 cunja a trebalo je 5
@@ -176,7 +176,7 @@ void pinsDown(int k)
 			i--;
 		    }
 	 	}
-	   for(i=0;i<=k;i++)
+	   for(i=0;i<k;i++)
 	     {
 
 	       switch(pale[i])	// Ovi if-ovi dodani u svakom case-u da ne bi u drugom bacanju ponovo stavljalo 'x'
@@ -244,22 +244,37 @@ void pinsDown(int k)
 
 //funkcija koje postavlja rezultate rusenja cunjeva
 //i ukupan broj bodova po frejmovima
+
 void populateMatrixTable(int* score,int* total)
 {
-  uint8_t i = 0;	//trenutna kolona u matrici
+  static uint8_t i = START_LANE_ROW;	//trenutna kolona u matrici
   uint8_t j = 0;	//citanje iz score niza
   uint8_t k = 0;	//citanje iz total niza
   uint8_t l = 0;	//upisa ucinka za frame, pomjeranje kroz polja na kojima se upisuje rezultat
   
   int tmpScore[21] = {1,2,4,6,8,6}; 	// nizovi koristeni za testiranje
   int tmpTotal[10] = {6,15,21,35};	// umjesto njih ce se koristiti rezultati iz statistike
-  score = tmpScore;
+  //score = tmpScore;
   total = tmpTotal;
   
-  for (i = START_LANE_ROW; i < COLUMN; i+= 2)
+  
+  //for (i = START_LANE_ROW; i < COLUMN; i+= 2)
+  if(i < COLUMN)
   {
     if (*(score+j) != 0)
-      matrix[1][i] = *(score+j++) + 0x30;		//postavljen rezultat bacanja, matrica je char, a rezultat int
+    {
+       if((j%2==0)&&(*(score+j)==10))
+	  matrix[1][i] ='X';
+       else if((j%2==1)&&((*(score+j))+(*(score+j-1))==10))
+	  matrix[1][i] ='/';
+       else
+	  matrix[1][i] = 0x30 +(*(score+j));		//postavljen rezultat bacanja, matrica je char, a rezultat int
+	j++;
+    }
+    else
+       matrix[1][i] ='-';
+    i+=2;
+
     if ((i+1)%4 == 2)			//uslov je ovakav jer tabela pocinje da se ispisuje od pozicije START_LANE_ROW, 
     {					//na poziciji odredjenoj uslovom se nalazi posljednja cifra rezultata za frame
       if (*(total+k) != 0)
@@ -278,8 +293,8 @@ void populateMatrixTable(int* score,int* total)
     }
   }
   return;
-}
 
+}
 //Ispis matrice
 void print(void)
 {
@@ -296,25 +311,26 @@ void print(void)
     }
     return;
 }
-
+/*
 unsigned int random(void)
 {
-     static unsigned int zi,zii;
-     
-     zi=(1103515245* zii + 12345) % 2147483648 ;
+     static unsigned int zi;
+     unsigned int zii;
+     zi=(1103515245* zi + 12345) % 2147483648 ;
      zii=zi;
-             return zi ;
-}
+     return zii;
+}*/
 
-/*int main(void)
+int main(void)
 {
   initialisationLane();
   initialisationPins();
   initialisationTable();
   
-  uint8_t KolikoZaOboriti[21];  // Zbog 21-og bacanja
+  //uint8_t 
+  int KolikoZaOboriti[21];  // Zbog 21-og bacanja
   uint8_t i;
-  for(i=0;i<10;i++)	// Simulacija vise bacanja... Trebalo bi 21 ali predugo traje dok provjeravamo ispis
+  for(i=0;i<4;i++)	// Simulacija vise bacanja... Trebalo bi 21 ali predugo traje dok provjeravamo ispis
   {
     move();
 
@@ -326,15 +342,17 @@ unsigned int random(void)
     pinsDown(KolikoZaOboriti[i]);
     sleep(2);
     int tmpPopulation1,tmpPopulation2;
-    populateMatrixTable(&tmpPopulation1,&tmpPopulation2);
+    populateMatrixTable(&KolikoZaOboriti[i],&tmpPopulation2);
     initialisationLane();		// Ova initialisationLane refresh-uje donji dio staze ispod cunjeva
-    initialisationTable();		// i tabela se treba refresh-ovati nakon svakog bacanja
+    //initialisationTable();		// i tabela se treba refresh-ovati nakon svakog bacanja
 
     if(i<9&&i>0&&(i%2==1||KolikoZaOboriti[i]==10)) 
       initialisationPins();	// Cunjevi se nakon svaka dva bacanja trebaju refresh-ovati
-// Ovako sam uradio jer treba da nakon prvog bacanja u seriji ostanu neporuseni cunjevi
+				// Ovako sam uradio jer treba da nakon prvog bacanja u seriji ostanu neporuseni cunjevi
+  }
+return 0;
+}
+  
 
-    }
 
-    return 0;
-} */
+
