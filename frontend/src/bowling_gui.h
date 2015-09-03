@@ -17,7 +17,7 @@ void initialisationPins(void);
 void initialisationTable(void);
 void print(void);
 void move(void);
-void pinsDown(int);
+void pinsDown(int,int*,int);
 int knockDownPins(int, int);
 void populateMatrixTable(int*, int*);
 unsigned int random(void);

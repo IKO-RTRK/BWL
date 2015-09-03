@@ -161,21 +161,69 @@ int knockDownPins(int position, int remain) 	// remain se koristi da zapamtim br
 
 // Funkcija koja stavlja 'x' na mjesto srusenog cunja, s tim da ona  na slucajan nacin
 //  bira poziciju na kojoj ce srusiti cunj
-void pinsDown(int k)
+void pinsDown(int k,int fallen[],int position)	//fallen dodano da bi se znalo koji cunjevi su sruseni, sluzi za tesiranje
 {
-	if(k!=0)
-	 {
-	   uint8_t pale[k], i, j;
-	   for(i=0;i<=k;i++)
-		{
-		  pale[i]=random()%10+1;
-		  for(j=0;j<i;j++)		// Da ne izgleda da su npr srusena samo 2 cunja a trebalo je 5
-						// tj da se ne postavlja 'x' na isto mjesto
-		    {
-			if(pale[i]==pale[j]) 
-			i--;
-		    }
-	 	}
+      if(k!=0)
+      {
+	int pale[k], i, j;
+	for(i=0;i<k;i++)
+	{
+	  fallen[i] = pale[i]=random()%10+1;
+	  if (position == 5)
+	  {
+	    if (pale[i] != 4 && pale[i] != 7 && pale[i] != 8)
+	    {
+	      i--;
+	      continue;
+	    }
+	  }
+	  else if (position == 11)
+	  {
+	    if (pale[i] != 6 && pale[i] != 9 && pale[i] != 10)
+	    {
+	      i--;
+	      continue;
+	    }
+	  }
+	  else if (position == 6)
+	  {
+	    if (pale[i] != 2 && pale[i] != 4 && pale[i] != 5 && pale[i] != 7 && pale[i] != 8)
+	    {
+	      i--;
+	      continue;
+	    }
+	  }
+	  else if (position == 10)
+	  {
+	    if (pale[i] != 3 && pale[i] != 5 && pale[i] != 6 && pale[i] != 9 && pale[i] != 10)
+	    {
+	      i--;
+	      continue;
+	    }
+	  }
+	  else if (position == 7)
+	  {
+	    if (pale[i] != 1 && pale[i] != 2 && pale[i] != 3 && pale[i] != 4 && pale[i] != 5 && pale[i] != 7 && pale[i] != 8)
+	    {
+	      i--;
+	      continue;
+	    }
+	  }
+	  else if (position == 9)
+	  {
+	    if (pale[i] != 1 && pale[i] != 2 && pale[i] != 3 && pale[i] != 5 && pale[i] != 6 && pale[i] != 9 && pale[i] != 10)
+	    {
+	      i--;
+	      continue;
+	    }
+	  }
+	  for(j=0;j<i;j++)		// Da ne izgleda da su npr srusena samo 2 cunja a trebalo je 5
+					// tj da se ne postavlja 'x' na isto mjesto
+	  {
+	    if(pale[i]==pale[j]) 
+	      i--;
+	  }
+	 }
 	   for(i=0;i<=k;i++)
 	     {
 
@@ -236,10 +284,11 @@ void pinsDown(int k)
 	 	}
 	     }
 	 }
-	 matrix[4][lastPosition]='.';
-	 system("clear");
+	 
+	/* matrix[4][lastPosition]='.';
+	 system("clear");			Zakomentarisano zbog testova, nakon testiranja otkomentarisati
          print();
-         usleep(700000);
+         usleep(700000);     */
 }
 
 //funkcija koje postavlja rezultate rusenja cunjeva
@@ -299,14 +348,14 @@ void print(void)
 
 unsigned int random(void)
 {
-     static unsigned int zi,zii;
+     static unsigned int zi,zii = 1;
      
      zi=(1103515245* zii + 12345) % 2147483648 ;
      zii=zi;
              return zi ;
 }
 
-/*int main(void)
+int main(void)		// otkomentarisati samo ako se bude nesto provjeravalo
 {
   initialisationLane();
   initialisationPins();
@@ -322,8 +371,8 @@ unsigned int random(void)
       KolikoZaOboriti[i]=knockDownPins(lastPosition, 10-KolikoZaOboriti[i-1]);    
     else
       KolikoZaOboriti[i]=knockDownPins(lastPosition, 10);
-
-    pinsDown(KolikoZaOboriti[i]);
+    int tmpNiz[3];
+    pinsDown(KolikoZaOboriti[i],tmpNiz,lastPosition);
     sleep(2);
     int tmpPopulation1,tmpPopulation2;
     populateMatrixTable(&tmpPopulation1,&tmpPopulation2);
@@ -337,4 +386,4 @@ unsigned int random(void)
     }
 
     return 0;
-} */
+}  
