@@ -4,7 +4,7 @@
 static int score[21];
 static int currentPosition;
 
-int* throws()
+int* throws(void)
 {
   return score;
 }
@@ -20,3 +20,12 @@ int srusi(int x)
   currentPosition++;
 }
 
+void newGame(void)
+{
+  int i;
+  for (i = 0; i < 21; i++)
+  {
+    score[i] = 0;
+  }
+  currentPosition = 0;
+}
