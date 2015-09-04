@@ -27,6 +27,7 @@ int16_t* get_frame_array()
 {
 	return frames;
 }
+ 
 int16_t score()
 {
 	uint8_t i; 
@@ -37,32 +38,40 @@ int16_t score()
 		{	
 			if(j < LAST_FRAME_FIRST_THROW)
 			{
-				if (points[j+2] == ALL_PINS_DOWN)          //double
-				frames[i] = totalScore += (ALL_PINS_DOWN + points[j+2] + points[j+4]);
-							
+				if (points[j + 2] == ALL_PINS_DOWN)          //double
+				{
+					frames[i] = totalScore += (ALL_PINS_DOWN + points[j + 2] + points[j + 4]);
+				}							
 				else				//strike
-				frames[i] = totalScore += (ALL_PINS_DOWN + points[j+2] + points[j+3]);
+				{
+					frames[i] = totalScore += (ALL_PINS_DOWN + points[j + 2] + points[j + 3]);
+				}
 			}
 			else
-				frames[i] = totalScore += (ALL_PINS_DOWN + points[j+1]+ points[j+2]);// last frame different rules
-
+			{	
+				frames[i] = totalScore += (ALL_PINS_DOWN + points[j + 1]+ points[j + 2]);// last frame different rules
+			}
 		}
-		else if ((isSpare(j)) && (j <= LAST_FRAME_FIRST_THROW))  // spare
-			frames[i] = totalScore += (ALL_PINS_DOWN + points[j+2]);
+		else if (isSpare(j) && (j <= LAST_FRAME_FIRST_THROW)) // spare
+		{
+			frames[i] = totalScore += (ALL_PINS_DOWN + points[j + 2]);
+		}
 		else
-		frames[i] = totalScore += (points[j] + points[j+1]);
-
+		{
+			frames[i] = totalScore += (points[j] + points[j + 1]);
+		}
 		j += 2;
 
 	}
 	return totalScore;
 }
-
+						
 void knockDown(uint8_t x)
 {
 	if (numOfThrow == MAX_NUM_OF_THROWS)
-	initialise();
-	
+	{
+		initialise();
+	}	
 	points[numOfThrow] = x;
 	if ((x == ALL_PINS_DOWN) && (numOfThrow < LAST_FRAME_FIRST_THROW)) // last frame <=> different rules
 	{
@@ -73,28 +82,29 @@ void knockDown(uint8_t x)
 
 void initialise()
 {
-  uint8_t i,j;
+	uint8_t i; uint8_t j;
 
-  for(i = 0; i < NUM_OF_FRAMES; i++)
-  {
-      frames[i] = NOT_EVALUATED;
-  }
+	for(i = 0; i < NUM_OF_FRAMES; i++)
+	{
+		frames[i] = NOT_EVALUATED;
+	}
 
-  for(j = 0; j < MAX_NUM_OF_THROWS; j++)
-  {
-      points[j] = NOT_THROWN;
-  }
+	for(j = 0; j < MAX_NUM_OF_THROWS; j++)
+	{
+		points[j] = NOT_THROWN;
+	}
 
-  totalScore = 0;
-  numOfThrow = 0;
+	totalScore = 0;
+	numOfThrow = 0;
 
 }
 
 void testMemory(int* pointsCheck)
 {
-	uint8_t i=0;
- 	for (i = 0; i < 24; i++) {
-     	pointsCheck[i] = points[i];
+	uint8_t i = 0;
+ 	for (i = 0; i < 24; i++) 
+	{
+     		pointsCheck[i] = points[i];
   	}
 
 }
