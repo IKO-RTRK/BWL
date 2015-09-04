@@ -83,7 +83,7 @@ void initialise(int argc, char* argv[])
   
   int numberOfLanes = atoi(argv[1]);
   int numberOfPlayers;
-  char players[6][15];
+  char players[6][10];
   
   for (i = 0;i < numberOfLanes; i++)
   {
@@ -91,15 +91,15 @@ void initialise(int argc, char* argv[])
     
     for ( k = 0; k < numberOfPlayers; k++)
     {
+  
       strcpy(players[k],argv[j++]);
     }
-    createLane();
-  //  j += numberOfPlayers;
-  }
-
+    createLane(numberOfPlayers, players);
+    
 }
 
-void createLane(int num_of_players, player* heros)
+
+void createLane(int num_of_players, char* heros[])
 {
   uint8_t i,j, k;  
  

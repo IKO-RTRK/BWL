@@ -1,7 +1,7 @@
 #ifndef BOWLING_STATS_H
 #define BOWLING_STATS_H
 #define NUM_OF_FRAMES 10
-#define MAX_NUM_OF_THROWS 21
+#define MAX_NUM_OF_THROWS (NUM_OF_FRAMES*2 + 1)
 #define LAST_FRAME_FIRST_THROW 18
 #define ALL_PINS_DOWN 10
 #define NOT_EVALUATED -1
@@ -18,8 +18,8 @@ typedef struct Player
     
 } player;
 
-void initialise(int, char**);
-void createLane(int, player*);
+void initialise(int argc, char* argv[]);
+void createLane(int num_of_players, char* heroes[]);
 int16_t score();
 void knockDown(uint8_t x);
 int8_t* get_points_array(); // zvati score() prije ovoga, vraca pokazivac na pocetak niza statistike, objasnjenje je u fajlu sa implementacijom
