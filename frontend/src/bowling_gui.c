@@ -318,8 +318,6 @@ int main(void)
 	initialisationTable(1);
 	initialisationTrack(2);
 	initialisationTable(2);
-	initialisationTrack(3);
-	initialisationTable(3);
   print();
 /*
   uint8_t KolikoZaOboriti[21];  // Zbog 21-og bacanja
