@@ -3,15 +3,7 @@
 #include <stdbool.h>
 
 
-typedef struct Player 
-{
-    char name[10];
-    int16_t frames[NUM_OF_FRAMES];
-    int8_t points[MAX_NUM_OF_THROWS]; 
-    uint16_t totalScore; //max score je 300 pa koristimo uint16_t
-    uint8_t numOfThrow;
-    
-} player;
+
 
 static bool isSpare(uint8_t frameIndex) // helper funkcija za provjeru spare a
 {
@@ -85,22 +77,25 @@ void knockDown(uint8_t x)
 	numOfThrow++;
 }
 
-void initialise()
+void initialise(int argc, char* argv[])
 {
-	uint8_t i; uint8_t j;
-
-	for(i = 0; i < NUM_OF_FRAMES; i++)
-	{
-		frames[i] = NOT_EVALUATED;
-	}
-
-	for(j = 0; j < MAX_NUM_OF_THROWS; j++)
-	{
-		points[j] = NOT_THROWN;
-	}
-
-	totalScore = 0;
-	numOfThrow = 0;
+  uint8_t i,j = 2, k;
+  
+  int numberOfLanes = atoi(argv[1]);
+  int numberOfPlayers;
+  char players[6][15];
+  
+  for (i = 0;i < numberOfLanes; i++)
+  {
+    numberOfPlayers = atoi(argv[j]);
+    
+    for ( k = 0; k < numberOfPlayers; k++)
+    {
+      strcpy(players[k],argv[j++]);
+    }
+    createLane();
+  //  j += numberOfPlayers;
+  }
 
 }
 
@@ -126,7 +121,7 @@ void createLane(int num_of_players, player* heros)
   }
 }
 
-void testMemory(int* pointsCheck)
+static void testMemory(int* pointsCheck)
 {
 	uint8_t i = 0;
  	for (i = 0; i < 24; i++) 

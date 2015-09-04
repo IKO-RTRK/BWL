@@ -8,10 +8,20 @@
 #define NOT_THROWN -1
 #include <stdint.h>
 
-void initialise();
+typedef struct Player 
+{
+    char name[10];
+    int16_t frames[NUM_OF_FRAMES];
+    int8_t points[MAX_NUM_OF_THROWS]; 
+    uint16_t totalScore; //max score je 300 pa koristimo uint16_t
+    uint8_t numOfThrow;
+    
+} player;
+
+void initialise(int, char**);
+void createLane(int, player*);
 int16_t score();
 void knockDown(uint8_t x);
-void testMemory(int* pointsCheck);
 int8_t* get_points_array(); // zvati score() prije ovoga, vraca pokazivac na pocetak niza statistike, objasnjenje je u fajlu sa implementacijom
 int16_t* get_frames_array(); // zvati score() prije ovoga, vraca pokazivac na pocetak niza bodova u svakom frejmu
 #endif
