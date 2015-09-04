@@ -3,10 +3,15 @@
 #include <stdbool.h>
 
 
-int16_t frames[NUM_OF_FRAMES];
-int8_t points[MAX_NUM_OF_THROWS]; 
-static uint16_t totalScore; //max score je 300 pa koristimo uint16_t
-static uint8_t numOfThrow;
+typedef struct Player 
+{
+    char name[10];
+    int16_t frames[NUM_OF_FRAMES];
+    int8_t points[MAX_NUM_OF_THROWS]; 
+    uint16_t totalScore; //max score je 300 pa koristimo uint16_t
+    uint8_t numOfThrow;
+    
+} player;
 
 static bool isSpare(uint8_t frameIndex) // helper funkcija za provjeru spare a
 {
@@ -97,6 +102,28 @@ void initialise()
 	totalScore = 0;
 	numOfThrow = 0;
 
+}
+
+void createLane(int num_of_players, player* heros)
+{
+  uint8_t i,j, k;  
+ 
+  for (k=0; k < num_of_players; k++)
+  {
+     
+      for(i = 0; i < NUM_OF_FRAMES; i++)
+      {
+	  heros[k]->frames[i] = NOT_EVALUATED;
+      }
+
+      for(j = 0; j < MAX_NUM_OF_THROWS; j++)
+      {
+	  heros[k]->points[j] = NOT_THROWN;
+      }
+      
+      heros[k]->totalScore = 0;
+      heros[k]->numOfThrow = 0;
+  }
 }
 
 void testMemory(int* pointsCheck)
