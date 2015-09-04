@@ -55,7 +55,7 @@ TEST(BowlingTest, TestSpare)
 {
 	throwTheBall(2,5);
 	throwTheBall(MAX_NUM_OF_THROWS-2,1);
-
+	TEST_ASSERT_EQUAL(29, score());
 }
 
 // Cetvrti test - strike u prvom bacanju (10), ostala bacanja po 1 cunj 
