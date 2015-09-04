@@ -11,7 +11,7 @@ char matrix[ROW][COLUMN] = {[0 ... ROW-1][0 ... COLUMN-1] = ' '};
 char bowling_pins[NUM_OF_PINS] = {[0 ... NUM_OF_PINS-1] = '!'};
 char bowling_ball = 'o';
 
-void initialisationLane(void)
+void initialisationLane(int TrackNumber)
 {
     uint8_t curr_row;
     uint8_t curr_column;
@@ -19,41 +19,41 @@ void initialisationLane(void)
     //unos staze
     for (curr_row = END_OF_PINS_ROW ; curr_row < ROW; curr_row++)
       {
-	for(j=5;j<12;j++)
+	for(j=5+(TrackNumber*DIFF);j<12;j++)
 	  {
 		matrix[curr_row][j] = ' ';
 	  }
-	matrix[curr_row][3] = ' ';
-	matrix[curr_row][13] = ' ';
-	matrix[curr_row][2] = '|';
-	matrix[curr_row][4] = '|';
-	matrix[curr_row][12] = '|';
-	matrix[curr_row][14] = '|';
+	matrix[curr_row][3+(TrackNumber*DIFF)] = ' ';
+	matrix[curr_row][13+(TrackNumber*DIFF)] = ' ';
+	matrix[curr_row][2+(TrackNumber*DIFF)] = '|';
+	matrix[curr_row][4+(TrackNumber*DIFF)] = '|';
+	matrix[curr_row][12+(TrackNumber*DIFF)] = '|';
+	matrix[curr_row][14+(TrackNumber*DIFF)] = '|';
       }
     
-    matrix[BALL_POS_ROW][BALL_POS_COL] = bowling_ball;  //pocetna pozicija na kojoj ce se nalaziti kugla
+    matrix[BALL_POS_ROW][BALL_POS_COL+(TrackNumber*DIFF)] = bowling_ball;  //pocetna pozicija na kojoj ce se nalaziti kugla
     return;
 }
 
 
-void initialisationPins(void)
+void initialisationPins(int TrackNumber)
 {
     uint8_t curr_row;
     uint8_t curr_column;
     uint8_t counter = NUM_OF_PINS - 1;
     uint8_t tmp = START_OF_FIRST_TRACK_ROW, tmp1;
-    uint8_t n = START_PINS;
+    uint8_t n = START_PINS+(TrackNumber*DIFF);
 
     //unosenje cunjeva u matricu
     for (curr_row =END_OF_PINS_ROW; curr_row > START_OF_FIRST_TRACK_ROW; curr_row--)
     {
-	matrix[tmp][2] = '|';
-	matrix[tmp][4] = '|';
-	matrix[tmp][12] = '|';
-	matrix[tmp][14] = '|';
+	matrix[tmp][2+(TrackNumber*DIFF)] = '|';
+	matrix[tmp][4+(TrackNumber*DIFF)] = '|';
+	matrix[tmp][12+(TrackNumber*DIFF)] = '|';
+	matrix[tmp][14+(TrackNumber*DIFF)] = '|';
 
 	tmp1 = n;
-	for (curr_column = curr_row; curr_column >START_OF_FIRST_TRACK_ROW; curr_column--)
+	for (curr_column = curr_row+(TrackNumber*DIFF); curr_column >START_OF_FIRST_TRACK_ROW+(TrackNumber*DIFF); curr_column--)
 	{
 	    matrix[tmp][tmp1] = bowling_pins[counter--];
 	    tmp1+=2;
@@ -65,16 +65,20 @@ void initialisationPins(void)
     return;
 }
     
-
+void initialisationTrack(int TrackNumber)
+{
+	initialisationPins(TrackNumber);
+	initialisationLane(TrackNumber);
+}
  
-void initialisationTable(void)
+void initialisationTable(int TrackNumber)
 {   
     uint8_t curr_row;
     uint8_t curr_column;
     uint8_t tmp1 = START_LANE_ROW;				//prvi red od koga pocinju da se upisuju -
     for (curr_row = 0; curr_row < 10; curr_row++)
     {
-	for (curr_column = 1; curr_column < 4; curr_column++) 
+	for (curr_column = 1+DIFF_TABLES*TrackNumber; curr_column < 4+DIFF_TABLES*TrackNumber; curr_column++) 
 	{
 	    matrix[0][tmp1 + curr_column] = '-';
 	    matrix[3][tmp1 + curr_column] = '-';
@@ -83,11 +87,11 @@ void initialisationTable(void)
 	tmp1+=4;
     }
         
-    uint8_t tmp = START_LANE_COLON;				//prva kolona od koje pocinju da se upisuju |
+    uint8_t tmp = START_LANE_COLON+DIFF_TABLES*TrackNumber;				//prva kolona od koje pocinju da se upisuju |
 
     for (curr_row = 0; curr_row < 11; curr_row++)
     {
-	for (curr_column = 0; curr_column < 2; curr_column++) 
+	for (curr_column = 0+DIFF_TABLES*TrackNumber; curr_column < 2+DIFF_TABLES*TrackNumber; curr_column++) 
 	{
 	    matrix[1][tmp] = '|';
 	    matrix[2][tmp] = '|';
@@ -308,9 +312,14 @@ unsigned int random(void)
 
 int main(void)
 {
-  initialisationLane();
-  initialisationPins();
-  initialisationTable();
+	initialisationTrack(0);
+	initialisationTable(0);
+	initialisationTrack(1);
+	initialisationTable(1);
+	initialisationTrack(2);
+	initialisationTable(2);
+	initialisationTrack(3);
+	initialisationTable(3);
   print();
 /*
   uint8_t KolikoZaOboriti[21];  // Zbog 21-og bacanja
