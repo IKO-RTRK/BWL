@@ -2,7 +2,7 @@
 #define BOWLING_GUI_H
 
 #define ROW 34
-#define COLUMN 200
+#define COLUMN 155
 #define NUM_OF_PINS 10
 #define BALL_POS_ROW 33
 #define BALL_POS_COL 8
