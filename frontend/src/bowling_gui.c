@@ -4,12 +4,13 @@
 #include  <stdint.h>
 #include "bowling_gui.h"
 
-static int lastPosition;// Potrebna mi je informacija o poslednjoj poziciji
+static int lastPosition[3];// Potrebna mi je informacija o poslednjoj poziciji
 
 //Ovo podrzava samo gcc kompajler
 char matrix[ROW][COLUMN] = {[0 ... ROW-1][0 ... COLUMN-1] = ' '};
 char bowling_pins[NUM_OF_PINS] = {[0 ... NUM_OF_PINS-1] = '!'};
 char bowling_ball = 'o';
+
 
 void initialisationLane(int TrackNumber)
 {
@@ -31,7 +32,7 @@ void initialisationLane(int TrackNumber)
 	matrix[curr_row][14+(TrackNumber*DIFF)] = '|';
       }
     
-    matrix[BALL_POS_ROW][BALL_POS_COL+(TrackNumber*DIFF)] = bowling_ball;  //pocetna pozicija na kojoj ce se nalaziti kugla
+    matrix[BALL_POS_ROW][FIRST_BALL_POS_COL+(TrackNumber*DIFF)] = bowling_ball;  //pocetna pozicija na kojoj ce se nalaziti kugla
     return;
 }
 
@@ -104,22 +105,22 @@ void initialisationTable(int TrackNumber)
     
 
     
-void move(void)
+void move(int TrackNumber)
 { 
     uint8_t offset; 					//rezultat random-a, ukoliko kugla nije otisla van staze
     uint8_t curr_pos_row = BALL_POS_ROW;			//trentuni red u kome se nalazi kugla u toku kretanja
-    uint8_t curr_pos_col = BALL_POS_COL;			//trentuna kolona u kojoj se nalazi kugla u toku kretanja
+    uint8_t curr_pos_col = FIRST_BALL_POS_COL+(TrackNumber*DIFF);			//trentuna kolona u kojoj se nalazi kugla u toku kretanja
     uint8_t prev_pos_row;					//prethodni red u kome se nalazila kugla
     uint8_t prev_pos_col;					//prethodna kolona
     double a, b;		// koriste se samo za funkciju foo1
-    while (curr_pos_row >= 5)				//sve dok ne dodje kugla do cunjeva
+    while (curr_pos_row >= 10)				//sve dok ne dodje kugla do cunjeva
     {
 
-      if(curr_pos_col==4)		// ako je kugla dosla do kanala, natjeramo ga da udje u njega
+      if(curr_pos_col==4+(TrackNumber*DIFF))		// ako je kugla dosla do kanala, natjeramo ga da udje u njega
 	offset = -1;
-      else if(curr_pos_col==12)		// isto to samo u drugu stranu
+      else if(curr_pos_col==12+(TrackNumber*DIFF))		// isto to samo u drugu stranu
 	offset = 1;
-      else if (curr_pos_col < 4  || curr_pos_col > 12) 	//ako je kugla izasla sa staze, da se nastavi kretati pravo kroz kanal
+      else if (curr_pos_col < 4+(TrackNumber*DIFF)  || curr_pos_col > 12+(TrackNumber*DIFF)) 	//ako je kugla izasla sa staze, da se nastavi kretati pravo kroz kanal
 	offset = 0;					//ne koristi se vise radnom jer je njeno kretanje fiksno 
       else
       {
@@ -134,7 +135,7 @@ void move(void)
 	
       matrix[prev_pos_row][prev_pos_col] = '.';		//na prethodnoj poziciji na kojoj se nalazila kugla upisi .
       matrix[curr_pos_row][curr_pos_col] = bowling_ball;//na trenutnu poziciju na kojoj se nalazi kugla ucrtaj kuglu 
-      lastPosition=curr_pos_col;   			//ovo sam dodao jer mi je bila potrebna zadnja pozicija
+      lastPosition[TrackNumber]=curr_pos_col;   			//ovo sam dodao jer mi je bila potrebna zadnja pozicija
       system("clear");
       print();
       usleep(700000);
@@ -144,7 +145,7 @@ void move(void)
 
 // Funkcija koja u odnosu na poziciju vraca slucajan broj cunjeva koje treba srusiti
 // Mislim da bi ovu funkciju trebali koristiti i ovi iz backenda prilikom pozivanja svoje f_je srusi
-int knockDownPins(int position, int remain) 	// remain se koristi da zapamtim broj nesrusenih
+/*int knockDownPins(int position, int remain) 	// remain se koristi da zapamtim broj nesrusenih
 {  // da se ne desi u slucaju da je u prvom bacanju pogodjen centar i sruseno 7 cunjeva i da se u narednom bacanju pogodi centar ponovo
    // i tad srusi npr 5 a ostala su samo 3... min ogranicava maxMod 
 	uint8_t maxMod,x;				
@@ -162,10 +163,10 @@ int knockDownPins(int position, int remain) 	// remain se koristi da zapamtim br
 	x=(random()%maxMod)+1;
 	return x;
 }
-
+*/
 // Funkcija koja stavlja 'x' na mjesto srusenog cunja, s tim da ona  na slucajan nacin
 //  bira poziciju na kojoj ce srusiti cunj
-void pinsDown(int k)
+/*void pinsDown(int k)
 {
 	if(k!=0)
 	 {
@@ -240,15 +241,15 @@ void pinsDown(int k)
 	 	}
 	     }
 	 }
-	 matrix[4][lastPosition]='.';
+	 matrix[4][lastPosition[TrackNumber]]='.';
 	 system("clear");
          print();
          usleep(700000);
 }
-
+*/
 //funkcija koje postavlja rezultate rusenja cunjeva
 //i ukupan broj bodova po frejmovima
-void populateMatrixTable(int* score,int* total)
+/*void populateMatrixTable(int* score,int* total)
 {
   uint8_t i = 0;	//trenutna kolona u matrici
   uint8_t j = 0;	//citanje iz score niza
@@ -282,7 +283,7 @@ void populateMatrixTable(int* score,int* total)
     }
   }
   return;
-}
+}*/
 
 //Ispis matrice
 void print(void)
@@ -319,22 +320,9 @@ int main(void)
 	initialisationTrack(2);
 	initialisationTable(2);
   print();
-/*
-  uint8_t KolikoZaOboriti[21];  // Zbog 21-og bacanja
-  uint8_t i;
-  for(i=0;i<10;i++)	// Simulacija vise bacanja... Trebalo bi 21 ali predugo traje dok provjeravamo ispis
-  {
-    move();
-
-    
-   // int tmpPopulation1,tmpPopulation2;
-   // populateMatrixTable(&tmpPopulation1,&tmpPopulation2);
-    initialisationLane();		// Ova initialisationLane refresh-uje donji dio staze ispod cunjeva
-    initialisationTable();		// i tabela se treba refresh-ovati nakon svakog bacanja
-
-  */
-
-    
+	move(0);
+	move(1);
+	move(2);   
 
     return 0;
 } 

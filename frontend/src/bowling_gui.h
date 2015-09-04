@@ -1,11 +1,12 @@
 #ifndef BOWLING_GUI_H
 #define BOWLING_GUI_H
 
+
 #define ROW 34
 #define COLUMN 155
 #define NUM_OF_PINS 10
 #define BALL_POS_ROW 33
-#define BALL_POS_COL 8
+#define FIRST_BALL_POS_COL 8
 #define START_LANE_ROW 0
 #define START_LANE_COLON 0
 #define START_PINS 5
@@ -19,7 +20,7 @@
 void initialisationTable(int TrackNumber);
 void initialisationTrack(int TrackNumber);
 void print(void);
-void move(void);
+void move(int TrackNumber);
 void pinsDown(int);
 int knockDownPins(int, int);
 void populateMatrixTable(int*, int*);
