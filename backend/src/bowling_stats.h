@@ -22,6 +22,7 @@ void initialise(int, char**);
 void createLane(int, player*);
 int16_t score();
 void knockDown(uint8_t x);
+bool validate(int ,char* []);
 int8_t* get_points_array(); // zvati score() prije ovoga, vraca pokazivac na pocetak niza statistike, objasnjenje je u fajlu sa implementacijom
 int16_t* get_frames_array(); // zvati score() prije ovoga, vraca pokazivac na pocetak niza bodova u svakom frejmu
 #endif
