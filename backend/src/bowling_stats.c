@@ -130,3 +130,28 @@ static void testMemory(int* pointsCheck)
   	}
 
 }
+
+bool validate(int argc, char* argv[])
+
+{
+	bool x=true;
+	if(*argv[1] == '1' || *argv[1] == '2' || *argv[1] == '3')
+	{			
+		x=true;
+	}
+	else 
+	{
+		printf("Previse staza.\n");
+		x=false;
+	}
+	if(*argv[2] == '1' || *argv[2] == '2' || *argv[2] == '3' || *argv[2] == '4' || *argv[2] == '5' || *argv[2] == '6')
+	{	
+		x=true;
+	}
+	else 
+	{
+		printf("Previse igraca.\n");
+		x=false;
+	}
+	return x;
+}
