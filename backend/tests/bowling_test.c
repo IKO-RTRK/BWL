@@ -14,7 +14,7 @@ TEST_GROUP(BowlingTest);
 
 TEST_GROUP_RUNNER(BowlingTest)
 {
-	RUN_TEST_CASE(BowlingTest, TestAllZeroes);
+	/*RUN_TEST_CASE(BowlingTest, TestAllZeroes);
 	RUN_TEST_CASE(BowlingTest, TestAllOnes);	
 	RUN_TEST_CASE(BowlingTest, TestSpare);	
 	RUN_TEST_CASE(BowlingTest, TestStrike);
@@ -24,10 +24,10 @@ TEST_GROUP_RUNNER(BowlingTest)
 	RUN_TEST_CASE(BowlingTest, SparesAndStrikes);
 	RUN_TEST_CASE(BowlingTest, NoStrikesNoSpares);
 	RUN_TEST_CASE(BowlingTest, FirstAttemptAlwaysMiss);
-	RUN_TEST_CASE(BowlingTest, UnallowedMemoryAccess);
+	RUN_TEST_CASE(BowlingTest, UnallowedMemoryAccess); */
 }
 
-TEST_SETUP(BowlingTest)
+/*TEST_SETUP(BowlingTest)
 {
   char argv[] = {"1","1","ime"};
   int argc = 4;
@@ -144,6 +144,6 @@ TEST(BowlingTest, UnallowedMemoryAccess)
 	throwTheBall(3,10);
 	testMemory(pointsCheck);
  	TEST_ASSERT_EQUAL(0, pointsCheck[22]);
-}
+} */
 
 

@@ -6,9 +6,9 @@
 
 player** players;
 
-static int isSpare(uint8_t frameIndex) // helper funkcija za provjeru spare a
+static int isSpare(uint8_t frameIndex,player* player) // helper funkcija za provjeru spare a
 {
-	return player->points[frameIndex] + player->points[frameIndex+1] == ALL_PINS_DOWN;
+	return (player->points[frameIndex] + player->points[frameIndex + 1]) == ALL_PINS_DOWN;
 }
 
 static void createPlayer(player* p, char nName[])
@@ -47,7 +47,7 @@ static void createLane(int num_of_players, player* heroes, char** names, int lan
     }
 }
 
-int8_t* get_points_array()
+int8_t* get_points_array(player* player)
 {
 	/* points je organizovan na nacin:
 	points[i*2] - vraca bodove sa prvog bacanja u i-tom frejmu
@@ -57,7 +57,7 @@ int8_t* get_points_array()
 	*/
 	return player->points;
 }
-int16_t* get_frame_array()
+int16_t* get_frame_array(player* player)
 {
 	return player->frames;
 }
@@ -86,7 +86,7 @@ int16_t score(player* player)
 				player->frames[i] = player->totalScore += (ALL_PINS_DOWN + player->points[j + 1]+ player->points[j + 2]);// last frame different rules
 			}
 		}
-		else if (isSpare(j) && (j <= LAST_FRAME_FIRST_THROW)) // spare
+		else if (isSpare(j, player) && (j <= LAST_FRAME_FIRST_THROW)) // spare
 		{
 			player->frames[i] = player->totalScore += (ALL_PINS_DOWN + player->points[j + 2]);
 		}
