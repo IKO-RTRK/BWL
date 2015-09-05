@@ -1,14 +1,14 @@
 #include "bowling_stats.h"
 #include <stdio.h>
-#include <stdbool.h>
+#include <string.h>
+#include <stdbool.h
 
-
-
+player** players;
 
 static bool isSpare(uint8_t frameIndex) // helper funkcija za provjeru spare a
-{
+{/*
 	return points[frameIndex] + points[frameIndex+1] == ALL_PINS_DOWN;
-}
+*/}
 
 int8_t* get_points_array()
 {
@@ -18,15 +18,15 @@ int8_t* get_points_array()
 	points[MAX_NUM_OF_THROWS-1] - vraca bodove sa dodatnog bacanja u zadnjem frejmu ( bitno provjeriti da li je stecen uslov za dodatno bacanje, ako nije ne treba ni ispisivati )
 	bitno da znate kako bi kupili odgovarajuce bodove i ispisivali ih na ekran za odredjeni frejm
 	*/
-	return points;
+//	return points;
 }
 int16_t* get_frame_array()
-{
+{/*
 	return frames;
-}
+*/}
  
 int16_t score()
-{
+{/*
 	uint8_t i; 
 	uint8_t j = 0;
 	for (i = 0; i < NUM_OF_FRAMES; i++)
@@ -61,10 +61,10 @@ int16_t score()
 
 	}
 	return totalScore;
-}
+*/}
 						
 void knockDown(uint8_t x)
-{
+{/*
 	if (numOfThrow == MAX_NUM_OF_THROWS)
 	{
 		initialise();
@@ -75,83 +75,88 @@ void knockDown(uint8_t x)
 		points[++numOfThrow] = 0;  // ako je strike ima samo jedno bacanje u okviru => vazi za prvih devet frameova	
 	}
 	numOfThrow++;
-}
+*/}
 
-void initialise(int argc, char* argv[])
-{
-  uint8_t i,j = 2, k;
-  
+static void initialise(int argc, char* argv[])
+{ 
+  uint8_t i, j = 2, k;
   int numberOfLanes = atoi(argv[1]);
-  int numberOfPlayers;
-  char players[6][10];
+  int numberOfPlayers[numberOfLanes];
+  int totalNumberOfPlayers = 0;
+  char* lanePlayers[6];
+  players = (player**) malloc(sizeof(player*) * numberOfLanes);
   
-  for (i = 0;i < numberOfLanes; i++)
+  for (i = 0; i < numberOfLanes; i++)
   {
-    numberOfPlayers = atoi(argv[j]);
-    
-    for ( k = 0; k < numberOfPlayers; k++)
-    {
-  
-      strcpy(players[k],argv[j++]);
-    }
-    createLane(numberOfPlayers, players);
-    
-}
-
-
-void createLane(int num_of_players, char* heros[])
-{
-  uint8_t i,j, k;  
- 
-  for (k=0; k < num_of_players; k++)
-  {
+     numberOfPlayers[i] = atoi(argv[j]);
+     //printf("1\n");
      
-      for(i = 0; i < NUM_OF_FRAMES; i++)
-      {
-	  heros[k]->frames[i] = NOT_EVALUATED;
+     for(k = 0; k < numberOfPlayers[i]; k++)
+     {
+       lanePlayers[k] = (char*) malloc(strlen(argv[++j])+1);
+       strcpy(lanePlayers[k], argv[j]);
       }
-
-      for(j = 0; j < MAX_NUM_OF_THROWS; j++)
-      {
-	  heros[k]->points[j] = NOT_THROWN;
-      }
-      
-      heros[k]->totalScore = 0;
-      heros[k]->numOfThrow = 0;
+     j++;
+    
+     
+     
+     players[i] = (player*) malloc (sizeof(player) * numberOfPlayers[i]);
+     createLane(numberOfPlayers[i], players[i], &lanePlayers, i+1);
+     //printf("2\n");
   }
+  
+  for (i = 0; i < numberOfLanes; i++)
+  {
+    for (j = 0; j < numberOfPlayers[i]; j++)
+    {
+      printf("%d\n", players[i][j].lane_id);
+    }
+  }
+  
 }
 
-static void testMemory(int* pointsCheck)
+static void createPlayer(player* p, char nName[])
 {
+    p->name = (char*)calloc(strlen(nName) + 1, sizeof(char));
+    strcpy(p->name, nName);
+}
+
+
+static void createLane(int num_of_players, player* heroes, char** names, int lane)
+{
+  uint8_t i;
+  uint8_t j;
+  uint8_t k;
+     
+    for (k=0; k < num_of_players; k++)
+    {
+	  createPlayer(heroes + k, names[k]);
+	  
+	  for(i = 0; i < NUM_OF_FRAMES; i++)
+	  {
+	      heroes[k].frames[i] = NOT_EVALUATED;
+	  }
+	  
+	  
+
+	  for(j = 0; j < MAX_NUM_OF_THROWS; j++)
+	  {
+	      heroes[k].points[j] = NOT_THROWN;
+	  }
+	  
+	  heroes[k].lane_id = lane;
+	  heroes[k].totalScore = 0;
+	  heroes[k].numOfThrow = 0;
+	  
+    }
+}
+
+void testMemory(int* pointsCheck)
+{/*
 	uint8_t i = 0;
  	for (i = 0; i < 24; i++) 
 	{
      		pointsCheck[i] = points[i];
   	}
 
-}
-
-bool validate(int argc, char* argv[])
-
-{
-	bool x=true;
-	if(*argv[1] == '1' || *argv[1] == '2' || *argv[1] == '3')
-	{			
-		x=true;
-	}
-	else 
-	{
-		printf("Previse staza.\n");
-		x=false;
-	}
-	if(*argv[2] == '1' || *argv[2] == '2' || *argv[2] == '3' || *argv[2] == '4' || *argv[2] == '5' || *argv[2] == '6')
-	{	
-		x=true;
-	}
-	else 
-	{
-		printf("Previse igraca.\n");
-		x=false;
-	}
-	return x;
-}
+*/}

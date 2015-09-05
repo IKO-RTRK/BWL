@@ -10,12 +10,12 @@
 
 typedef struct Player 
 {
-    char name[10];
+    char* name;
     int16_t frames[NUM_OF_FRAMES];
     int8_t points[MAX_NUM_OF_THROWS]; 
     uint16_t totalScore; //max score je 300 pa koristimo uint16_t
     uint8_t numOfThrow;
-    
+    int lane_id;
 } player;
 
 void initialise(int argc, char* argv[]);
