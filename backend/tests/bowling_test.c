@@ -29,7 +29,9 @@ TEST_GROUP_RUNNER(BowlingTest)
 
 TEST_SETUP(BowlingTest)
 {
-	initialise();
+  char argv[] = {"1","1","ime"};
+  int argc = 4;
+  initialise(argc,argv);
 }
 
 TEST_TEAR_DOWN(BowlingTest)
