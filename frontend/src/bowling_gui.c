@@ -20,7 +20,7 @@ void initialisationLane(int TrackNumber)
     //unos staze
     for (curr_row = END_OF_PINS_ROW ; curr_row < ROW; curr_row++)
       {
-	for(j=5+(TrackNumber*DIFF);j<12;j++)
+	for(j=5+(TrackNumber*DIFF);j<12+(TrackNumber*DIFF);j++)
 	  {
 		matrix[curr_row][j] = ' ';
 	  }
@@ -145,28 +145,28 @@ void move(int TrackNumber)
 
 // Funkcija koja u odnosu na poziciju vraca slucajan broj cunjeva koje treba srusiti
 // Mislim da bi ovu funkciju trebali koristiti i ovi iz backenda prilikom pozivanja svoje f_je srusi
-/*int knockDownPins(int position, int remain) 	// remain se koristi da zapamtim broj nesrusenih
+int knockDownPins(int position, int remain,int TrackNumber) 	// dodan int TrackNumber, int remain se koristi da se pamti broj nesrusenih
 {  // da se ne desi u slucaju da je u prvom bacanju pogodjen centar i sruseno 7 cunjeva i da se u narednom bacanju pogodi centar ponovo
    // i tad srusi npr 5 a ostala su samo 3... min ogranicava maxMod 
 	uint8_t maxMod,x;				
-	if(position<5 || position>11)
+	if(position<5+(TrackNumber*DIFF) || position>11+(TrackNumber*DIFF))
 		return 0;
-	else if(position==5 || position==11)
+	else if(position==5+(TrackNumber*DIFF) || position==11+(TrackNumber*DIFF))
 		maxMod=min(remain,3);
-	else if(position==6 || position==10)
+	else if(position==6+(TrackNumber*DIFF) || position==10+(TrackNumber*DIFF))
 		maxMod=min(remain,5);
-	else if(position==7 || position==9)
+	else if(position==7+(TrackNumber*DIFF) || position==9+(TrackNumber*DIFF))
 		maxMod=min(remain,7);
-	else if(position==8)
+	else if(position==8+(TrackNumber*DIFF))
 		maxMod=min(remain,10);
 		
 	x=(random()%maxMod)+1;
 	return x;
 }
-*/
+
 // Funkcija koja stavlja 'x' na mjesto srusenog cunja, s tim da ona  na slucajan nacin
 //  bira poziciju na kojoj ce srusiti cunj
-/*void pinsDown(int k)
+void pinsDown(int k, int TrackNumber)
 {
 	if(k!=0)
 	 {
@@ -188,65 +188,65 @@ void move(int TrackNumber)
 				// tamo gdje je on vec postavljen... Treba biti zapamcen polozaj nesrusenih cunjeva iz prvog bacanja 
 	 	{
 	 	 case 1:
-			if(matrix[3][8]=='x')
+			if(matrix[8][8+(TrackNumber*DIFF)]=='x')
 			  i--;
 			else
-	 	 	  matrix[3][8]='x'; break;
+	 	 	  matrix[8][8+(TrackNumber*DIFF)]='x'; break;
 	 	 case 2:
-			if(matrix[2][7]=='x')
+			if(matrix[7][7+(TrackNumber*DIFF)]=='x')
 			  i--;
 			else
-	 	 	  matrix[2][7]='x'; break;
+	 	 	  matrix[7][7+(TrackNumber*DIFF)]='x'; break;
 	 	 case 3:
-			if(matrix[2][9]=='x')
+			if(matrix[7][9+(TrackNumber*DIFF)]=='x')
 			  i--;
 			else
-	 	 	  matrix[2][9]='x'; break;
+	 	 	  matrix[7][9+(TrackNumber*DIFF)]='x'; break;
 	 	 case 4: 
-			if(matrix[1][6]=='x')
+			if(matrix[6][6+(TrackNumber*DIFF)]=='x')
 			  i--;
 			else
-	 	 	  matrix[1][6]='x'; break;
+	 	 	  matrix[6][6+(TrackNumber*DIFF)]='x'; break;
 	 	 case 5:
-			if(matrix[1][8]=='x')
+			if(matrix[6][8+(TrackNumber*DIFF)]=='x')
 			  i--;
 			else
-	 	 	  matrix[1][8]='x'; break;
+	 	 	  matrix[6][8+(TrackNumber*DIFF)]='x'; break;
 	 	 case 6:
-	 	 	if(matrix[1][10]=='x')
+	 	 	if(matrix[6][10+(TrackNumber*DIFF)]=='x')
 			  i--;
 			else
-	 	 	  matrix[1][10]='x'; break;
+	 	 	  matrix[6][10+(TrackNumber*DIFF)]='x'; break;
 	 	 case 7:
-	 	 	if(matrix[0][5]=='x')
+	 	 	if(matrix[5][5+(TrackNumber*DIFF)]=='x')
 			  i--;
 			else
-	 	 	  matrix[0][5]='x'; break;
+	 	 	  matrix[5][5+(TrackNumber*DIFF)]='x'; break;
 	 	 case 8:
-	 	 	if(matrix[0][7]=='x')
+	 	 	if(matrix[5][7+(TrackNumber*DIFF)]=='x')
 			  i--;
 			else
-	 	 	  matrix[0][7]='x'; break;
+	 	 	  matrix[5][7+(TrackNumber*DIFF)]='x'; break;
 	 	 case 9:
-	 	 	if(matrix[0][9]=='x')
+	 	 	if(matrix[5][9+(TrackNumber*DIFF)]=='x')
 			  i--;
 			else
-	 	 	  matrix[0][9]='x'; break;
+	 	 	  matrix[5][9+(TrackNumber*DIFF)]='x'; break;
 	 	 case 10:
-	 	 	if(matrix[0][11]=='x')
+	 	 	if(matrix[5][11+(TrackNumber*DIFF)]=='x')
 			  i--;
 			else
-	 	 	  matrix[0][11]='x'; break;
+	 	 	  matrix[5][11+(TrackNumber*DIFF)]='x'; break;
 
 	 	}
 	     }
 	 }
-	 matrix[4][lastPosition[TrackNumber]]='.';
+	 matrix[10][lastPosition[TrackNumber]]='.';
 	 system("clear");
          print();
          usleep(700000);
 }
-*/
+
 //funkcija koje postavlja rezultate rusenja cunjeva
 //i ukupan broj bodova po frejmovima
 /*void populateMatrixTable(int* score,int* total)
@@ -319,10 +319,55 @@ int main(void)
 	initialisationTable(1);
 	initialisationTrack(2);
 	initialisationTable(2);
-  print();
-	move(0);
+	int KolikoZaOboriti1[21];
+	int KolikoZaOboriti2[21];
+	int KolikoZaOboriti3[21];
+int i;
+for(i=0;i<2;i++)	
+{
+    move(0);
+
+    if(i%2==1)
+      	KolikoZaOboriti1[i]=knockDownPins(lastPosition[0], 10-KolikoZaOboriti1[i-1],0);    
+    else
+      	KolikoZaOboriti1[i]=knockDownPins(lastPosition[0], 10,0);
+
+    	pinsDown(KolikoZaOboriti1[i],0);
+ 	print();
+	initialisationLane(0);
+}
+int a;
+for(a=0;a<2;a++)
+{
 	move(1);
-	move(2);   
+	if(a%2==1)
+
+      		KolikoZaOboriti2[a]=knockDownPins(lastPosition[1], 10-KolikoZaOboriti2[a-1],1);    
+    	else
+      		KolikoZaOboriti2[a]=knockDownPins(lastPosition[1], 10,1);
+	
+	pinsDown(KolikoZaOboriti2[a],1);
+ 	print();
+	initialisationLane(1);
+}
+	
+int c;
+
+for(c=0;c<2;c++)
+{
+	move(2);
+	if(c%2==1)
+
+		KolikoZaOboriti3[c]=knockDownPins(lastPosition[2], 10-KolikoZaOboriti3[c-1],2);    
+    	else
+      		KolikoZaOboriti3[c]=knockDownPins(lastPosition[2], 10,2);
+	
+	pinsDown(KolikoZaOboriti3[c],2);
+ 	print();
+	initialisationLane(2);
+		
+}
+	   
 
     return 0;
 } 
