@@ -21,7 +21,7 @@ typedef struct Player
 void initialise(int argc, char* argv[]);
 int16_t score(char* playerName,int laneId);
 void knockDown(char* playerName,int laneId,uint8_t x);
-int validate(int argc ,char* argv[]);
+//int validate(int argc ,char* argv[]);
 int8_t* get_points_array(char* playerName,int laneId); // zvati score() prije ovoga, vraca pokazivac na pocetak niza statistike, objasnjenje je u fajlu sa implementacijom
 int16_t* get_frames_array(char* playerName, int laneId); // zvati score() prije ovoga, vraca pokazivac na pocetak niza bodova u svakom frejmu
 char* getAllPlayersOnLane(int laneId);
