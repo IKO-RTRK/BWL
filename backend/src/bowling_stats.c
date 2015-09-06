@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
+#include <stdint.h>
 
 player** players;
 int numberOfLanes;
@@ -32,10 +34,6 @@ static player* getPlayerByNameAndId(char* playerName,int laneId)
 	return p;
 }
 
-static int validate(int argc,char** argv)
-{
-	return 1;	//na istoj traci ne smiju biti igraci sa istim imenom
-}
 
 static void createPlayer(player* p, char nName[])
 {
@@ -161,9 +159,107 @@ void knockDown(char* playerName,int laneId,uint8_t x)
 	}
 }
 
+
+static int validate(int argc,char* argv[])
+{
+	uint8_t i, j = 2, k, l, numLanes, numPlayersByLanes[numLanes];
+	
+	if(argc < 4)
+	{
+		return 1;	//premalo parametara
+	}
+
+	if(!isdigit(atoi(argv[1])))
+	{
+		numLanes=atoi(argv[1]);	
+	}
+	else
+		return 1;	// nije broj
+
+	if(numLanes > 3)
+	{
+		return 1;	//previse staza
+	}
+
+	if(numLanes >= 1)
+	{
+
+		if(!isdigit(atoi(argv[j])))
+		{
+			numPlayersByLanes[0]=atoi(argv[j]);
+		}
+		else
+			return 1;	// nije broj
+
+		if(numPlayersByLanes[0] > 6)
+		{
+			return 1;	//previse igraca po stazi
+		}
+
+		if(numLanes>=2)
+		{
+
+			if(!isdigit(atoi(argv[j+numPlayersByLanes[0]+1])))
+			{
+				numPlayersByLanes[1]=atoi(argv[j+numPlayersByLanes[0]+1]);
+			}
+			else
+				return 1;	// nije broj
+
+			if(numPlayersByLanes[1]>6)
+			{
+				return 1;	//previse igraca po stazi
+			}
+
+			if(numLanes==3)
+			{
+				if(!isdigit(atoi(argv[j+numPlayersByLanes[0]+numPlayersByLanes[1]+1])))
+				{
+					numPlayersByLanes[2]=atoi(argv[j+numPlayersByLanes[0]+numPlayersByLanes[1]+2]);
+				}
+				else
+					return 1;	// nije broj
+
+				if(numPlayersByLanes[2]>6)
+				{
+					return 1;	//previse igraca po stazi
+				}
+			}
+		}	
+	}
+	
+	char* namesLane[3][6];
+	
+	for(l=0;l<3;l++)
+	{
+	
+		for(i=0;i<numPlayersByLanes[l];i++)
+		{
+			namesLane[l][i] = (char*) malloc(strlen(argv[++j])+1);
+       			strcpy(namesLane[l][i], argv[j]);
+			for(k=0;k<i;k++)
+			{
+				if(strcmp(namesLane[l][i],namesLane1[k])==0)
+				{
+					return 1;
+				}	
+			}
+			j++;
+		}
+	}
+//***Napomena: Nije provjereno da li ima dovoljno igraca po stazama i da li ima dovoljno staza 
+	return 0;
+}
+
+
 void initialise(int argc, char* argv[])
-{ 
+{
+  
   uint8_t i, j = 2, k;
+  int valid;
+  valid=validate(argc, argv);
+  if(valid==0)
+  {
   numberOfLanes = atoi(argv[1]);
   numberOfPlayers = (int*) malloc(sizeof(int) * numberOfLanes);
   char* lanePlayers[6];
@@ -190,6 +286,7 @@ void initialise(int argc, char* argv[])
     {
       printf("%d\n", players[i][j].lane_id);
     }
+  }
   }
 }
 
