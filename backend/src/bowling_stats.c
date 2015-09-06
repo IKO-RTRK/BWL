@@ -5,6 +5,8 @@
 #include <stdbool.h>
 
 player** players;
+int numberOfLanes;
+int* numberOfPlayers;
 
 static int isSpare(uint8_t frameIndex,player* player) // helper funkcija za provjeru spare a
 {
@@ -13,12 +15,26 @@ static int isSpare(uint8_t frameIndex,player* player) // helper funkcija za prov
 
 static player* getPlayerByNameAndId(char* playerName,int laneId)
 {
-	return NULL;
+	int i,j;
+	player* p = NULL;
+	
+	for(i = 0;i < numberOfLanes;i++)
+	{
+		for (j = 0;j < numberOfPlayers[i];j++)
+		{
+			if ((strcmp(players[i][j].name,playerName) == 0) && (players[i][j].lane_id == laneId))
+			{
+				p = &players[i][j];
+				break;
+			}
+		}
+	}
+	return p;
 }
 
 static int validate(int argc,char** argv)
 {
-	return 1;
+	return 1;	//na istoj traci ne smiju biti igraci sa istim imenom
 }
 
 static void createPlayer(player* p, char nName[])
@@ -57,7 +73,7 @@ static void createLane(int num_of_players, player* heroes, char** names, int lan
     }
 }
 
-int8_t* get_points_array(char* playerName,int laneId);
+int8_t* get_points_array(char* playerName,int laneId)
 {
 	/* points je organizovan na nacin:
 	points[i*2] - vraca bodove sa prvog bacanja u i-tom frejmu
@@ -65,11 +81,20 @@ int8_t* get_points_array(char* playerName,int laneId);
 	points[MAX_NUM_OF_THROWS-1] - vraca bodove sa dodatnog bacanja u zadnjem frejmu ( bitno provjeriti da li je stecen uslov za dodatno bacanje, ako nije ne treba ni ispisivati )
 	bitno da znate kako bi kupili odgovarajuce bodove i ispisivali ih na ekran za odredjeni frejm
 	*/
-	return NULL;// player->points;
+	player* p = getPlayerByNameAndId(playerName, laneId);
+	
+	if (p != NULL)
+		return p->points;
+	return NULL;
 }
+
 int16_t* get_frame_array(char* playerName,int laneId)
 {
-	return NULL; //player->frames;
+	player* p = getPlayerByNameAndId(playerName, laneId);
+	
+	if (p != NULL)
+		return p->frames;
+	return NULL;
 }
  
 int16_t score(char* playerName,int laneId)
@@ -127,9 +152,8 @@ void knockDown(char* playerName,int laneId,uint8_t x)
 void initialise(int argc, char* argv[])
 { 
   uint8_t i, j = 2, k;
-  int numberOfLanes = atoi(argv[1]);
-  int numberOfPlayers[numberOfLanes];
-  int totalNumberOfPlayers = 0;
+  numberOfLanes = atoi(argv[1]);
+  numberOfPlayers = (int*) malloc(sizeof(int) * numberOfLanes);
   char* lanePlayers[6];
   players = (player**) malloc(sizeof(player*) * numberOfLanes);
   

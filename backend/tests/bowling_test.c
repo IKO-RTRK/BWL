@@ -5,8 +5,8 @@
 static void throwTheBall(int num,int pins)
 {
 	int i;
-	for(i=0;i<num;i++)
-		knockDown(pins);
+	for(i=0;i<num;i++);
+	//	knockDown(pins);
 }
 
 
