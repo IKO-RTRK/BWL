@@ -1,6 +1,5 @@
 **Zaduženja**
 
-- Saša Mihajlica - funkcije getPlayerByNameAndId, get_points_array, get_frames_array
 
 **Bowling Tests**
 
