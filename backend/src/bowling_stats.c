@@ -98,56 +98,68 @@ int16_t* get_frame_array(char* playerName,int laneId)
 }
  
 int16_t score(char* playerName,int laneId)
-{/*
+{
 	uint8_t i; 
 	uint8_t j = 0;
+	player* p = getPlayerByNameAndId(playerName, laneId);
+	
+	if (p != NULL)
+	{
 	for (i = 0; i < NUM_OF_FRAMES; i++)
 	{
-		if (player->points[j] == ALL_PINS_DOWN)            
+		if (p->points[j] == ALL_PINS_DOWN)            
 		{	
 			if(j < LAST_FRAME_FIRST_THROW)
 			{
-				if (player->points[j + 2] == ALL_PINS_DOWN)          //double
+				if (p->points[j + 2] == ALL_PINS_DOWN)          //double
 				{
-					player->frames[i] = player->totalScore += (ALL_PINS_DOWN + player->points[j + 2] + player->points[j + 4]);
+					p->frames[i] = p->totalScore += (ALL_PINS_DOWN + p->points[j + 2] + p->points[j + 4]);
 				}							
 				else				//strike
 				{
-					player->frames[i] = player->totalScore += (ALL_PINS_DOWN + player->points[j + 2] + player->points[j + 3]);
+					p->frames[i] = p->totalScore += (ALL_PINS_DOWN + p->points[j + 2] + p->points[j + 3]);
 				}
 			}
 			else
 			{	
-				player->frames[i] = player->totalScore += (ALL_PINS_DOWN + player->points[j + 1]+ player->points[j + 2]);// last frame different rules
+				p->frames[i] = p->totalScore += (ALL_PINS_DOWN + p->points[j + 1]+ pl->points[j + 2]);
+						// last frame different rules
 			}
 		}
 		else if (isSpare(j, player) && (j <= LAST_FRAME_FIRST_THROW)) // spare
 		{
-			player->frames[i] = player->totalScore += (ALL_PINS_DOWN + player->points[j + 2]);
+			p->frames[i] = p->totalScore += (ALL_PINS_DOWN + p->points[j + 2]);
 		}
 		else
 		{
-			player->frames[i] = player->totalScore += (player->points[j] + player->points[j + 1]);
+			p->frames[i] = p->totalScore += (p->points[j] + p->points[j + 1]);
 		}
 		j += 2;
-
-	} */
-	return 0; //player->totalScore;
+	}
+	} 
+	else 
+		return NULL;//return 0; //player->totalScore;
 }
 						
 void knockDown(char* playerName,int laneId,uint8_t x)
-{/*
-	if (numOfThrow == MAX_NUM_OF_THROWS)
+{
+	player* p = getPlayerByNameAndId(playerName, laneId);
+	
+	if (p != NULL)
 	{
-		initialise();
-	}	
-	points[numOfThrow] = x;
-	if ((x == ALL_PINS_DOWN) && (numOfThrow < LAST_FRAME_FIRST_THROW)) // last frame <=> different rules
-	{
-		points[++numOfThrow] = 0;  // ako je strike ima samo jedno bacanje u okviru => vazi za prvih devet frameova	
+		if (p->numOfThrow == MAX_NUM_OF_THROWS)
+		{
+			initialise();
+		}	
+		p->points[p->numOfThrow] = x;
+		if ((x == ALL_PINS_DOWN) && (p->numOfThrow < LAST_FRAME_FIRST_THROW)) // last frame <=> different rules
+		{
+			p->points[++(p->numOfThrow)] = 0;  
+				// ako je strike ima samo jedno bacanje u okviru => vazi za prvih devet frameova	
+		}
+		(p->numOfThrow)++;
 	}
-	numOfThrow++;
-*/}
+}
 
 void initialise(int argc, char* argv[])
 { 
