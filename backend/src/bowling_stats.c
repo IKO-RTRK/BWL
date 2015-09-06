@@ -196,7 +196,7 @@ int* getAllLaneIds()
 	return laneIds;
 }
 
-char* getAllPlayersOnLane(int laneId)
+char** getAllPlayersOnLane(int laneId)
 {
 	int i,j;
 	
