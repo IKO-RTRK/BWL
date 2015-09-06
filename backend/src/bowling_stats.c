@@ -11,6 +11,16 @@ static int isSpare(uint8_t frameIndex,player* player) // helper funkcija za prov
 	return (player->points[frameIndex] + player->points[frameIndex + 1]) == ALL_PINS_DOWN;
 }
 
+static player* getPlayerByNameAndId(char* playerName,int laneId)
+{
+	return NULL;
+}
+
+static int validate(int argc,char** argv)
+{
+	return 1;
+}
+
 static void createPlayer(player* p, char nName[])
 {
     p->name = (char*)calloc(strlen(nName) + 1, sizeof(char));
@@ -47,7 +57,7 @@ static void createLane(int num_of_players, player* heroes, char** names, int lan
     }
 }
 
-int8_t* get_points_array(player* player)
+int8_t* get_points_array(char* playerName,int laneId);
 {
 	/* points je organizovan na nacin:
 	points[i*2] - vraca bodove sa prvog bacanja u i-tom frejmu
@@ -55,15 +65,15 @@ int8_t* get_points_array(player* player)
 	points[MAX_NUM_OF_THROWS-1] - vraca bodove sa dodatnog bacanja u zadnjem frejmu ( bitno provjeriti da li je stecen uslov za dodatno bacanje, ako nije ne treba ni ispisivati )
 	bitno da znate kako bi kupili odgovarajuce bodove i ispisivali ih na ekran za odredjeni frejm
 	*/
-	return player->points;
+	return NULL;// player->points;
 }
-int16_t* get_frame_array(player* player)
+int16_t* get_frame_array(char* playerName,int laneId)
 {
-	return player->frames;
+	return NULL; //player->frames;
 }
  
-int16_t score(player* player)
-{
+int16_t score(char* playerName,int laneId)
+{/*
 	uint8_t i; 
 	uint8_t j = 0;
 	for (i = 0; i < NUM_OF_FRAMES; i++)
@@ -96,11 +106,11 @@ int16_t score(player* player)
 		}
 		j += 2;
 
-	}
-	return player->totalScore;
+	} */
+	return 0; //player->totalScore;
 }
 						
-void knockDown(uint8_t x)
+void knockDown(char* playerName,int laneId,uint8_t x)
 {/*
 	if (numOfThrow == MAX_NUM_OF_THROWS)
 	{
