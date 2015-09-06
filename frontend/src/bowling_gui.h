@@ -3,7 +3,7 @@
 
 
 #define ROW 34
-#define COLUMN 155
+#define COLUMN 135
 #define NUM_OF_PINS 10
 #define BALL_POS_ROW 33
 #define FIRST_BALL_POS_COL 8
@@ -21,8 +21,8 @@ void initialisationTable(int TrackNumber);
 void initialisationTrack(int TrackNumber);
 void print(void);
 void move(int TrackNumber);
-void pinsDown(int);
-int knockDownPins(int, int);
+void pinsDown(int,int);
+int knockDownPins(int, int,int);
 void populateMatrixTable(int*, int*);
 unsigned int random(void);
 
