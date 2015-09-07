@@ -5,27 +5,27 @@
 #include "users.h"
 
 
-int numberOfLanesValidation(int numberOfLanes)
+static int8_t numberOfLanesValidation()
 {
 	if (numberOfLanes < 1 || numberOfLanes > 3)
 		return 1;
 	return 0;
 }
 
-int numberOfPlayersValidation(int numberOfPlayers)
+static int8_t numberOfPlayersValidation(int8_t numberOfPlayers)
 {
 	if (numberOfPlayers < 1 || numberOfPlayers > 6)
 		return 1;
 	return 0;
 }
 
-int playerNameValidation(int8_t laneId,int8_t position,char* newName)
+static int8_t playerNameValidation(int8_t laneId, int8_t position, char* newName)
 {
 	int8_t i;
 	
 	for(i = 0; i < position; i++)
 	{
-		if (!strcmp(allLanes[laneId].playersOnLane[i].name,newName))
+		if (!strcmp(allLanes[laneId].playersOnLane[i].name, newName))
 			return 1;
 	}
 	return 0;
@@ -33,19 +33,18 @@ int playerNameValidation(int8_t laneId,int8_t position,char* newName)
 
 void initialise()
 {
-	int8_t numberOfLanes;
 	int8_t i;
 	
-	printf("Koliko staza zelite kreirati: ");		//unos broja staza
+	printf("Koliko staza zelite kreirati: ");		
 	scanf("%" SCNd8, &numberOfLanes);
-	int valid = numberOfLanesValidation(numberOfLanes);		//provjera unosa
+	int8_t valid = numberOfLanesValidation(numberOfLanes);		
 		
 	if (!valid)
 	{
-		allLanes = (lane*) calloc(numberOfLanes, sizeof(lane));		//alokacija niza staza
+		allLanes = (lane*) calloc(numberOfLanes, sizeof(lane));		
 		for (i = 0; i < numberOfLanes; i++)
 		{			
-			createLane(i);						//kreiranje staze
+			createLane(i);					
 		}
 	}
 	else
@@ -58,42 +57,45 @@ void createLane(int8_t laneId)
 {
 	int8_t numberOfPlayers;
 	int8_t i;
+	int8_t valid = 1;
 	
-	printf("Staza %d:\n", laneId);
-	printf("Koliko igraca ce igrati na stazi: ");			//unos broja igraca na stazi
-	scanf("%" SCNd8, &numberOfPlayers);
-	int valid = numberOfPlayersValidation(numberOfPlayers);		//provjera validnosti
+	printf("Staza %d:\n", laneId + 1);
+	printf("Koliko igraca ce igrati na stazi: ");			
 
-	if (!valid)
+	while (valid)
 	{
-		allLanes[laneId].laneId = laneId;			//dodan Id staze
-		allLanes[laneId].numberOfPlayers = numberOfPlayers;		//dodan broj igraca
-		allLanes[laneId].playersOnLane = calloc (numberOfPlayers, sizeof(player));
-		for (i = 0; i < numberOfPlayers; i++)
-		{
-			createPlayer(laneId,i);					//kreiranje igraca
-		}
+		scanf("%" SCNd8, &numberOfPlayers);
+		valid = numberOfPlayersValidation(numberOfPlayers);
+		if (valid)
+			printf("Broj igraca 1-6 ! Unesite ponovo: ");
+	}		
+	
+	allLanes[laneId].laneId = laneId;			
+	allLanes[laneId].numberOfPlayers = numberOfPlayers;		
+	allLanes[laneId].playersOnLane = (player*) calloc(numberOfPlayers, sizeof(player));
+	for (i = 0; i < numberOfPlayers; i++)
+	{
+		createPlayer(laneId, i);					
 	}
 }
 
-void createPlayer(int8_t laneId,int8_t position)
+void createPlayer(int8_t laneId, int8_t position)
 {
-	int valid = 1;
-	while(valid)				// petlja omogucava da se ponovi unos, ako prethodni nije validan
+	int8_t valid = 1;
+	while(valid)				
 	{
 		char tmp[200];
-		printf("Igrac %d\n", position+1);
-		printf("Unesi ime igraca: " );
-		scanf("%s", tmp);						// unos imena igraca
-		valid = playerNameValidation(laneId,position,tmp)		//provjera validnosti imena
+		printf("Unesite ime %d. igraca: ", position + 1);
+		scanf("%s", tmp);					
+		valid = playerNameValidation(laneId,position,tmp);		
 	
 		if (!valid)
-		{																				// inicijalizacija podataka igraca
-			allLanes[laneId].playersOnLane[position].name =(char*) malloc(strlen(tmp) + 1);
-			strcpy(allLanes[laneId].playersOnLane[position].name,tmp);
+		{ 
+			allLanes[laneId].playersOnLane[position].name = (char*) malloc(strlen(tmp) + 1);
+			strcpy(allLanes[laneId].playersOnLane[position].name, tmp);
 			allLanes[laneId].playersOnLane[position].numOfThrow = NOT_EVALUATED;
 			allLanes[laneId].playersOnLane[position].totalScore = NOT_EVALUATED;
-			int i;
+			int8_t i;
 		
 			for (i = 0; i < NUM_OF_FRAMES; i++)
 				allLanes[laneId].playersOnLane[position].frames[i] = NOT_EVALUATED;
