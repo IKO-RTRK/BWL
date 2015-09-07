@@ -51,10 +51,40 @@ typedef struct Lane
 
 lane* allLanes;
 
-void initialise();		//kreira odredjen broj staza na kojima ce se igrati
-void createPlayer();   // Kreira se igrac, tj. unose se ime i broj staze sa tastature i ubacuje se u niz
+/**
+ * @brief	Funkcija vrsi alokaciju memorije za staze, od korisnika se zahtjeva da unese broj staza.
+ * @retval void
+ */
+void initialise();
+
+/**
+ * @brief	Funkcija vrsi unos podataka vezanih za stazu.
+ * @param laneId	Vrijednost koja ce biti jedinstvena za svaku stazu
+ * @retval void
+ */
+void createLane(int8_t laneId);
+
+/**
+ * @brief	Funkcija vrsi unos podataka vezanih za jednog igraca.
+ * @param laneId	Id staze za koju se vrsi unos.
+ * @retval void
+ */
+void createPlayer(int8_t laneId);
 player* getPlayerByNameAndId(char* playerName,int laneId);  // vraca igraca na osnovu ta dva podatka
 
+/**
+ * @brief	Funkcija provjerava da li je broj traka koji unese korisnik validan(maksimano 3 trake).
+ * @param numberOfLanes	Broj staza.
+ * @retval int	Ako je broj staza validan funkcija vraca 0, inace 1.
+ */
+int numberOfLanesValidation(int numberOfLanes);
+
+/**
+ * @brief Funkcija provjerava da li je broj igraca na traci valida(maksimalno 6 igraca).
+ * @param numberOfPlayers Broj igraca.
+ * @retval int Ako je broj igraca validan funkcija vraca 0, inace 1.
+ */ 
+int numberOfPlayersValidation(int numberOfPlayers);
 int deletePLayer(player* p);  // uz pomoc prethodne funkcije, moze se obrisati igrac iz niza 
 
 
