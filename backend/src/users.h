@@ -67,9 +67,10 @@ void createLane(int8_t laneId);
 /**
  * @brief	Funkcija vrsi unos podataka vezanih za jednog igraca.
  * @param laneId	Id staze za koju se vrsi unos.
+ * @param position	Pozicija u nizu igraca na koju se vrsi unos
  * @retval void
  */
-void createPlayer(int8_t laneId);
+void createPlayer(int8_t laneId,int8_t position);
 player* getPlayerByNameAndId(char* playerName,int laneId);  // vraca igraca na osnovu ta dva podatka
 
 /**
@@ -85,6 +86,15 @@ int numberOfLanesValidation(int numberOfLanes);
  * @retval int Ako je broj igraca validan funkcija vraca 0, inace 1.
  */ 
 int numberOfPlayersValidation(int numberOfPlayers);
+
+/**
+ * @brief Funkcija provjerava da li vec postoji igrac sa istim imenom kao novi.
+ * @param laneId	Id staze za koju se ispituje korektnost unosa.
+ * @param numberOfPlayers Pozicija u nizu na koju bi trebalo da bude upisan igrac.
+ * @param newName	Ime igraca koji treba da bude dodan na stazu.
+ * @retval int Ako ne postoji igrac sa istim imenom funkcija vraca 0, inace 1.
+ */ 
+int playerNameValidation(int8_t laneId,int8_t position,char* newName);
 int deletePLayer(player* p);  // uz pomoc prethodne funkcije, moze se obrisati igrac iz niza 
 
 

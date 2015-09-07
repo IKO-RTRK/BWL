@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
+#include <string.h>
 #include "users.h"
 
 
@@ -18,10 +19,22 @@ int numberOfPlayersValidation(int numberOfPlayers)
 	return 0;
 }
 
+int playerNameValidation(int8_t laneId,int8_t position,char* newName)
+{
+	int8_t i;
+	
+	for(i = 0; i < position; i++)
+	{
+		if (!strcmp(allLanes[laneId].playersOnLane[i].name,newName))
+			return 1;
+	}
+	return 0;
+}
+
 void initialise()
 {
 	int8_t numberOfLanes;
-	int i;
+	int8_t i;
 	
 	printf("Koliko staza zelite kreirati: ");		//unos broja staza
 	scanf("%" SCNd8, &numberOfLanes);
@@ -44,7 +57,7 @@ void initialise()
 void createLane(int8_t laneId)
 {
 	int8_t numberOfPlayers;
-	int i;
+	int8_t i;
 	
 	printf("Staza %d:\n", laneId);
 	printf("Koliko igraca ce igrati na stazi: ");			//unos broja igraca na stazi
@@ -55,14 +68,42 @@ void createLane(int8_t laneId)
 	{
 		allLanes[laneId].laneId = laneId;			//dodan Id staze
 		allLanes[laneId].numberOfPlayers = numberOfPlayers;		//dodan broj igraca
+		allLanes[laneId].playersOnLane = calloc (numberOfPlayers, sizeof(player));
 		for (i = 0; i < numberOfPlayers; i++)
 		{
-			//createPlayer();					//kreiranje igraca
+			createPlayer(laneId,i);					//kreiranje igraca
 		}
 	}
 }
 
-void createPlayer(int8_t laneId)
+void createPlayer(int8_t laneId,int8_t position)
 {
+	int valid = 1;
+	while(valid)				// petlja omogucava da se ponovi unos, ako prethodni nije validan
+	{
+		char tmp[200];
+		printf("Igrac %d\n", position+1);
+		printf("Unesi ime igraca: " );
+		scanf("%s", tmp);						// unos imena igraca
+		valid = playerNameValidation(laneId,position,tmp)		//provjera validnosti imena
 	
+		if (!valid)
+		{																				// inicijalizacija podataka igraca
+			allLanes[laneId].playersOnLane[position].name =(char*) malloc(strlen(tmp) + 1);
+			strcpy(allLanes[laneId].playersOnLane[position].name,tmp);
+			allLanes[laneId].playersOnLane[position].numOfThrow = NOT_EVALUATED;
+			allLanes[laneId].playersOnLane[position].totalScore = NOT_EVALUATED;
+			int i;
+		
+			for (i = 0; i < NUM_OF_FRAMES; i++)
+				allLanes[laneId].playersOnLane[position].frames[i] = NOT_EVALUATED;
+		
+			for (i = 0; i < MAX_NUM_OF_THROWS; i++)
+				allLanes[laneId].playersOnLane[position].points[i] = NOT_EVALUATED;
+		}
+		else
+		{
+			printf("Uneseno ime vec postoji!\n");
+		}
+	}
 }
