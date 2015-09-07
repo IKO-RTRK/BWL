@@ -20,5 +20,5 @@
  - ~~Unesen validan broj traka~~
  - ~~Unesen nevalidan broj igraca~~
  - ~~Unesen validan broj igraca~~
- - Dva ili vise igaca imaju isto ime
- - Svi igraci imaju razlicita imena
+ - ~~Dva ili vise igaca imaju isto ime~~
+ - ~~Svi igraci imaju razlicita imena~~
