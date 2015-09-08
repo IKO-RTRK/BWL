@@ -327,17 +327,16 @@ void print_track(int NumberOfLanes)
 	    {
 		for (curr_column = 0; curr_column < COLUMN_TRACK; curr_column++)
 		{
-	 	    SetCursorPos((curr_lane * DIFF_TRACKS)+curr_column, curr_row);
+	 	    SetCursorPos((curr_lane * DIFF_TRACKS)+curr_column, curr_row + 1);
 		    printf("%c", matrix_track[curr_row][curr_column]);
 		}
-		printf("\n");
 	    }
 	}
     return;
 }
 
 
-void print_table(int NumberOfTables)
+void print_table(int NumberOfTables,int curr_lane)
 {
     uint8_t curr_table;
     uint8_t curr_row;
@@ -348,14 +347,25 @@ void print_table(int NumberOfTables)
 	    {
 		for (curr_column = 0; curr_column < COLUMN_TABLE; curr_column++)
 		{
-	 	    SetCursorPos(curr_column,(curr_table * DIFF_TABLES) + curr_row + 1);
+	 	    SetCursorPos((curr_lane * DIFF_TRACKS) + curr_column + 16,(curr_table * DIFF_TABLES) + curr_row + 7);
 		    printf("%c", matrix_table[curr_row][curr_column]);
 		}
-		printf("\n");
 	    }
 	}
     return;
 }
+
+void print()
+{
+	uint8_t NumOfPlayers;
+	print_track(3);
+	for(NumOfPlayers = 0; NumOfPlayers < 3; NumOfPlayers++)
+	{
+		print_table(5,NumOfPlayers);
+	}
+	SetCursorPos(100,0);
+}
+
 
 
 unsigned int random1(void)
@@ -370,9 +380,9 @@ unsigned int random1(void)
 int main(void)
 
 {
+initialisationTrack();
 initialisationTable();
-//print_track(3);
-print_table(3);
+print();
 	//potrebno pozvati clear prije pokretanja programa
     return 0;
 } 

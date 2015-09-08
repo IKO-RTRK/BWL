@@ -12,7 +12,7 @@
 #define START_LANE_ROW 0
 #define START_LANE_COLON 0
 #define START_PINS 5
-#define DIFF_TRACKS 45
+#define DIFF_TRACKS 56
 #define DIFF_TABLES 5
 #define min(a,b) (((a)<=(b))?(a):(b))
 #define START_OF_FIRST_TRACK_ROW 5
@@ -23,7 +23,8 @@ void initialisationLane();
 void initialisationTrack();
 void initialisationTable();
 void print_track(int);
-void print_table(int);
+void print_table(int,int);
+void print();
 void move(int TrackNumber);
 void pinsDown(int,int,int);
 int knockDownPins(int, int,int);
