@@ -1,7 +1,10 @@
-all: a b
+all: a b c
 
 a:
-	ar -cvq libBackend.a ../build/bowling_stats.o ../build/users.o
+	ls | grep *\.a | xargs rm -f
 
 b:
+	ar -cvq libBackend.a ../build/bowling_stats.o ../build/users.o
+
+c:
 	gcc main.c -o main -L. -lBackend

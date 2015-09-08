@@ -30,8 +30,14 @@ void baci()
 // Primjer koristenja backend biblioteke
 int main()
 {
-	int8_t b = 3;
-	initialise(b);
+	int8_t b;
+
+	printf("Broj staza: ");
+	scanf("%"SCNd8, &b);
+
+	if (initialise(b))
+	return 1;
+
 	int8_t i, br, n, j;
 	char name[50];
 	for (i = 0; i < numberOfLanes; i++)
@@ -40,7 +46,6 @@ int main()
 		scanf("%"SCNd8, &n);
 		if (createLane(i, n))
 		{
-			printf("Broj igraca od 1 do 6!\n");
 			i--;	
 		}
 		else
@@ -49,7 +54,10 @@ int main()
 			{
 				printf("Ime %d. igraca: ", j + 1);
 				scanf("%s", name);
-				createPlayer(i, name);
+				if (createPlayer(i, name))
+				{
+					j--;
+				}
 			}
 		}
 	}
