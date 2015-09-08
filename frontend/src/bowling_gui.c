@@ -1,6 +1,6 @@
 #include <stdio.h>
-//#include <stdlib.h>
-# include <unistd.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include  <stdint.h>
 #include "bowling_gui.h"
 
@@ -10,6 +10,71 @@ static int lastPosition[3];// Potrebna mi je informacija o poslednjoj poziciji
 char matrix[ROW][COLUMN] = {[0 ... ROW-1][0 ... COLUMN-1] = ' '};
 char bowling_pins[NUM_OF_PINS] = {[0 ... NUM_OF_PINS-1] = '!'};
 char bowling_ball = 'o';
+
+typedef struct node{ // lista koja sluzi za izvlacenje rednog broja dostupnih pinova koji se mogu srusiti
+	int position;
+	struct node *next;
+} node;
+
+node * head=NULL;
+node * tail=NULL;
+char listSize=0;
+
+void listAppend(int broj)
+{
+	if ( head == NULL ) 
+	{
+		head=tail=(node*)malloc(sizeof(node));
+		head->position=tail->position=broj;
+		head->next=tail->next=NULL;
+		return;
+	}
+	node *temp=tail;
+	tail=(node*)malloc(sizeof(node));
+	tail->next=NULL;
+	temp->next=tail;
+	tail->position=broj;
+}
+void listDestroy()
+{
+	node *temp;
+	while(head!=NULL)
+	{
+		temp=head->next;
+		free(head);
+		head=temp;
+	}
+	head=tail=NULL;
+	listSize=0;
+}
+int listGetAvailablePin(int atPosition) // vraca pin koji se moze srusiti, a nalazi se na poziciji "atPosition" u listi
+{
+	if ( atPosition > listSize || atPosition < 1 ) atPosition=1; // u slucaju da dodje nedozvoljena vrijednost izbacuje se onaj na poziciji 1
+	int i=1;
+	node *temp=head;
+	node *prev=NULL;
+	for(; i<atPosition; i++)
+	{
+		prev=temp;
+		temp=temp->next;
+	}
+	i=temp->position;
+	if ( temp==head ) { head=head->next; free(temp); listSize--; return i; }
+	if ( temp==tail ) { free(tail); tail=prev; tail->next=NULL; listSize--; return i; }
+	prev->next=temp->next;
+	free(temp);
+	listSize--;
+	return i;
+	
+}
+void listInitialisation()
+{
+	int i;
+	listDestroy();
+	for(i=1;i<=10;i++)
+	listAppend(i);
+	listSize=10;
+}
 
 
 void initialisationLane(int TrackNumber)
@@ -112,7 +177,6 @@ void move(int TrackNumber)
     uint8_t curr_pos_col = FIRST_BALL_POS_COL+(TrackNumber*DIFF);			//trentuna kolona u kojoj se nalazi kugla u toku kretanja
     uint8_t prev_pos_row;					//prethodni red u kome se nalazila kugla
     uint8_t prev_pos_col;					//prethodna kolona
-    double a, b;		// koriste se samo za funkciju foo1
     while (curr_pos_row >= 10)				//sve dok ne dodje kugla do cunjeva
     {
 
@@ -124,7 +188,7 @@ void move(int TrackNumber)
 	offset = 0;					//ne koristi se vise radnom jer je njeno kretanje fiksno 
       else
       {
-	offset = (random() % 3) - 1;
+	offset = (random1() % 3) - 1;
       }
       
       prev_pos_row = curr_pos_row;
@@ -132,13 +196,12 @@ void move(int TrackNumber)
       
       curr_pos_row -= 1;
       curr_pos_col = curr_pos_col + offset;
-	
       matrix[prev_pos_row][prev_pos_col] = '.';		//na prethodnoj poziciji na kojoj se nalazila kugla upisi .
       matrix[curr_pos_row][curr_pos_col] = bowling_ball;//na trenutnu poziciju na kojoj se nalazi kugla ucrtaj kuglu 
       lastPosition[TrackNumber]=curr_pos_col;   			//ovo sam dodao jer mi je bila potrebna zadnja pozicija
       system("clear");
       print();
-      usleep(700000);
+      usleep(100000);
       
     }
 }
@@ -148,7 +211,7 @@ void move(int TrackNumber)
 int knockDownPins(int position, int remain,int TrackNumber) 	// dodan int TrackNumber, int remain se koristi da se pamti broj nesrusenih
 {  // da se ne desi u slucaju da je u prvom bacanju pogodjen centar i sruseno 7 cunjeva i da se u narednom bacanju pogodi centar ponovo
    // i tad srusi npr 5 a ostala su samo 3... min ogranicava maxMod 
-	uint8_t maxMod,x;				
+	uint8_t maxMod,x;		
 	if(position<5+(TrackNumber*DIFF) || position>11+(TrackNumber*DIFF))
 		return 0;
 	else if(position==5+(TrackNumber*DIFF) || position==11+(TrackNumber*DIFF))
@@ -159,92 +222,55 @@ int knockDownPins(int position, int remain,int TrackNumber) 	// dodan int TrackN
 		maxMod=min(remain,7);
 	else if(position==8+(TrackNumber*DIFF))
 		maxMod=min(remain,10);
-		
-	x=(random()%maxMod)+1;
+	x=(random1()%maxMod)+1;
 	return x;
 }
 
 // Funkcija koja stavlja 'x' na mjesto srusenog cunja, s tim da ona  na slucajan nacin
 //  bira poziciju na kojoj ce srusiti cunj
-void pinsDown(int k, int TrackNumber)
+void pinsDown(int k, int TrackNumber,int roll) //roll je redni broj bacanja u frejmu ( za prvo bacanje argument je 0, za drugo je 1 )
 {
-	if(k!=0)
-	 {
-	   uint8_t pale[k], i, j;
-	   for(i=0;i<=k;i++)
-		{
-		  pale[i]=random()%10+1;
-		  for(j=0;j<i;j++)		// Da ne izgleda da su npr srusena samo 2 cunja a trebalo je 5
-						// tj da se ne postavlja 'x' na isto mjesto
-		    {
-			if(pale[i]==pale[j]) 
-			i--;
-		    }
-	 	}
-	   for(i=0;i<=k;i++)
+	if ( !roll ) listInitialisation();
+	if( k!=0 )
+	{
+	uint8_t pale[k], i, j;
+	for(i=0;i<k;i++)
+	{
+		pale[i]=listGetAvailablePin((random1()%listSize)+1);
+	}
+	   for(i=0;i<k;i++)
 	     {
 
-	       switch(pale[i])	// Ovi if-ovi dodani u svakom case-u da ne bi u drugom bacanju ponovo stavljalo 'x'
-				// tamo gdje je on vec postavljen... Treba biti zapamcen polozaj nesrusenih cunjeva iz prvog bacanja 
+	       switch(pale[i]) 
 	 	{
+
 	 	 case 1:
-			if(matrix[8][8+(TrackNumber*DIFF)]=='x')
-			  i--;
-			else
 	 	 	  matrix[8][8+(TrackNumber*DIFF)]='x'; break;
 	 	 case 2:
-			if(matrix[7][7+(TrackNumber*DIFF)]=='x')
-			  i--;
-			else
 	 	 	  matrix[7][7+(TrackNumber*DIFF)]='x'; break;
 	 	 case 3:
-			if(matrix[7][9+(TrackNumber*DIFF)]=='x')
-			  i--;
-			else
 	 	 	  matrix[7][9+(TrackNumber*DIFF)]='x'; break;
 	 	 case 4: 
-			if(matrix[6][6+(TrackNumber*DIFF)]=='x')
-			  i--;
-			else
 	 	 	  matrix[6][6+(TrackNumber*DIFF)]='x'; break;
 	 	 case 5:
-			if(matrix[6][8+(TrackNumber*DIFF)]=='x')
-			  i--;
-			else
 	 	 	  matrix[6][8+(TrackNumber*DIFF)]='x'; break;
 	 	 case 6:
-	 	 	if(matrix[6][10+(TrackNumber*DIFF)]=='x')
-			  i--;
-			else
 	 	 	  matrix[6][10+(TrackNumber*DIFF)]='x'; break;
 	 	 case 7:
-	 	 	if(matrix[5][5+(TrackNumber*DIFF)]=='x')
-			  i--;
-			else
 	 	 	  matrix[5][5+(TrackNumber*DIFF)]='x'; break;
 	 	 case 8:
-	 	 	if(matrix[5][7+(TrackNumber*DIFF)]=='x')
-			  i--;
-			else
 	 	 	  matrix[5][7+(TrackNumber*DIFF)]='x'; break;
 	 	 case 9:
-	 	 	if(matrix[5][9+(TrackNumber*DIFF)]=='x')
-			  i--;
-			else
 	 	 	  matrix[5][9+(TrackNumber*DIFF)]='x'; break;
 	 	 case 10:
-	 	 	if(matrix[5][11+(TrackNumber*DIFF)]=='x')
-			  i--;
-			else
 	 	 	  matrix[5][11+(TrackNumber*DIFF)]='x'; break;
-
 	 	}
 	     }
-	 }
-	 matrix[10][lastPosition[TrackNumber]]='.';
-	 system("clear");
-         print();
-         usleep(700000);
+	}
+	matrix[10][lastPosition[TrackNumber]]='.';
+	system("clear");
+        print();
+        usleep(100000);
 }
 
 //funkcija koje postavlja rezultate rusenja cunjeva
@@ -302,7 +328,7 @@ void print(void)
     return;
 }
 
-unsigned int random(void)
+unsigned int random1(void)
 {
      static unsigned int zi,zii;
      
@@ -322,51 +348,47 @@ int main(void)
 	int KolikoZaOboriti1[21];
 	int KolikoZaOboriti2[21];
 	int KolikoZaOboriti3[21];
-int i;
-for(i=0;i<2;i++)	
-{
-    move(0);
-
-    if(i%2==1)
-      	KolikoZaOboriti1[i]=knockDownPins(lastPosition[0], 10-KolikoZaOboriti1[i-1],0);    
-    else
-      	KolikoZaOboriti1[i]=knockDownPins(lastPosition[0], 10,0);
-
-    	pinsDown(KolikoZaOboriti1[i],0);
- 	print();
-	initialisationLane(0);
-}
-int a;
-for(a=0;a<2;a++)
-{
-	move(1);
-	if(a%2==1)
-
-      		KolikoZaOboriti2[a]=knockDownPins(lastPosition[1], 10-KolikoZaOboriti2[a-1],1);    
-    	else
-      		KolikoZaOboriti2[a]=knockDownPins(lastPosition[1], 10,1);
-	
-	pinsDown(KolikoZaOboriti2[a],1);
- 	print();
-	initialisationLane(1);
-}
-	
-int c;
-
-for(c=0;c<2;c++)
-{
-	move(2);
-	if(c%2==1)
-
-		KolikoZaOboriti3[c]=knockDownPins(lastPosition[2], 10-KolikoZaOboriti3[c-1],2);    
-    	else
-      		KolikoZaOboriti3[c]=knockDownPins(lastPosition[2], 10,2);
-	
-	pinsDown(KolikoZaOboriti3[c],2);
- 	print();
-	initialisationLane(2);
+	int i,j;
+	for (j=1;j<=10;j++)
+	{
+		initialisationTrack(0);
+		initialisationTrack(1);
+		initialisationTrack(2);
 		
-}
+		
+	for(i=0;i<2;i++)	
+	{
+  		move(0);
+		if (i % 2 == 1 ) KolikoZaOboriti1[i]=knockDownPins(lastPosition[0], 10-KolikoZaOboriti1[i-1],0);    
+    		else KolikoZaOboriti1[i]=knockDownPins(lastPosition[0], 10,0);
+
+	    	pinsDown(KolikoZaOboriti1[i],0,i%2);
+	 	print();
+		initialisationLane(0);
+	}
+	for(i=0;i<2;i++)
+	{
+		move(1);
+		if( i % 2 ==  1 ) KolikoZaOboriti2[i]=knockDownPins(lastPosition[1], 10-KolikoZaOboriti2[i-1],1);    
+    		else KolikoZaOboriti2[i]=knockDownPins(lastPosition[1], 10,1);
+
+		pinsDown(KolikoZaOboriti2[i],1,i%2);
+ 		print();
+		initialisationLane(1);
+	}
+	for(i=0;i<2;i++)
+	{
+		move(2);
+		if(i % 2 == 1) KolikoZaOboriti3[i]=knockDownPins(lastPosition[2], 10-KolikoZaOboriti3[i-1],2);    
+	    	else KolikoZaOboriti3[i]=knockDownPins(lastPosition[2], 10,2);
+
+		pinsDown(KolikoZaOboriti3[i],2,i%2);
+ 		print();
+		initialisationLane(2);
+	}
+	}
+	system("clear");
+	print();
 	   
 
     return 0;

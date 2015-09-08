@@ -21,10 +21,10 @@ void initialisationTable(int TrackNumber);
 void initialisationTrack(int TrackNumber);
 void print(void);
 void move(int TrackNumber);
-void pinsDown(int,int);
+void pinsDown(int,int,int);
 int knockDownPins(int, int,int);
 void populateMatrixTable(int*, int*);
-unsigned int random(void);
+unsigned int random1(void);
 
 #endif
 
