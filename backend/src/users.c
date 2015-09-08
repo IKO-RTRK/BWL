@@ -5,6 +5,11 @@
 #include <ctype.h>
 #include "users.h"
 
+static int8_t isDigit(int8_t number)
+{
+	if(number=='0' || number=='1' || number=='2' || number=='3' || number=='4' || number=='5' || number=='6' || number=='7' || number=='8' || number=='9')
+	return 1;
+}
 
 static int8_t numberOfLanesValidation(int8_t numberOfLanes)
 {
@@ -14,8 +19,8 @@ static int8_t numberOfLanesValidation(int8_t numberOfLanes)
 }
 
 static int8_t numberOfPlayersValidation(int8_t numberOfPlayers)
-{
-	if (numberOfPlayers < MIN_NUM_OF_PLAYERS || numberOfPlayers > MAX_NUM_OF_PLAYERS)
+{	
+	if ((isDigit(numberOfPlayers)) && (numberOfPlayers < MIN_NUM_OF_PLAYERS || numberOfPlayers > MAX_NUM_OF_PLAYERS))
 		return 1;
 	return 0;
 }
@@ -31,6 +36,7 @@ static int8_t playerNameValidation(int8_t laneId, int8_t position, char* newName
 	}
 	return 0;
 }
+
 
 int8_t initialise(int8_t numOfLanes)
 {	
@@ -56,7 +62,7 @@ int8_t createLane(int8_t laneId,int8_t numberOfPlayers)
 	int8_t valid;			
 
 	valid = numberOfPlayersValidation(numberOfPlayers);
-				
+	
 	if (!valid)
 	{
 	 	allLanes[laneId].laneId = laneId;			
