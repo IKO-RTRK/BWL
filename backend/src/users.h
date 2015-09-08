@@ -15,21 +15,12 @@
 
 #include <stdint.h>
 #include <inttypes.h>
+#include "player.h"
 #define MAX_NUM_OF_LANES 3
 #define MAX_NUM_OF_PLAYERS 6
 #define MIN_NUM_OF_LANES 1
 #define MIN_NUM_OF_PLAYERS 1
-/**
-	@brief Struktura predstavlja apstrakciju jednog igraca sa svim potrebnim podacima za igru. 
-*/
-typedef struct Player 
-{
-    char* name;				///< Ime igraca
-    int16_t frames[NUM_OF_FRAMES];	///< Niz u koji se upisuju bodovi po okvirima 
-    int8_t points[MAX_NUM_OF_THROWS]; 	///< Niz u koji se upisuju bodovi po bacanjima
-    uint16_t totalScore; 		///< Ukupan rezultat
-    uint8_t numOfThrow;			///< Broj bacanja
-} player;
+
 
 /**
 	@brief Strukura predstavlja apstrakciju jedne staze sa igracima koji ucestvuju u igri
@@ -49,7 +40,7 @@ int8_t numberOfLanes;
  * @param	numberOfLanes	Broj staza koji treba da bude kreiran.
  * @retval 	int8_t
  */
-int8_t initialise(int8_t numberOfLanes);
+int8_t initialise(int8_t numOfLanes);
 
 /**
  * @brief		Funkcija vrsi unos podataka vezanih za stazu. Mora biti pozvana prije createPlayer.
@@ -65,7 +56,7 @@ int8_t createLane(int8_t laneId, int8_t numberOfPlayers);
  * @param playerName	Ime igraca koji treba biti dodan.
  * @retval int8_t
  */
-int8_t createPlayer(int8_t laneId,char* playerName);
+int8_t createPlayer(int8_t laneId, char* playerName);
 
   
 

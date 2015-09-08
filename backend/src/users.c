@@ -5,7 +5,7 @@
 #include "users.h"
 
 
-static int8_t numberOfLanesValidation()
+static int8_t numberOfLanesValidation(int8_t numberOfLanes)
 {
 	if (numberOfLanes < MIN_NUM_OF_LANES || numberOfLanes > MAX_NUM_OF_LANES)
 		return 1;
@@ -31,11 +31,12 @@ static int8_t playerNameValidation(int8_t laneId, int8_t position, char* newName
 	return 0;
 }
 
-int8_t initialise(int8_t numberOfLanes)
+int8_t initialise(int8_t numOfLanes)
 {
 	int8_t i;
-	
-	int8_t valid = numberOfLanesValidation(numberOfLanes);		
+	numberOfLanes = numOfLanes;
+	int8_t valid = numberOfLanesValidation(numberOfLanes);	
+
 		
 	if (!valid)
 	{
@@ -70,7 +71,7 @@ int8_t createLane(int8_t laneId,int8_t numberOfPlayers)
 	return 0;
 }
 
-int8_t createPlayer(int8_t laneId,char* playerName)
+int8_t createPlayer(int8_t laneId, char* playerName)
 {
 	int8_t valid;	
 	int8_t numberOfPlayers = allLanes[laneId].numberOfPlayers;
