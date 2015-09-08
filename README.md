@@ -1,3 +1,5 @@
+http://falsinsoft.blogspot.ba/2014/05/set-console-cursor-position-in-windows.html
+
 **pocistite sve sto nije potrebno**
 - npr. backup fajlovi (*.*~)
 - *.o fajlovi ne treba da budu na GIT-u
