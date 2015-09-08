@@ -32,6 +32,7 @@
 	Bacanje nije izvrseno.
 */
 #define NOT_THROWN -1
+
 #include <stdint.h>
 
 /**
@@ -44,59 +45,15 @@ typedef struct Player
     int8_t points[MAX_NUM_OF_THROWS]; 	///< Niz u koji se upisuju bodovi po bacanjima
     uint16_t totalScore; 		///< Ukupan rezultat
     uint8_t numOfThrow;			///< Broj bacanja
-    int lane_id;			///< Broj staze koja je dodjeljena igracu
 } player;
 
 /**
-*	@brief	Funkcija vrsi pocetnu inicijalizaciju igre. Parametri funkcije su argumenti komandne linije. 
-*	@param	argc	Ukupan broj argumenata komandne linije.
-*	@param	argv[]	Niz stringova (argumenata). Prvi stvarni argument predstavlja ukupan broj staza. Drugi argument oznacava 
-			broja igraca na prvoj stazi, a zatim dolaze imena svih igraca sa prve staze. Nakon toga dolazi broj igraca 
-			na drugoj stazi, pa njihova imena. Postupak se ponavlja za sve staze.
-*	@retval void
-*/
-void initialise(int argc, char* argv[]);
-/**
-*	@brief	Funkcija na osnovu imena igraca i broja staze vraca broj bodova koje je ostvario taj igrac.
-*	@param	playerName	Ime igraca.
-*	@param	laneId		Broj staze.
-*	@retval int16_t		Ukupan broj bodova za odredjenog igraca na odredjenoj stazi.
-*/
-int16_t score(char* playerName,int laneId);
-/**
-*	@brief	Funkcija za odredjenog igraca na odredjenoj stazi upisuje broj srusenih cunjeva nakon bacanja.
-*	@param	playerName	Ime igraca.
-*	@param	laneId		Broj staze.
+*	@brief	Funkcija za odredjenog igraca upisuje broj srusenih cunjeva nakon bacanja i racuna ukupan rezultat.
+*	@param	p		Igrac koji baca.
 *	@param	x		Broj srusenih cunjeva.
 *	@retval void
 */
-void knockDown(char* playerName,int laneId,uint8_t x);
-//int validate(int argc ,char* argv[]);
+void knockDown(player* p, uint8_t x);
 
-/**
-*	@brief	Funkcija za odredjenog igraca na odredjenoj stazi vraca adresu pocetka niza koji sadrzi bodove po bacanjima.
-*	@param	playerName	Ime igraca.
-*	@param	laneId		Broj staze.
-*	@retval int8_t*		Referenca na niz bodova po bacanjima.
-*/
-int8_t* get_points_array(char* playerName,int laneId); 
-/**
-*	@brief	Funkcija za odredjenog igraca na odredjenoj stazi vraca adresu pocetka niza koji sadrzi bodove po okvirima.
-*	@param	playerName	Ime igraca.
-*	@param	laneId		Broj staze.
-*	@retval int16_t*	Referenca na niz okvira (frejmova).
-*/
-int16_t* get_frames_array(char* playerName, int laneId); 
-/**
-*	@brief	Funkcija za odredjeni broj staze vraca niz imena svih igraca na toj stazi.
-*	@param	laneId		Broj staze.
-*	@retval char**		Referenca na niz.
-*/
-char** getAllPlayersOnLane(int laneId);
-/**
-*	@brief	Funkcija vraca adresu niza koji sadrzi identifikatore svih staza.
-*	@param	void
-*	@retval int*	Referenca na niz.
-*/
-int* getAllLaneIds();
+
 #endif
