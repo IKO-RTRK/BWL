@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 #include <string.h>
+#include <ctype.h>
 #include "users.h"
 
 
@@ -58,14 +59,14 @@ int8_t createLane(int8_t laneId,int8_t numberOfPlayers)
 				
 	if (!valid)
 	{
-	  allLanes[laneId].laneId = laneId;			
-	  allLanes[laneId].numberOfPlayers = 0;		
-	  allLanes[laneId].playersOnLane = (player*) calloc(numberOfPlayers, sizeof(player));
+	 	allLanes[laneId].laneId = laneId;			
+		allLanes[laneId].numberOfPlayers = 0;		
+	 	allLanes[laneId].playersOnLane = (player*) calloc(numberOfPlayers, sizeof(player));
 	}
 	else
 	{
-	  printf("Broj igraca 1-6 ! ");
-	  return -1;
+	 	printf("Broj igraca 1-6 ! ");
+	  	return -1;
 	}
 	return 0;
 }
