@@ -315,21 +315,23 @@ void pinsDown(int k, int TrackNumber,int roll) //roll je redni broj bacanja u fr
 }*/
 
 //Ispis matrice
-void print(int xPos, int yPos)
+void print(int NumberOfLanes)
 {
-    SetCursorPos(10, 10);
+    uint8_t curr_lane;
     uint8_t curr_row;
     uint8_t curr_column;
-    
-    for (curr_row = 0; curr_row < ROW_TRACK; curr_row++) 
-    {
-	for (curr_column = 0; curr_column < COLUMN_TRACK; curr_column++)
+    for (curr_lane = 0; curr_lane < NumberOfLanes; curr_lane++)
 	{
- 	    SetCursorPos(xPos+curr_column, yPos+curr_row);
-	    printf("%c", matrix_track[curr_row][curr_column]);
+	    for (curr_row = 0; curr_row < ROW_TRACK; curr_row++) 
+	    {
+		for (curr_column = 0; curr_column < COLUMN_TRACK; curr_column++)
+		{
+	 	    SetCursorPos((curr_lane * DIFF)+curr_column, curr_row);
+		    printf("%c", matrix_track[curr_row][curr_column]);
+		}
+		printf("\n");
+	    }
 	}
-	printf("\n");
-    }
     return;
 }
 
@@ -349,7 +351,7 @@ int main(void)
 
 {
 initialisationTrack();
-   print(57,19);
-print (97,19);
+print(4);
+	//potrebno pozvati clear prije pokretanja programa
     return 0;
 } 

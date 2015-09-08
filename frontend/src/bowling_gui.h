@@ -19,7 +19,7 @@
 
 void initialisationLane();
 void initialisationTrack();
-void print(int,int);
+void print(int);
 void move(int TrackNumber);
 void pinsDown(int,int,int);
 int knockDownPins(int, int,int);
