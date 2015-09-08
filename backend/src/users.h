@@ -15,7 +15,10 @@
 
 #include <stdint.h>
 #include <inttypes.h>
-
+#define MAX_NUM_OF_LANES 3
+#define MAX_NUM_OF_PLAYERS 6
+#define MIN_NUM_OF_LANES 1
+#define MIN_NUM_OF_PLAYERS 1
 /**
 	@brief Struktura predstavlja apstrakciju jednog igraca sa svim potrebnim podacima za igru. 
 */
@@ -42,28 +45,29 @@ lane* allLanes;
 int8_t numberOfLanes;
 
 /**
- * @brief	Funkcija vrsi alokaciju memorije za staze, od korisnika se zahtjeva da unese broj staza.
- * @retval 	void
+ * @brief	Funkcija vrsi alokaciju memorije za staze, od korisnika se zahtjeva da unese broj staza. Mora biti pozvana prije createLane i createPlayer
+ * @param	numberOfLanes	Broj staza koji treba da bude kreiran.
+ * @retval 	int8_t
  */
-void initialise();
+int8_t initialise(int8_t numberOfLanes);
 
 /**
- * @brief		Funkcija vrsi unos podataka vezanih za stazu.
- * @param laneId	Vrijednost koja ce biti jedinstvena za svaku stazu
- * @retval void
+ * @brief		Funkcija vrsi unos podataka vezanih za stazu. Mora biti pozvana prije createPlayer.
+ * @param laneId	Vrijednost koja ce biti jedinstvena za svaku stazu.
+ * @param numberOfPlayers	Broj igraca koji ce biti na stazi.
+ * @retval int8_t
  */
-void createLane(int8_t laneId);
+int8_t createLane(int8_t laneId, int8_t numberOfPlayers);
 
 /**
  * @brief		Funkcija vrsi unos podataka vezanih za jednog igraca.
  * @param laneId	Id staze za koju se vrsi unos.
- * @param position	Pozicija u nizu igraca na koju se vrsi unos
- * @retval void
+ * @param playerName	Ime igraca koji treba biti dodan.
+ * @retval int8_t
  */
-void createPlayer(int8_t laneId, int8_t position);
+int8_t createPlayer(int8_t laneId,char* playerName);
 
-
-player* getPlayerByNameAndId(char* playerName,int8_t laneId);  
+  
 
 
 int8_t deletePLayer(player* p);  
