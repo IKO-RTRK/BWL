@@ -8,6 +8,7 @@ static int lastPosition[3];// Potrebna mi je informacija o poslednjoj poziciji
 
 //Ovo podrzava samo gcc kompajler
 char matrix_track[ROW_TRACK][COLUMN_TRACK] = {[0 ... ROW_TRACK-1][0 ... COLUMN_TRACK-1] = ' '};
+char matrix_table[ROW_TABLE][COLUMN_TABLE] = {[0 ... ROW_TABLE-1][0 ... COLUMN_TABLE-1] = ' '};
 char bowling_pins[NUM_OF_PINS] = {[0 ... NUM_OF_PINS-1] = '!'};
 char bowling_ball = 'o';
 
@@ -141,37 +142,37 @@ void initialisationTrack()
 	initialisationPins();
 	initialisationLane();
 }
- /*
-void initialisationTable(int TrackNumber)
+
+void initialisationTable()
 {   
     uint8_t curr_row;
     uint8_t curr_column;
     uint8_t tmp1 = START_LANE_ROW;				//prvi red od koga pocinju da se upisuju -
     for (curr_row = 0; curr_row < 10; curr_row++)
     {
-	for (curr_column = 1+DIFF_TABLES*TrackNumber; curr_column < 4+DIFF_TABLES*TrackNumber; curr_column++) 
+	for (curr_column = 1; curr_column < 4; curr_column++) 
 	{
-	    matrix[0][tmp1 + curr_column] = '-';
-	    matrix[3][tmp1 + curr_column] = '-';
+	    matrix_table[0][tmp1 + curr_column] = '-';
+	    matrix_table[3][tmp1 + curr_column] = '-';
 	}
 
 	tmp1+=4;
     }
         
-    uint8_t tmp = START_LANE_COLON+DIFF_TABLES*TrackNumber;				//prva kolona od koje pocinju da se upisuju |
+    uint8_t tmp = START_LANE_COLON;				//prva kolona od koje pocinju da se upisuju |
 
     for (curr_row = 0; curr_row < 11; curr_row++)
     {
-	for (curr_column = 0+DIFF_TABLES*TrackNumber; curr_column < 2+DIFF_TABLES*TrackNumber; curr_column++) 
+	for (curr_column = 0; curr_column < 2; curr_column++) 
 	{
-	    matrix[1][tmp] = '|';
-	    matrix[2][tmp] = '|';
+	    matrix_table[1][tmp] = '|';
+	    matrix_table[2][tmp] = '|';
 	}
 	tmp+=4;
     }
     
     
-}*/
+}
 
     /*
 void move(int TrackNumber)
@@ -315,7 +316,7 @@ void pinsDown(int k, int TrackNumber,int roll) //roll je redni broj bacanja u fr
 }*/
 
 //Ispis matrice
-void print(int NumberOfLanes)
+void print_track(int NumberOfLanes)
 {
     uint8_t curr_lane;
     uint8_t curr_row;
@@ -326,32 +327,62 @@ void print(int NumberOfLanes)
 	    {
 		for (curr_column = 0; curr_column < COLUMN_TRACK; curr_column++)
 		{
-	 	    SetCursorPos((curr_lane * DIFF)+curr_column, curr_row);
+	 	    SetCursorPos((curr_lane * DIFF_TRACKS)+curr_column, curr_row + 1);
 		    printf("%c", matrix_track[curr_row][curr_column]);
 		}
-		printf("\n");
 	    }
 	}
     return;
 }
 
 
-unsigned int random1(void)
+void print_table(int NumberOfTables,int curr_lane)
 {
-     static unsigned int zi,zii;
-     
-     zi=(1103515245* zii + 12345) % 2147483648 ;
-     zii=zi;
-             return zi ;
+    uint8_t curr_table;
+    uint8_t curr_row;
+    uint8_t curr_column;
+    for (curr_table = 0; curr_table < NumberOfTables; curr_table++)
+	{
+	    for (curr_row = 0; curr_row < ROW_TABLE; curr_row++) 
+	    {
+		for (curr_column = 0; curr_column < COLUMN_TABLE; curr_column++)
+		{
+	 	    SetCursorPos((curr_lane * DIFF_TRACKS) + curr_column + 16,(curr_table * DIFF_TABLES) + curr_row + 7);
+		    printf("%c", matrix_table[curr_row][curr_column]);
+		}
+	    }
+	}
+    return;
 }
 
+void print()
+{
+	uint8_t NumOfPlayers;
+	print_track(3);
+	for(NumOfPlayers = 0; NumOfPlayers < 3; NumOfPlayers++)
+	{
+		print_table(5,NumOfPlayers);
+	}
+	SetCursorPos(100,0);
+}
+
+
+
+unsigned int random1(void)
+{
+     static unsigned int zi;
+     
+     zi=(1103515245* zi + 12345) % 2147483648 ;
+             return zi ;
+}
 
 
 int main(void)
 
 {
 initialisationTrack();
-print(4);
+initialisationTable();
+print();
 	//potrebno pozvati clear prije pokretanja programa
     return 0;
 } 
