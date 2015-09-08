@@ -11,7 +11,7 @@
 /**
 	Vrijednost okvira još nije izracunata.
 */
-#define NOT_EVALUATED -1
+#define NOT_EVALUATED 0
 
 #include <stdint.h>
 #include <inttypes.h>

@@ -27,25 +27,15 @@
 /**
 	Vrijednost okvira još nije izracunata.
 */
-#define NOT_EVALUATED -1
+#define NOT_EVALUATED 0
 /**
 	Bacanje nije izvrseno.
 */
 #define NOT_THROWN -1
 
 #include <stdint.h>
+#include "users.h"
 
-/**
-	@brief Struktura predstavlja apstrakciju jednog igraca sa svim potrebnim podacima za igru. 
-*/
-typedef struct Player 
-{
-    char* name;				///< Ime igraca
-    int16_t frames[NUM_OF_FRAMES];	///< Niz u koji se upisuju bodovi po okvirima 
-    int8_t points[MAX_NUM_OF_THROWS]; 	///< Niz u koji se upisuju bodovi po bacanjima
-    uint16_t totalScore; 		///< Ukupan rezultat
-    uint8_t numOfThrow;			///< Broj bacanja
-} player;
 
 /**
 *	@brief	Funkcija za odredjenog igraca upisuje broj srusenih cunjeva nakon bacanja i racuna ukupan rezultat.
