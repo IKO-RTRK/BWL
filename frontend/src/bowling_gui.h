@@ -2,8 +2,8 @@
 #define BOWLING_GUI_H
 
 
-#define ROW 34
-#define COLUMN 135
+#define ROW_TRACK 34
+#define COLUMN_TRACK 15
 #define NUM_OF_PINS 10
 #define BALL_POS_ROW 33
 #define FIRST_BALL_POS_COL 8
@@ -17,9 +17,9 @@
 #define END_OF_PINS_ROW 9
 
 
-void initialisationTable(int TrackNumber);
-void initialisationTrack(int TrackNumber);
-void print(void);
+void initialisationLane();
+void initialisationTrack();
+void print(int,int);
 void move(int TrackNumber);
 void pinsDown(int,int,int);
 int knockDownPins(int, int,int);
