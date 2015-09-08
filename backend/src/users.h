@@ -16,6 +16,7 @@
 #include <stdint.h>
 #include <inttypes.h>
 #include "player.h"
+
 #define MAX_NUM_OF_LANES 3
 #define MAX_NUM_OF_PLAYERS 6
 #define MIN_NUM_OF_LANES 1

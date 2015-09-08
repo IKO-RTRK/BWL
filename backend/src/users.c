@@ -32,11 +32,10 @@ static int8_t playerNameValidation(int8_t laneId, int8_t position, char* newName
 }
 
 int8_t initialise(int8_t numOfLanes)
-{
+{	
 	int8_t i;
 	numberOfLanes = numOfLanes;
 	int8_t valid = numberOfLanesValidation(numberOfLanes);	
-
 		
 	if (!valid)
 	{

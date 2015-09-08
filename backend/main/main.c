@@ -30,7 +30,8 @@ void baci()
 // Primjer koristenja backend biblioteke
 int main()
 {
-	initialise(3);
+	int8_t b = 3;
+	initialise(b);
 	int8_t i, br, n, j;
 	char name[50];
 	for (i = 0; i < numberOfLanes; i++)
@@ -42,16 +43,14 @@ int main()
 			printf("Broj igraca od 1 do 6!\n");
 			i--;	
 		}
-	}
-
-	for (i = 0; i < numberOfLanes; i++)
-	{
-		printf("%d. staza: \n", i + 1);
-		for (j = 0; j < allLanes[i].numberOfPlayers; j++)
+		else
 		{
-			printf("Ime %d. igraca: ", j + 1);
-			scanf("%s", name);
-			createPlayer(i, name);
+			for (j = 0; j < n; j++)
+			{
+				printf("Ime %d. igraca: ", j + 1);
+				scanf("%s", name);
+				createPlayer(i, name);
+			}
 		}
 	}
 
