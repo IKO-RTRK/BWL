@@ -118,7 +118,7 @@ int8_t deletePLayer(player* p, int8_t laneId)
 	{
 		if (strcmp(allLanes[laneId].playersOnLane[j].name,p->name) != 0) 
 		{
-			if (i == numberOfPlayers - 1)
+			if (i == allLanes[laneId].numberOfPlayers - 1)
 			{
 				return -1;
 			}
