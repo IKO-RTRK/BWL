@@ -106,3 +106,52 @@ int8_t createPlayer(int8_t laneId, char* playerName)
 		}
 		return 0;
 }
+
+int8_t deletePLayer(player* p, int8_t laneId)
+{
+	player* help;
+	int8_t i, j;
+	i=0;
+	help=(player*)malloc(sizeof(player)*(allLanes[laneId].numberOfPlayers - 1));
+
+	for (j = 0; j < allLanes[laneId].numberOfPlayers; j++)
+	{
+		if (strcmp(allLanes[laneId].playersOnLane[j].name,p->name) != 0) 
+		{
+			if (i == allLanes[laneId].numberOfPlayers - 1)
+			{
+				return -1;
+			}
+			help[i++]=allLanes[laneId].playersOnLane[j];
+		}
+	
+	}
+	
+	free(allLanes[laneId].playersOnLane);
+	allLanes[laneId].numberOfPlayers--;
+	allLanes[laneId].playersOnLane=(player*)malloc(sizeof(player)*allLanes[laneId].numberOfPlayers);
+	for (j = 0; j < allLanes[laneId].numberOfPlayers; j++)
+	{
+		allLanes[laneId].playersOnLane[j] = help[j];
+	}
+
+	free (help);
+	return 0;
+}
+
+player* getPlayerByNameAndId(char* playerName, int8_t laneId)
+{
+	int8_t j;
+	player* p = NULL;
+	
+	for (j = 0; j < allLanes[laneId].numberOfPlayers; j++)
+	{
+		if (strcmp(allLanes[laneId].playersOnLane[j].name,playerName) == 0) 
+		{
+			p = &allLanes[laneId].playersOnLane[j];
+			break;
+		}
+	}
+
+	return p;
+}

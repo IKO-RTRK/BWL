@@ -1,4 +1,6 @@
 *~
 *.o
 *~1.?
+*.a
+main1
 runall
