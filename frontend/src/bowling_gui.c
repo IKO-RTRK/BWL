@@ -4,8 +4,6 @@
 #include  <stdint.h>
 #include "bowling_gui.h"
 
-traka array[3];
-
 char bowling_pins[NUM_OF_PINS] = {[0 ... NUM_OF_PINS-1] = '!'};
 char bowling_ball = 'o';
 
@@ -190,7 +188,7 @@ unsigned int random1(void)
              return zi ;
 }
 
-
+/*
 int main(void)
 {
 
@@ -202,4 +200,4 @@ int main(void)
 	(allLanes+1)->numberOfPlayers=1;
 	(allLanes+2)->numberOfPlayers=2;
 	ShowTrack (allLanes, array);
-} 
+} */

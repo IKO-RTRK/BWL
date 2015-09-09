@@ -13,4 +13,3 @@ bowling_stats:
 
 main:
 	$(MAKE) -C build all
-

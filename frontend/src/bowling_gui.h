@@ -17,6 +17,8 @@
 #include "traka.h"
 #include "../../backend/src/users.h"
 
+traka array[3];
+
 void initialisationLane(traka* t);
 void initialisationTrack(traka* t);
 void initialisationTable(lane *l,traka * t);
