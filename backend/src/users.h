@@ -62,7 +62,7 @@ int8_t createPlayer(int8_t laneId, char* playerName);
   
 
 
-int8_t deletePLayer(player* p);  
+int8_t deletePLayer(player* p, int8_t laneId);
 
 
 #endif
