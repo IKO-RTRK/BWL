@@ -1,6 +1,6 @@
 #include "../unity/unity_fixture.h"
 #include "../src/bowling_gui.h"
-
+/*
 static int contains(int* arrayExpected,int* arrayReturned,int expectedLength,int returnedLength)
 {
   int i,j;
@@ -171,3 +171,4 @@ TEST(BowlingTest, TestPosition8Throw)
   int expected[10] = {1,2,3,4,5,6,7,8,9,10};
   TEST_ASSERT_TRUE(contains(expected,fallen,10,k) == 0);
 }
+*/

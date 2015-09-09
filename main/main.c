@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <inttypes.h>
-#include "../src/bowling_stats.h"
-#include "../src/users.h"
+#include "../backend/src/bowling_stats.h"
+#include "../frontend/src/bowling_gui.h"
+#include "../backend/src/users.h"
 
 void baci()
 {

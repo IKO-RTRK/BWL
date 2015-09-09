@@ -384,5 +384,5 @@ initialisationTrack();
 initialisationTable();
 print();
 	//potrebno pozvati clear prije pokretanja programa
-    return 0;
+    //return 0;
 } 
