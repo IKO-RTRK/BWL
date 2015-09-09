@@ -139,3 +139,19 @@ int8_t deletePLayer(player* p, int8_t laneId)
 	return 0;
 }
 
+player* getPlayerByNameAndId(char* playerName, int8_t laneId)
+{
+	int8_t j;
+	player* p = NULL;
+	
+	for (j = 0; j < allLanes[laneId].numberOfPlayers; j++)
+	{
+		if (strcmp(allLanes[laneId].playersOnLane[j].name,playerName) == 0) 
+		{
+			p = &allLanes[laneId].playersOnLane[j];
+			break;
+		}
+	}
+
+	return p;
+}
