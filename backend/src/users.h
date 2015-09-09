@@ -69,6 +69,12 @@ int8_t createPlayer(int8_t laneId, char* playerName);
  */
 int8_t deletePLayer(player* p, int8_t laneId);
 
+/**
+ * @brief		Funkcija trazi adresu igraca sa datim imenom i datoj stazi.
+ * @param playerName	Ime igraca koji se trazi.
+ * @param laneId	Id staze na kojoj se trazi igrac.
+ * @retval player* 	Funkcija vraca vrijednost NULL ako igrac nije pronadjen na stazi, inace adresu strukture player
+ */
 player* getPlayerByNameAndId(char* playerName, int8_t laneId);
 
 
