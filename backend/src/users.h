@@ -1,3 +1,10 @@
+/** 
+	@file	users.h
+	@brief	Dokument sadrzi kratak opis funkcija vezanih za igraca	
+	@author RT-RK - Backend 
+	@date   Septembar, 2015
+*/
+
 #ifndef USERS_H
 #define USERS_H
 /**
@@ -12,16 +19,26 @@
 	Vrijednost okvira još nije izracunata.
 */
 #define NOT_EVALUATED 0
+/**
+ * 	Maksimalan broj staza.
+ */
+#define MAX_NUM_OF_LANES 3
+/**
+ * 	Maksimalan broj igraca na stazi.
+ */
+#define MAX_NUM_OF_PLAYERS 6
+/**
+ * 	Minimalan broj staza.
+ */
+#define MIN_NUM_OF_LANES 1
+/**
+ * 	Minimalna broj igraca na stazi.
+ */
+#define MIN_NUM_OF_PLAYERS 1
 
 #include <stdint.h>
 #include <inttypes.h>
 #include "player.h"
-
-#define MAX_NUM_OF_LANES 3
-#define MAX_NUM_OF_PLAYERS 6
-#define MIN_NUM_OF_LANES 1
-#define MIN_NUM_OF_PLAYERS 1
-
 
 /**
 	@brief Strukura predstavlja apstrakciju jedne staze sa igracima koji ucestvuju u igri
@@ -33,21 +50,28 @@ typedef struct Lane
 	int8_t numberOfPlayers;	  	///< Broj igraca koji igraju na datoj stazi
 } lane;
 
-lane* allLanes;
+/**
+ * @brief	Pokazivac na niz staza koji se kreira na pocetku programa.
+ */
+lane* allLanes;		
+
+/**
+ * @brief 	Broj staza koje ce biti kreirane prije pocetka igre.
+ */
 int8_t numberOfLanes;
 
 /**
  * @brief	Funkcija vrsi alokaciju memorije za staze, od korisnika se zahtjeva da unese broj staza. Mora biti pozvana prije createLane i createPlayer
- * @param	numberOfLanes	Broj staza koji treba da bude kreiran.
- * @retval 	int8_t
+ * @param numberOfLanes	Broj staza koji treba da bude kreiran.
+ * @retval int8_t	Rezultat funkcije je -1 ako je broj staza nevalidan, inace 0.
  */
 int8_t initialise(int8_t numOfLanes);
 
 /**
- * @brief		Funkcija vrsi unos podataka vezanih za stazu. Mora biti pozvana prije createPlayer.
+ * @brief	Funkcija vrsi unos podataka vezanih za stazu. Mora biti pozvana prije createPlayer.
  * @param laneId	Vrijednost koja ce biti jedinstvena za svaku stazu.
  * @param numberOfPlayers	Broj igraca koji ce biti na stazi.
- * @retval int8_t
+ * @retval int8_t	Rezultat funkcije je -1 ako je broj igraca nevalidan, inace 0.
  */
 int8_t createLane(int8_t laneId, int8_t numberOfPlayers);
 
@@ -55,11 +79,9 @@ int8_t createLane(int8_t laneId, int8_t numberOfPlayers);
  * @brief		Funkcija vrsi unos podataka vezanih za jednog igraca.
  * @param laneId	Id staze za koju se vrsi unos.
  * @param playerName	Ime igraca koji treba biti dodan.
- * @retval int8_t
+ * @retval int8_t	Rezultat funkcije je -1 ako ime igraca vec postoji, inace 0.
  */
 int8_t createPlayer(int8_t laneId, char* playerName);
-
-  
 
 /**
  * @brief		Funkcija vrsi brisanje igraca sa odredjene staze.

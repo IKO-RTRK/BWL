@@ -1,3 +1,10 @@
+/** 
+	@file	player.h
+	@brief	Dokument sadrzi opis strukture player
+	@author RT-RK - Backend 
+	@date   Septembar, 2015
+*/
+
 #ifndef PLAYER_H
 #define PLAYER_H
 

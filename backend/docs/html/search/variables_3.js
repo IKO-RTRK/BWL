@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['playersonlane',['playersOnLane',['../structLane.html#a690fa8511be94f233cbc5e85b7e05d86',1,'Lane']]],
-  ['points',['points',['../structPlayer.html#a1301a317c8bcbdfe51e0502c1c4f74db',1,'Player']]]
+  ['name',['name',['../structPlayer.html#a4af4a10433f33834b59d0c3793358a40',1,'Player']]],
+  ['numberoflanes',['numberOfLanes',['../users_8h.html#a8de3a206f1426f137f3fc832711819c7',1,'users.h']]],
+  ['numberofplayers',['numberOfPlayers',['../structLane.html#a6d4c2ea0f26af425c13bcbfaa2d7be15',1,'Lane']]],
+  ['numofthrow',['numOfThrow',['../structPlayer.html#aba6d09903c341f347787707fcbea975d',1,'Player']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['laneid',['laneId',['../structLane.html#a2be34c30e2af91b9e9ddb3d9598b366c',1,'Lane']]]
+  ['frames',['frames',['../structPlayer.html#a9664b1bda2ce8abd43a6ed696cbae2ff',1,'Player']]]
 ];
