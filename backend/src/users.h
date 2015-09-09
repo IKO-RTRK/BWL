@@ -61,8 +61,21 @@ int8_t createPlayer(int8_t laneId, char* playerName);
 
   
 
-
+/**
+ * @brief		Funkcija vrsi brisanje igraca sa odredjene staze.
+ * @param player	Pokazivac na strukturu player predstavlja igraca koji ce biti obrisan.
+ * @param laneId	Id staze sa koje se brise igrac.
+ * @retval int8_t 	Funkcija vraca vrijednost -1 ako igrac nije pronadjen na stazi, inace 0
+ */
 int8_t deletePLayer(player* p, int8_t laneId);
+
+/**
+ * @brief		Funkcija trazi adresu igraca sa datim imenom i datoj stazi.
+ * @param playerName	Ime igraca koji se trazi.
+ * @param laneId	Id staze na kojoj se trazi igrac.
+ * @retval player* 	Funkcija vraca vrijednost NULL ako igrac nije pronadjen na stazi, inace adresu strukture player
+ */
+player* getPlayerByNameAndId(char* playerName, int8_t laneId);
 
 
 #endif

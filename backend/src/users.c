@@ -118,6 +118,10 @@ int8_t deletePLayer(player* p, int8_t laneId)
 	{
 		if (strcmp(allLanes[laneId].playersOnLane[j].name,p->name) != 0) 
 		{
+			if (i == allLanes[laneId].numberOfPlayers - 1)
+			{
+				return -1;
+			}
 			help[i++]=allLanes[laneId].playersOnLane[j];
 		}
 	
@@ -131,6 +135,23 @@ int8_t deletePLayer(player* p, int8_t laneId)
 		allLanes[laneId].playersOnLane[j] = help[j];
 	}
 
+	free (help);
 	return 0;
 }
 
+player* getPlayerByNameAndId(char* playerName, int8_t laneId)
+{
+	int8_t j;
+	player* p = NULL;
+	
+	for (j = 0; j < allLanes[laneId].numberOfPlayers; j++)
+	{
+		if (strcmp(allLanes[laneId].playersOnLane[j].name,playerName) == 0) 
+		{
+			p = &allLanes[laneId].playersOnLane[j];
+			break;
+		}
+	}
+
+	return p;
+}
