@@ -118,6 +118,10 @@ int8_t deletePLayer(player* p, int8_t laneId)
 	{
 		if (strcmp(allLanes[laneId].playersOnLane[j].name,p->name) != 0) 
 		{
+			if (i == numberOfPlayers - 1)
+			{
+				return -1;
+			}
 			help[i++]=allLanes[laneId].playersOnLane[j];
 		}
 	
@@ -131,6 +135,7 @@ int8_t deletePLayer(player* p, int8_t laneId)
 		allLanes[laneId].playersOnLane[j] = help[j];
 	}
 
+	free (help);
 	return 0;
 }
 
