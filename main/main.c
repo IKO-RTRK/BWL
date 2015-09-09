@@ -31,6 +31,7 @@ void baci()
 // Primjer koristenja backend biblioteke
 int main()
 {
+	system("clear");
 	int8_t b;
 
 	printf("Broj staza: ");
@@ -77,8 +78,10 @@ int main()
 	for (i = 0; i < NUM_OF_FRAMES; i++)
 	printf("%"PRId8" ", allLanes[0].playersOnLane[0].frames[i]);
 	printf("\n");
-
-
+	system("clear");
+	initialisationTrack();
+	initialisationTable();
+	print();
 	return 0;
 }
 

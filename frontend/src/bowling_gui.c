@@ -377,7 +377,7 @@ unsigned int random1(void)
 }
 
 
-int main(void)
+/*int main(void)
 
 {
 initialisationTrack();
@@ -385,4 +385,4 @@ initialisationTable();
 print();
 	//potrebno pozvati clear prije pokretanja programa
     //return 0;
-} 
+}*/ 
